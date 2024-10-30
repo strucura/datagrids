@@ -2,4 +2,12 @@
 
 namespace Strucura\Grids\Contracts;
 
-interface GridContract extends DataVisualizationContract {}
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
+
+interface GridContract
+{
+    public function getColumns(): Collection;
+
+    public function getQuery(): Builder;
+}
