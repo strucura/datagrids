@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Strucura\Grids\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class GridsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'grids';
 
     public $description = 'My command';
 
