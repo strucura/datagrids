@@ -1,4 +1,4 @@
-# Backend Implementation For Displaying Complex Tabular Data
+# Grids 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/strucura/grids.svg?style=flat-square)](https://packagist.org/packages/strucura/grids)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/strucura/grids/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/strucura/grids/actions?query=workflow%3Arun-tests+branch%3Amain)
@@ -81,4 +81,4 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+ihe MIT License (MIT). Please see [License File](LICENSE.md) for more information.
