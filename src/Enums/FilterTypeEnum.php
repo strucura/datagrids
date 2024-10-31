@@ -2,7 +2,7 @@
 
 namespace Strucura\Grids\Enums;
 
-enum FilterMatchModeEnum: string
+enum FilterTypeEnum: string
 {
     case STARTS_WITH = 'startsWith';
     case CONTAINS = 'contains';

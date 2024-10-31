@@ -9,7 +9,7 @@ use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Traits\Macroable;
 use Strucura\Grids\Contracts\ColumnContract;
-use Strucura\Grids\Enums\ColumnDataTypeEnum;
+use Strucura\Grids\Enums\ColumnTypeEnum;
 
 abstract class AbstractColumn implements ColumnContract
 {
@@ -43,7 +43,7 @@ abstract class AbstractColumn implements ColumnContract
      * The data type of the column. We are using this to convey the format to the front end so that they can easily
      * determine how best to present the data.  Ex: Converting a date time to the user's timezone
      */
-    protected ColumnDataTypeEnum $dataType = ColumnDataTypeEnum::String;
+    protected ColumnTypeEnum $dataType = ColumnTypeEnum::String;
 
     /**
      * @throws Exception

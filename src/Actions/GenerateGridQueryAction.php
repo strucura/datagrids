@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Contracts\FilterContract;
 use Strucura\Grids\Contracts\GridContract;
-use Strucura\Grids\Contracts\SortOrderEnum;
+use Strucura\Grids\Enums\SortTypeEnum;
 
 /**
  * Class GenerateGridQueryAction
@@ -78,7 +78,7 @@ class GenerateGridQueryAction
     private function applySorts(Builder $query, Collection $sorts): void
     {
         foreach ($sorts as $sort) {
-            $direction = $sort->order === SortOrderEnum::ASC ? 'asc' : 'desc';
+            $direction = $sort->order === SortTypeEnum::ASC ? 'asc' : 'desc';
             $query->orderBy($sort->column, $direction);
         }
     }

@@ -6,17 +6,17 @@ use Illuminate\Database\Query\Builder;
 use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
 use Strucura\Grids\Data\FilterData;
-use Strucura\Grids\Enums\FilterMatchModeEnum;
+use Strucura\Grids\Enums\FilterTypeEnum;
 
 class NumericFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return in_array($filterData->matchMode, [
-            FilterMatchModeEnum::LESS_THAN,
-            FilterMatchModeEnum::LESS_THAN_OR_EQUAL_TO,
-            FilterMatchModeEnum::GREATER_THAN,
-            FilterMatchModeEnum::GREATER_THAN_OR_EQUAL_TO,
+        return in_array($filterData->filterType, [
+            FilterTypeEnum::LESS_THAN,
+            FilterTypeEnum::LESS_THAN_OR_EQUAL_TO,
+            FilterTypeEnum::GREATER_THAN,
+            FilterTypeEnum::GREATER_THAN_OR_EQUAL_TO,
         ]);
     }
 
@@ -25,7 +25,7 @@ class NumericFilter extends AbstractFilter
      */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
-        $expression = match ($filterData->matchMode) {
+        $expression = match ($filterData->filterType) {
             'lt' => $column->getSelectAs().' < ?',
             'lte' => $column->getSelectAs().' <= ?',
             'gt' => $column->getSelectAs().' > ?',

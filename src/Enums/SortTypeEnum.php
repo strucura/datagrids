@@ -1,8 +1,8 @@
 <?php
 
-namespace Strucura\Grids\Contracts;
+namespace Strucura\Grids\Enums;
 
-enum SortOrderEnum: int
+enum SortTypeEnum: int
 {
     case ASC = 1;
     case DESC = -1;

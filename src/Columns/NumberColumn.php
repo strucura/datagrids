@@ -3,14 +3,24 @@
 namespace Strucura\Grids\Columns;
 
 use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Enums\ColumnDataTypeEnum;
+use Strucura\Grids\Enums\ColumnTypeEnum;
 
 class NumberColumn extends AbstractColumn
 {
-    protected ColumnDataTypeEnum $dataType = ColumnDataTypeEnum::Number;
+    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Number;
 
-    public function setSelectAs(string $selectAs): static
+    public function asFloat(): static
     {
-        return parent::setSelectAs('CAST('.$selectAs.' AS UNSIGNED)');
+        return $this->setSelectAs('CAST('.$this->getSelectAs().' AS FLOAT)');
+    }
+
+    public function asInteger(): static
+    {
+        return $this->setSelectAs('CAST('.$this->getSelectAs().' AS SIGNED)');
+    }
+
+    public function asUnsignedInteger(): static
+    {
+        return $this->setSelectAs('CAST('.$this->getSelectAs().' AS UNSIGNED)');
     }
 }

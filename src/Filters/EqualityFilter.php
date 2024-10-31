@@ -6,18 +6,18 @@ use Illuminate\Database\Query\Builder;
 use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
 use Strucura\Grids\Data\FilterData;
-use Strucura\Grids\Enums\FilterMatchModeEnum;
+use Strucura\Grids\Enums\FilterTypeEnum;
 
 class EqualityFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return in_array($filterData->matchMode, [
-            FilterMatchModeEnum::EQUALS,
-            FilterMatchModeEnum::IS,
-            FilterMatchModeEnum::NOT_EQUALS,
-            FilterMatchModeEnum::IS_NOT,
-        ]) && $this->prepareFilterValueForDatabase($filterData->value) !== null;
+        return in_array($filterData->filterType, [
+            FilterTypeEnum::EQUALS,
+            FilterTypeEnum::IS,
+            FilterTypeEnum::NOT_EQUALS,
+            FilterTypeEnum::IS_NOT,
+        ]) && $this->getTransformedFilterValue($filterData->value) !== null;
     }
 
     /**
@@ -25,9 +25,9 @@ class EqualityFilter extends AbstractFilter
      */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
-        $expression = match ($filterData->matchMode) {
-            'equals' => $column->getSelectAs().' = ?',
-            'notEquals' => $column->getSelectAs().' != ?',
+        $expression = match ($filterData->filterType) {
+            FilterTypeEnum::EQUALS => $column->getSelectAs().' = ?',
+            FilterTypeEnum::NOT_EQUALS => $column->getSelectAs().' != ?',
             default => throw new \Exception('Invalid match mode for equality filter'),
         };
 

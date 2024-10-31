@@ -3,11 +3,11 @@
 namespace Strucura\Grids\Columns;
 
 use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Enums\ColumnDataTypeEnum;
+use Strucura\Grids\Enums\ColumnTypeEnum;
 
 class DateTimeColumn extends AbstractColumn
 {
-    protected ColumnDataTypeEnum $dataType = ColumnDataTypeEnum::DateTime;
+    protected ColumnTypeEnum $dataType = ColumnTypeEnum::DateTime;
 
     public function setSelectAs(string $selectAs): static
     {

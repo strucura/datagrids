@@ -3,11 +3,11 @@
 namespace Strucura\Grids\Columns;
 
 use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Enums\ColumnDataTypeEnum;
+use Strucura\Grids\Enums\ColumnTypeEnum;
 
 class PointColumn extends AbstractColumn
 {
-    protected ColumnDataTypeEnum $dataType = ColumnDataTypeEnum::Point;
+    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Point;
 
     protected bool $filterable = false;
 

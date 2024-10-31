@@ -13,7 +13,7 @@ class NullFilter extends AbstractFilter implements FilterContract
 
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $this->prepareFilterValueForDatabase($filterData->value) === null;
+        return $this->getTransformedFilterValue($filterData->value) === null;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder

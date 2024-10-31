@@ -7,7 +7,7 @@ use Strucura\Grids\Contracts\FilterContract;
 
 abstract class AbstractFilter implements FilterContract
 {
-    public function prepareFilterValueForDatabase(mixed $value): mixed
+    public function getTransformedFilterValue(mixed $value): mixed
     {
         $transformers = config('grids.value_transformers');
 

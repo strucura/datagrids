@@ -2,7 +2,7 @@
 
 namespace Strucura\Grids\Enums;
 
-enum ColumnDataTypeEnum: string
+enum ColumnTypeEnum: string
 {
     case String = 'string';
     case Number = 'number';

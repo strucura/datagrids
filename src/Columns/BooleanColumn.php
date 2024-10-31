@@ -3,9 +3,9 @@
 namespace Strucura\Grids\Columns;
 
 use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Enums\ColumnDataTypeEnum;
+use Strucura\Grids\Enums\ColumnTypeEnum;
 
 class BooleanColumn extends AbstractColumn
 {
-    protected ColumnDataTypeEnum $dataType = ColumnDataTypeEnum::Boolean;
+    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Boolean;
 }
