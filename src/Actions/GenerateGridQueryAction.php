@@ -19,10 +19,11 @@ class GenerateGridQueryAction
     /**
      * Handle the generation of the grid query.
      *
-     * @param GridContract $gridContract The grid contract instance.
-     * @param Collection $filters The collection of filters to apply.
-     * @param Collection $sorts The collection of sorts to apply.
+     * @param  GridContract  $gridContract  The grid contract instance.
+     * @param  Collection  $filters  The collection of filters to apply.
+     * @param  Collection  $sorts  The collection of sorts to apply.
      * @return Builder The generated query builder instance.
+     *
      * @throws \Exception
      */
     public function handle(GridContract $gridContract, Collection $filters, Collection $sorts): Builder
@@ -42,9 +43,10 @@ class GenerateGridQueryAction
     /**
      * Apply filters to the query.
      *
-     * @param Builder $query The query builder instance.
-     * @param Collection $columns The collection of columns.
-     * @param Collection $filters The collection of filters to apply.
+     * @param  Builder  $query  The query builder instance.
+     * @param  Collection  $columns  The collection of columns.
+     * @param  Collection  $filters  The collection of filters to apply.
+     *
      * @throws \Exception If a filter cannot be applied.
      */
     private function applyFilters(Builder $query, Collection $columns, Collection $filters): void
@@ -52,8 +54,10 @@ class GenerateGridQueryAction
         $availableFilters = config('grids.filters');
 
         foreach ($filters as $filter) {
-            $column = $columns->first(fn(AbstractColumn $col) => $col->getAlias() === $filter->column);
-            if (!$column) continue;
+            $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);
+            if (! $column) {
+                continue;
+            }
 
             foreach ($availableFilters as $filterClass) {
                 /** @var FilterContract $filterInstance */
@@ -68,8 +72,8 @@ class GenerateGridQueryAction
     /**
      * Apply sorts to the query.
      *
-     * @param Builder $query The query builder instance.
-     * @param Collection $sorts The collection of sorts to apply.
+     * @param  Builder  $query  The query builder instance.
+     * @param  Collection  $sorts  The collection of sorts to apply.
      */
     private function applySorts(Builder $query, Collection $sorts): void
     {

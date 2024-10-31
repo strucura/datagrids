@@ -4,7 +4,6 @@ namespace Strucura\Grids;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Strucura\Grids\Commands\GridsCommand;
 
 class GridsServiceProvider extends PackageServiceProvider
 {
