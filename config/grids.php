@@ -1,6 +1,8 @@
 <?php
 
 // config for Strucura/Grids
+use Spatie\StructureDiscoverer\DiscoverConditions\DiscoverCondition;
+use Strucura\Grids\Contracts\GridContract;
 use Strucura\Grids\Filters\DateFilter;
 use Strucura\Grids\Filters\EqualityFilter;
 use Strucura\Grids\Filters\NumericFilter;
@@ -12,6 +14,19 @@ use Strucura\Grids\ValueTransformers\NullValueTransformer;
 use Strucura\Grids\ValueTransformers\TimezoneValueTransformer;
 
 return [
+    /**
+     * Used to discover grids in the application.
+     */
+    'discovery' => [
+        'paths' => [
+            app_path(''),
+        ],
+        'conditions' => [
+            DiscoverCondition::create()
+                ->implementing(GridContract::class),
+        ],
+    ],
+
     /**
      * Used to perform data manipulations on the value of a filter before applying it to the query.
      */

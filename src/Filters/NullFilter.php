@@ -7,6 +7,7 @@ use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
 use Strucura\Grids\Contracts\FilterContract;
 use Strucura\Grids\Data\FilterData;
+use Strucura\Grids\Enums\FilterTypeEnum;
 
 class NullFilter extends AbstractFilter implements FilterContract
 {
@@ -18,8 +19,8 @@ class NullFilter extends AbstractFilter implements FilterContract
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->value) {
-            'equals' => $column->getSelectAs().' IS NULL',
-            'notEquals' => $column->getSelectAs().' IS NOT NULL',
+            FilterTypeEnum::EQUALS => $column->getSelectAs().' IS NULL',
+            FilterTypeEnum::NOT_EQUALS => $column->getSelectAs().' IS NOT NULL',
             default => throw new \Exception('Invalid match mode for equality filter'),
         };
 
@@ -34,5 +35,7 @@ class NullFilter extends AbstractFilter implements FilterContract
                 $filterData->value,
             ]);
         }
+
+        return $query;
     }
 }

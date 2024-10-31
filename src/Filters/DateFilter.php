@@ -26,10 +26,10 @@ class DateFilter extends AbstractFilter
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
-            'dateIs' => $column->getSelectAs()." = DATE_FORMAT(?, '%Y-%m-%d %T')",
-            'after', 'dateAfter' => $column->getSelectAs()." > DATE_FORMAT(?, '%Y-%m-%d %T')",
-            'before', 'dateBefore' => $column->getSelectAs()." < DATE_FORMAT(?, '%Y-%m-%d %T')",
-            'dateIsNot' => $column->getSelectAs()." != DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::DATE_IS => $column->getSelectAs()." = DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::AFTER, FilterTypeEnum::DATE_AFTER => $column->getSelectAs()." > DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::BEFORE, FilterTypeEnum::DATE_BEFORE => $column->getSelectAs()." < DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::DATE_IS_NOT => $column->getSelectAs()." != DATE_FORMAT(?, '%Y-%m-%d %T')",
             default => throw new \Exception('Invalid match mode for date filter'),
         };
 

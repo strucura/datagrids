@@ -26,10 +26,10 @@ class NumericFilter extends AbstractFilter
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
-            'lt' => $column->getSelectAs().' < ?',
-            'lte' => $column->getSelectAs().' <= ?',
-            'gt' => $column->getSelectAs().' > ?',
-            'gte' => $column->getSelectAs().' >= ?',
+            FilterTypeEnum::LESS_THAN => $column->getSelectAs().' < ?',
+            FilterTypeEnum::LESS_THAN_OR_EQUAL_TO => $column->getSelectAs().' <= ?',
+            FilterTypeEnum::GREATER_THAN => $column->getSelectAs().' > ?',
+            FilterTypeEnum::GREATER_THAN_OR_EQUAL_TO => $column->getSelectAs().' >= ?',
             default => throw new \Exception('Invalid match mode for numeric filter'),
         };
 

@@ -26,15 +26,17 @@ class StringFilter extends AbstractFilter
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
-            'startsWith', 'contains', 'endsWith' => $column->getSelectAs().' LIKE ?',
-            'notContains' => $column->getSelectAs().' NOT LIKE ?',
+            FilterTypeEnum::STARTS_WITH,
+            FilterTypeEnum::ENDS_WITH,
+            FilterTypeEnum::CONTAINS => $column->getSelectAs().' LIKE ?',
+            FilterTypeEnum::NOT_CONTAINS => $column->getSelectAs().' NOT LIKE ?',
             default => throw new \Exception('Invalid match mode for string filter'),
         };
 
         $value = match ($filterData->filterType) {
-            'startsWith' => $filterData->value.'%',
-            'endsWith' => '%'.$filterData->value,
-            'contains', 'notContains' => '%'.$filterData->value.'%',
+            FilterTypeEnum::STARTS_WITH => $filterData->value.'%',
+            FilterTypeEnum::ENDS_WITH => '%'.$filterData->value,
+            FilterTypeEnum::CONTAINS, FilterTypeEnum::NOT_CONTAINS => '%'.$filterData->value.'%',
             default => throw new \Exception('Invalid match mode for string filter'),
         };
 
