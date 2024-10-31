@@ -20,9 +20,6 @@ class NumericFilter extends AbstractFilter
         ]);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
@@ -33,17 +30,8 @@ class NumericFilter extends AbstractFilter
             default => throw new \Exception('Invalid match mode for numeric filter'),
         };
 
-        if ($column->isHavingRequired()) {
-            $query->havingRaw($expression, [
-                ...$column->getBindings(),
-                $filterData->value,
-            ]);
-        } else {
-            $query->whereRaw($expression, [
-                ...$column->getBindings(),
-                $filterData->value,
-            ]);
-        }
+        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
+        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 
         return $query;
     }

@@ -18,23 +18,10 @@ class NullFilter extends AbstractFilter implements FilterContract
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
-        $expression = match ($filterData->value) {
-            FilterTypeEnum::EQUALS => $column->getSelectAs().' IS NULL',
-            FilterTypeEnum::NOT_EQUALS => $column->getSelectAs().' IS NOT NULL',
-            default => throw new \Exception('Invalid match mode for equality filter'),
-        };
+        $expression = $column->getSelectAs() . ($filterData->value === FilterTypeEnum::EQUALS ? ' IS NULL' : ' IS NOT NULL');
 
-        if ($column->isHavingRequired()) {
-            $query->havingRaw($expression, [
-                ...$column->getBindings(),
-                $filterData->value,
-            ]);
-        } else {
-            $query->whereRaw($expression, [
-                ...$column->getBindings(),
-                $filterData->value,
-            ]);
-        }
+        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
+        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 
         return $query;
     }

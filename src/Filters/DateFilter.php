@@ -26,24 +26,15 @@ class DateFilter extends AbstractFilter
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
-            FilterTypeEnum::DATE_IS => $column->getSelectAs()." = DATE_FORMAT(?, '%Y-%m-%d %T')",
-            FilterTypeEnum::AFTER, FilterTypeEnum::DATE_AFTER => $column->getSelectAs()." > DATE_FORMAT(?, '%Y-%m-%d %T')",
-            FilterTypeEnum::BEFORE, FilterTypeEnum::DATE_BEFORE => $column->getSelectAs()." < DATE_FORMAT(?, '%Y-%m-%d %T')",
-            FilterTypeEnum::DATE_IS_NOT => $column->getSelectAs()." != DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::DATE_IS => "{$column->getSelectAs()} = DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::AFTER, FilterTypeEnum::DATE_AFTER => "{$column->getSelectAs()} > DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::BEFORE, FilterTypeEnum::DATE_BEFORE => "{$column->getSelectAs()} < DATE_FORMAT(?, '%Y-%m-%d %T')",
+            FilterTypeEnum::DATE_IS_NOT => "{$column->getSelectAs()} != DATE_FORMAT(?, '%Y-%m-%d %T')",
             default => throw new \Exception('Invalid match mode for date filter'),
         };
 
-        if ($column->isHavingRequired()) {
-            $query->havingRaw($expression.' = ?', [
-                ...$column->getBindings(),
-                $filterData->value,
-            ]);
-        } else {
-            $query->whereRaw($expression.' = ?', [
-                ...$column->getBindings(),
-                $filterData->value,
-            ]);
-        }
+        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
+        $query->$method("$expression = ?", [...$column->getBindings(), $filterData->value]);
 
         return $query;
     }

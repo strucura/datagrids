@@ -20,15 +20,10 @@ class StringFilter extends AbstractFilter
         ]);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
-            FilterTypeEnum::STARTS_WITH,
-            FilterTypeEnum::ENDS_WITH,
-            FilterTypeEnum::CONTAINS => $column->getSelectAs().' LIKE ?',
+            FilterTypeEnum::STARTS_WITH, FilterTypeEnum::ENDS_WITH, FilterTypeEnum::CONTAINS => $column->getSelectAs().' LIKE ?',
             FilterTypeEnum::NOT_CONTAINS => $column->getSelectAs().' NOT LIKE ?',
             default => throw new \Exception('Invalid match mode for string filter'),
         };
@@ -40,11 +35,8 @@ class StringFilter extends AbstractFilter
             default => throw new \Exception('Invalid match mode for string filter'),
         };
 
-        if ($column->isHavingRequired()) {
-            $query->havingRaw($expression, [...$column->getBindings(), $value]);
-        } else {
-            $query->whereRaw($expression, [...$column->getBindings(), $value]);
-        }
+        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
+        $query->$method($expression, [...$column->getBindings(), $value]);
 
         return $query;
     }
