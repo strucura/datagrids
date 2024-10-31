@@ -18,7 +18,7 @@ class NullFilter extends AbstractFilter implements FilterContract
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
-        $expression = $column->getSelectAs() . ($filterData->value === FilterTypeEnum::EQUALS ? ' IS NULL' : ' IS NOT NULL');
+        $expression = $column->getSelectAs().($filterData->value === FilterTypeEnum::EQUALS ? ' IS NULL' : ' IS NOT NULL');
 
         $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
         $query->$method($expression, [...$column->getBindings(), $filterData->value]);
