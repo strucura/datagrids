@@ -10,7 +10,6 @@ use Strucura\Grids\Data\FilterData;
 
 class NullFilter extends AbstractFilter implements FilterContract
 {
-
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
         return $this->getTransformedFilterValue($filterData->value) === null;
