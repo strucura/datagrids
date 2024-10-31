@@ -16,7 +16,7 @@ class EqualityFilter extends AbstractFilter
             FilterMatchModeEnum::EQUALS,
             FilterMatchModeEnum::IS,
             FilterMatchModeEnum::NOT_EQUALS,
-            FilterMatchModeEnum::IS_NOT
+            FilterMatchModeEnum::IS_NOT,
         ]);
     }
 

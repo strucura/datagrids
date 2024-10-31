@@ -5,7 +5,6 @@ namespace Strucura\Grids\Filters;
 use Illuminate\Database\Query\Builder;
 use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
-use Strucura\Grids\Contracts\DataSourceContract;
 use Strucura\Grids\Data\FilterData;
 use Strucura\Grids\Enums\FilterMatchModeEnum;
 

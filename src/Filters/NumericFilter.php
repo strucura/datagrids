@@ -47,6 +47,4 @@ class NumericFilter extends AbstractFilter
 
         return $query;
     }
-
-
 }
