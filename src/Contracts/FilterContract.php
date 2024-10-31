@@ -8,7 +8,7 @@ use Strucura\Grids\Data\FilterData;
 
 interface FilterContract
 {
-    public function handle(Builder $query, DataSourceContract $dataSource, FilterData $filterData): Builder;
+    public function canHandle(AbstractColumn $column, FilterData $filterData): bool;
 
-    public function matchFilterToColumn(DataSourceContract $dataSource, FilterData $filterData): AbstractColumn;
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder;
 }

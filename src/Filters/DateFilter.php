@@ -3,16 +3,26 @@
 namespace Strucura\Grids\Filters;
 
 use Illuminate\Database\Query\Builder;
+use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
-use Strucura\Grids\Contracts\DataSourceContract;
 use Strucura\Grids\Data\FilterData;
+use Strucura\Grids\Enums\FilterMatchModeEnum;
 
 class DateFilter extends AbstractFilter
 {
-    public function handle(Builder $query, DataSourceContract $dataSource, FilterData $filterData): Builder
+    public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        $column = $this->matchFilterToColumn($dataSource, $filterData);
+        return in_array($filterData->matchMode, [
+            FilterMatchModeEnum::DATE_IS,
+            FilterMatchModeEnum::DATE_IS_NOT,
+            FilterMatchModeEnum::DATE_BEFORE,
+            FilterMatchModeEnum::DATE_AFTER,
+            FilterMatchModeEnum::DOESNT_HAVE,
+        ]);
+    }
 
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    {
         $expression = match ($filterData->matchMode) {
             'dateIs' => $column->getSelectAs()." = DATE_FORMAT(?, '%Y-%m-%d %T')",
             'dateAfter' => $column->getSelectAs()." > DATE_FORMAT(?, '%Y-%m-%d %T')",

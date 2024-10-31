@@ -3,23 +3,31 @@
 namespace Strucura\Grids\Filters;
 
 use Illuminate\Database\Query\Builder;
+use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
 use Strucura\Grids\Contracts\DataSourceContract;
 use Strucura\Grids\Data\FilterData;
+use Strucura\Grids\Enums\FilterMatchModeEnum;
 
 class StringFilter extends AbstractFilter
 {
+    public function canHandle(AbstractColumn $column, FilterData $filterData): bool
+    {
+        return in_array($filterData->matchMode, [
+            FilterMatchModeEnum::STARTS_WITH,
+            FilterMatchModeEnum::ENDS_WITH,
+            FilterMatchModeEnum::CONTAINS,
+            FilterMatchModeEnum::NOT_CONTAINS,
+        ]);
+    }
+
     /**
      * @throws \Exception
      */
-    public function handle(Builder $query, DataSourceContract $dataSource, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
-        $column = $this->matchFilterToColumn($dataSource, $filterData);
-
         $expression = match ($filterData->matchMode) {
-            'startsWith' => $column->getSelectAs().' LIKE ?',
-            'endsWith' => $column->getSelectAs().' LIKE ?',
-            'contains' => $column->getSelectAs().' LIKE ?',
+            'startsWith', 'contains', 'endsWith' => $column->getSelectAs().' LIKE ?',
             'notContains' => $column->getSelectAs().' NOT LIKE ?',
             default => throw new \Exception('Invalid match mode for string filter'),
         };
@@ -27,8 +35,7 @@ class StringFilter extends AbstractFilter
         $value = match ($filterData->matchMode) {
             'startsWith' => $filterData->value.'%',
             'endsWith' => '%'.$filterData->value,
-            'contains' => '%'.$filterData->value.'%',
-            'notContains' => '%'.$filterData->value.'%',
+            'contains', 'notContains' => '%'.$filterData->value.'%',
             default => throw new \Exception('Invalid match mode for string filter'),
         };
 

@@ -7,19 +7,16 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Strucura\Grids\Abstracts\AbstractColumn;
 use Strucura\Grids\Abstracts\AbstractFilter;
-use Strucura\Grids\Contracts\DataSourceContract;
+use Strucura\Grids\Contracts\GridContract;
 use Strucura\Grids\Contracts\ValueTransformerContract;
 use Strucura\Grids\Data\FilterData;
 use Strucura\Grids\Data\SortData;
-use Strucura\Grids\Traits\CanMakeOrFake;
 
 class GenerateGridQueryAction
 {
-    use CanMakeOrFake;
-
-    public function handle(DataSourceContract $dataSource, Collection $filters, Collection $sorts): Builder
+    public function handle(GridContract $gridContract, Collection $filters, Collection $sorts): Builder
     {
-        $filteredQuery = $dataSource->getQuery();
+        $filteredQuery = $gridContract->getQuery();
 
         $this->applyFilters(
             $filteredQuery,
@@ -30,7 +27,7 @@ class GenerateGridQueryAction
         $this->applySorts($filteredQuery, $sorts);
 
         /** @var AbstractColumn $column */
-        foreach ($dataSource->getColumns() as $column) {
+        foreach ($gridContract->getColumns() as $column) {
             $filteredQuery->selectRaw(
                 $column->getSelectAs().' as `'.$column->getAlias().'`',
                 $column->getBindings()
@@ -63,7 +60,7 @@ class GenerateGridQueryAction
     {
         /** @var array<FilterData> $filters */
         foreach ($filters as $filter) {
-            $availableFilters = config('data-visualizations.filters');
+            $availableFilters = config('grids.filters');
 
             if (! isset($availableFilters[$filter->matchMode])) {
                 continue;
