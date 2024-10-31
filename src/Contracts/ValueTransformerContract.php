@@ -2,4 +2,9 @@
 
 namespace Strucura\Grids\Contracts;
 
-interface ValueTransformerContract {}
+use Closure;
+
+interface ValueTransformerContract
+{
+    public function handle(mixed $value, Closure $next): mixed;
+}

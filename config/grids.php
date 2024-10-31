@@ -27,30 +27,9 @@ return [
      * A list of filters that can be applied to a data source.
      */
     'filters' => [
-        // Strings
-        'startsWith' => StringFilter::class,
-        'contains' => StringFilter::class,
-        'notContains' => StringFilter::class,
-        'endsWith' => StringFilter::class,
-
-        // Equality
-        'equals' => EqualityFilter::class,
-        'is' => EqualityFilter::class,
-        'notEquals' => EqualityFilter::class,
-        'isNot' => EqualityFilter::class,
-
-        // Numeric
-        'lt' => NumericFilter::class,
-        'lte' => NumericFilter::class,
-        'gt' => NumericFilter::class,
-        'gte' => NumericFilter::class,
-
-        // Dates
-        'dateIs' => DateFilter::class,
-        'dateIsNot' => DateFilter::class,
-        'dateBefore' => DateFilter::class,
-        'before' => DateFilter::class,
-        'dateAfter' => DateFilter::class,
-        'after' => DateFilter::class,
+        StringFilter::class,
+        NumericFilter::class,
+        DateFilter::class,
+        EqualityFilter::class,
     ],
 ];

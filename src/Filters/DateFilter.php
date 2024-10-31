@@ -15,7 +15,9 @@ class DateFilter extends AbstractFilter
         return in_array($filterData->matchMode, [
             FilterMatchModeEnum::DATE_IS,
             FilterMatchModeEnum::DATE_IS_NOT,
+            FilterMatchModeEnum::BEFORE,
             FilterMatchModeEnum::DATE_BEFORE,
+            FilterMatchModeEnum::AFTER,
             FilterMatchModeEnum::DATE_AFTER,
             FilterMatchModeEnum::DOESNT_HAVE,
         ]);
@@ -25,8 +27,8 @@ class DateFilter extends AbstractFilter
     {
         $expression = match ($filterData->matchMode) {
             'dateIs' => $column->getSelectAs()." = DATE_FORMAT(?, '%Y-%m-%d %T')",
-            'dateAfter' => $column->getSelectAs()." > DATE_FORMAT(?, '%Y-%m-%d %T')",
-            'dateBefore' => $column->getSelectAs()." < DATE_FORMAT(?, '%Y-%m-%d %T')",
+            'after', 'dateAfter' => $column->getSelectAs()." > DATE_FORMAT(?, '%Y-%m-%d %T')",
+            'before', 'dateBefore' => $column->getSelectAs()." < DATE_FORMAT(?, '%Y-%m-%d %T')",
             'dateIsNot' => $column->getSelectAs()." != DATE_FORMAT(?, '%Y-%m-%d %T')",
             default => throw new \Exception('Invalid match mode for date filter'),
         };

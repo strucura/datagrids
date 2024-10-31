@@ -17,9 +17,6 @@ class GridsServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('grids')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_grids_table')
-            ->hasCommand(GridsCommand::class);
+            ->hasConfigFile();
     }
 }

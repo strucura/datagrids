@@ -3,94 +3,79 @@
 namespace Strucura\Grids\Actions;
 
 use Illuminate\Database\Query\Builder;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Abstracts\AbstractFilter;
+use Strucura\Grids\Contracts\FilterContract;
 use Strucura\Grids\Contracts\GridContract;
-use Strucura\Grids\Contracts\ValueTransformerContract;
-use Strucura\Grids\Data\FilterData;
-use Strucura\Grids\Data\SortData;
+use Strucura\Grids\Contracts\SortOrderEnum;
 
+/**
+ * Class GenerateGridQueryAction
+ *
+ * This class is responsible for generating a query for a grid based on the provided filters and sorts.
+ */
 class GenerateGridQueryAction
 {
+    /**
+     * Handle the generation of the grid query.
+     *
+     * @param GridContract $gridContract The grid contract instance.
+     * @param Collection $filters The collection of filters to apply.
+     * @param Collection $sorts The collection of sorts to apply.
+     * @return Builder The generated query builder instance.
+     * @throws \Exception
+     */
     public function handle(GridContract $gridContract, Collection $filters, Collection $sorts): Builder
     {
-        $filteredQuery = $gridContract->getQuery();
+        $query = $gridContract->getQuery();
 
-        $this->applyFilters(
-            $filteredQuery,
-            $dataSource,
-            $this->transformFilterValues($filters)
-        );
+        $this->applyFilters($query, $gridContract->getColumns(), $filters);
+        $this->applySorts($query, $sorts);
 
-        $this->applySorts($filteredQuery, $sorts);
-
-        /** @var AbstractColumn $column */
         foreach ($gridContract->getColumns() as $column) {
-            $filteredQuery->selectRaw(
-                $column->getSelectAs().' as `'.$column->getAlias().'`',
-                $column->getBindings()
-            );
+            $query->selectRaw("{$column->getSelectAs()} as `{$column->getAlias()}`", $column->getBindings());
         }
 
-        return $filteredQuery;
+        return $query;
     }
 
     /**
-     * @param  Collection<FilterData>  $filters
+     * Apply filters to the query.
+     *
+     * @param Builder $query The query builder instance.
+     * @param Collection $columns The collection of columns.
+     * @param Collection $filters The collection of filters to apply.
+     * @throws \Exception If a filter cannot be applied.
      */
-    public function transformFilterValues(Collection $filters): Collection
+    private function applyFilters(Builder $query, Collection $columns, Collection $filters): void
     {
-        /** @var array<ValueTransformerContract> $transformers */
-        $transformers = config('data-visualizations.value_transformers');
+        $availableFilters = config('grids.filters');
 
         foreach ($filters as $filter) {
-            /** @var Pipeline $pipeline */
-            $pipeline = app(Pipeline::class);
-            $filter->value = $pipeline->send($filter->value)
-                ->through($transformers)
-                ->thenReturn();
-        }
+            $column = $columns->first(fn(AbstractColumn $col) => $col->getAlias() === $filter->column);
+            if (!$column) continue;
 
-        return $filters;
+            foreach ($availableFilters as $filterClass) {
+                /** @var FilterContract $filterInstance */
+                $filterInstance = app($filterClass);
+                if ($filterInstance->canHandle($column, $filter)) {
+                    $filterInstance->handle($query, $column, $filter);
+                }
+            }
+        }
     }
 
-    public function applyFilters(Builder $query, DataSourceContract $dataSource, Collection $filters): Builder
+    /**
+     * Apply sorts to the query.
+     *
+     * @param Builder $query The query builder instance.
+     * @param Collection $sorts The collection of sorts to apply.
+     */
+    private function applySorts(Builder $query, Collection $sorts): void
     {
-        /** @var array<FilterData> $filters */
-        foreach ($filters as $filter) {
-            $availableFilters = config('grids.filters');
-
-            if (! isset($availableFilters[$filter->matchMode])) {
-                continue;
-            }
-
-            /** @var AbstractFilter $filterDefinitionInstance */
-            $filterDefinitionInstance = app($availableFilters[$filter->matchMode]);
-
-            $filterDefinitionInstance->handle($query, $dataSource, $filter);
+        foreach ($sorts as $sort) {
+            $direction = $sort->order === SortOrderEnum::ASC ? 'asc' : 'desc';
+            $query->orderBy($sort->column, $direction);
         }
-
-        return $query;
-    }
-
-    public function applySorts(Builder $query, Collection $sorts): Builder
-    {
-        $sorts->each(function (SortData $sort) use ($query) {
-            $sortDirection = match ($sort->order) {
-                1 => 'asc',
-                -1 => 'desc',
-                default => null,
-            };
-
-            if ($sortDirection === null) {
-                return;
-            }
-
-            $query->orderBy($sort->column, $sortDirection);
-        });
-
-        return $query;
     }
 }
