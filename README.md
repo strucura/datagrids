@@ -1,4 +1,4 @@
-# Grids 
+# DataGrids 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/strucura/datagrids.svg?style=flat-square)](https://packagist.org/packages/strucura/datagrids)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/strucura/datagrids/run-tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/strucura/datagrids/actions?query=workflow%3Arun-tests+branch%3Amaster)
