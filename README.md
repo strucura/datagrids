@@ -5,15 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/strucura/grids/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/strucura/grids/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/strucura/grids.svg?style=flat-square)](https://packagist.org/packages/strucura/grids)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/Grids.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/Grids)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Grids is a package for Laravel that provides a simple and front end agnostic way to create and manage data grids.
 
 ## Installation
 
@@ -23,25 +15,7 @@ You can install the package via composer:
 composer require strucura/grids
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="grids-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="grids-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
+## Configuration
 
 Optionally, you can publish the views using
 
@@ -49,12 +23,65 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="grids-views"
 ```
 
-## Usage
+### Discovery of Grids
+
+The discovery of grids in the application is configured in the `config/grids.php` file. This configuration allows the package to automatically discover grid classes within specified paths and under certain conditions.
+
+Here is how the discovery process is set up:
+
+1. **Paths**: The `paths` array specifies the directories where the package will look for grid classes. By default, it includes the `app` directory.
+2. **Conditions**: The `conditions` array defines the criteria that a class must meet to be considered a grid. In this case, it uses the `DiscoverCondition` class to find classes that implement the `GridContract` interface.
 
 ```php
-$grids = new Strucura\Grids();
-echo $grids->echoPhrase('Hello, Strucura!');
+'discovery' => [
+    'paths' => [
+        app_path(''),
+    ],
+    'conditions' => [
+        DiscoverCondition::create()
+            ->implementing(GridContract::class),
+    ],
+],
 ```
+
+This setup ensures that any class within the specified paths that implements the `GridContract` interface will be automatically discovered and registered as a grid in the application.
+
+### Value Transformers
+
+Value transformers are used to perform data manipulations on the value of a filter before applying it to the query. 
+They ensure that the filter values are in the correct format and type required by the database query.  Value 
+transformers are registered in the `config/grids.php` file under the `value_transformers` key. Each transformer class must implement the `ValueTransformerContract` interface.
+
+```php
+'value_transformers' => [
+    BooleanValueTransformer::class,
+    TimezoneValueTransformer::class,
+    FloatValueTransformer::class,
+    IntegerValueTransformer::class,
+    NullValueTransformer::class,
+],
+```
+
+This configuration ensures that the specified transformers are applied to filter values in the order they are listed.
+
+### Filters
+
+Filters are used to apply specific conditions to the data being queried. They help in narrowing down the results 
+based on various criteria.  Filters are registered in the `config/grids.php` file under the `filters` key. Each 
+filter class must extend the `AbstractFilter` class and implement the `FilterContract` interface.
+
+```php
+'filters' => [
+    StringFilter::class,
+    NumericFilter::class,
+    DateFilter::class,
+    EqualityFilter::class,
+    InFilter::class,
+    NullFilter::class,
+],
+```
+
+This configuration ensures that the specified filters are available for use in the application. Each filter class defines the conditions it can handle and the logic to apply those conditions to the query.
 
 ## Testing
 
