@@ -8,7 +8,6 @@ use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Contracts\FilterContract;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Data\SortData;
-use Strucura\DataGrid\Enums\SortTypeEnum;
 
 /**
  * Class GenerateGridQueryAction
