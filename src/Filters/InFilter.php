@@ -10,7 +10,6 @@ use Strucura\Grids\Enums\FilterTypeEnum;
 
 class InFilter extends AbstractFilter
 {
-
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
         return in_array($filterData->filterType, [
@@ -26,11 +25,11 @@ class InFilter extends AbstractFilter
     {
         // You MUST have one parameter per item in the array
         $placeholders = implode(',', array_fill(0, count($filterData->value), '?'));
-        $bindings     = array_merge($column->getBindings(), $filterData->value);
+        $bindings = array_merge($column->getBindings(), $filterData->value);
 
         $expression = match ($filterData->filterType) {
-            FilterTypeEnum::IN => $column->getSelectAs() . " IN ($placeholders)",
-            FilterTypeEnum::NOT_IN => $column->getSelectAs() . " NOT IN ($placeholders)",
+            FilterTypeEnum::IN => $column->getSelectAs()." IN ($placeholders)",
+            FilterTypeEnum::NOT_IN => $column->getSelectAs()." NOT IN ($placeholders)",
             default => throw new \Exception('Invalid match mode for IN filter'),
         };
 
