@@ -1,15 +1,15 @@
 <?php
 
-use Mockery;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
+use Mockery;
+use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
-use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Illuminate\Database\Query\Builder;
 
 function mockColumn($alias, $selectAs, $bindings = [], $havingRequired = false)
 {
@@ -18,6 +18,7 @@ function mockColumn($alias, $selectAs, $bindings = [], $havingRequired = false)
     $column->shouldReceive('getSelectAs')->andReturn($selectAs);
     $column->shouldReceive('getBindings')->andReturn($bindings);
     $column->shouldReceive('isHavingRequired')->andReturn($havingRequired);
+
     return $column;
 }
 
@@ -27,7 +28,7 @@ it('applies filters correctly', function () {
     $column = mockColumn('column', 'column');
     $filterData = new FilterData('column', 'value', FilterTypeEnum::CONTAINS);
     $filters = new Collection([$filterData]);
-    $sorts = new Collection();
+    $sorts = new Collection;
 
     $gridContract->shouldReceive('getQuery')->andReturn($query);
     $gridContract->shouldReceive('getColumns')->andReturn(new Collection([$column]));
@@ -35,7 +36,7 @@ it('applies filters correctly', function () {
     $query->shouldReceive('selectRaw')->once()->with('column as `column`', []);
     $query->shouldReceive('whereRaw')->once()->with('column LIKE ?', ['%value%']);
 
-    $action = new GenerateGridQueryAction();
+    $action = new GenerateGridQueryAction;
     $action->handle($gridContract, $filters, $sorts);
 });
 
@@ -44,7 +45,7 @@ it('applies sorts correctly', function () {
     $query = Mockery::mock(Builder::class);
     $column = mockColumn('column', 'column');
     $sortData = new SortData('column', SortTypeEnum::ASC);
-    $filters = new Collection();
+    $filters = new Collection;
     $sorts = new Collection([$sortData]);
 
     $gridContract->shouldReceive('getQuery')->andReturn($query);
@@ -53,7 +54,7 @@ it('applies sorts correctly', function () {
     $query->shouldReceive('selectRaw')->once()->with('column as `column`', []);
     $query->shouldReceive('orderBy')->once()->with('column', 'asc');
 
-    $action = new GenerateGridQueryAction();
+    $action = new GenerateGridQueryAction;
     $action->handle($gridContract, $filters, $sorts);
 });
 
@@ -61,14 +62,14 @@ it('selects columns correctly', function () {
     $gridContract = Mockery::mock(GridContract::class);
     $query = Mockery::mock(Builder::class);
     $column = mockColumn('alias', 'column');
-    $filters = new Collection();
-    $sorts = new Collection();
+    $filters = new Collection;
+    $sorts = new Collection;
 
     $gridContract->shouldReceive('getQuery')->andReturn($query);
     $gridContract->shouldReceive('getColumns')->andReturn(new Collection([$column]));
 
     $query->shouldReceive('selectRaw')->once()->with('column as `alias`', []);
 
-    $action = new GenerateGridQueryAction();
+    $action = new GenerateGridQueryAction;
     $action->handle($gridContract, $filters, $sorts);
 });
