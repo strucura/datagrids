@@ -11,6 +11,7 @@ enum FilterTypeEnum: string
     case EQUALS = 'equals';
     case NOT_EQUALS = 'notEquals';
     case IN = 'in';
+    case NOT_IN = 'notIn';
     case LESS_THAN = 'lt';
     case LESS_THAN_OR_EQUAL_TO = 'lte';
     case GREATER_THAN = 'gt';
