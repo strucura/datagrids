@@ -23,7 +23,7 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="datagrids-config"
 ```
 
-### Discovery of Grids
+### Discovery of DataGrids
 
 The discovery of grids in the application is configured in the `config/datagrids.php` file. This configuration allows 
 the package to automatically discover grid classes within specified paths and under certain conditions.
