@@ -3,7 +3,6 @@
 // tests/Filters/StringFilterTest.php
 
 use Illuminate\Database\Query\Builder;
-use Mockery;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
