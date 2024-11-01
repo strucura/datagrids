@@ -7,14 +7,14 @@ use Strucura\DataGrid\Contracts\FilterContract;
 
 abstract class AbstractFilter implements FilterContract
 {
-    public function getTransformedFilterValue(mixed $value): mixed
+    public function getNormalizedValue(mixed $value): mixed
     {
-        $transformers = config('grids.value_transformers');
+        $transformers = config('datagrids.value_transformers');
 
         foreach ($transformers as $transformer) {
             /** @var Pipeline $pipeline */
             $pipeline = app(Pipeline::class);
-            $value = $pipeline->send($transformer->value)
+            $value = $pipeline->send($value)
                 ->through($transformers)
                 ->thenReturn();
         }

@@ -23,10 +23,16 @@ class InFilter extends AbstractFilter
      */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
-        // You MUST have one parameter per item in the array
-        $placeholders = implode(',', array_fill(0, count($filterData->value), '?'));
-        $bindings = array_merge($column->getBindings(), $filterData->value);
+        // Normalize the values
+        $values = collect($filterData->value)->map(function ($value) {
+            return $this->getNormalizedValue($value);
+        })->filter()->toArray();
 
+        // You MUST have one parameter per item in the array
+        $placeholders = implode(',', array_fill(0, count($values), '?'));
+        $bindings = array_merge($column->getBindings(), $values);
+
+        // Build the expression
         $expression = match ($filterData->filterType) {
             FilterTypeEnum::IN => $column->getSelectAs()." IN ($placeholders)",
             FilterTypeEnum::NOT_IN => $column->getSelectAs()." NOT IN ($placeholders)",

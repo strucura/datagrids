@@ -23,6 +23,9 @@ class DateFilter extends AbstractFilter
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
     {
         $expression = match ($filterData->filterType) {
