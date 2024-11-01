@@ -1,13 +1,13 @@
 <?php
 
+use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Columns\DateColumn;
-use Strucura\DataGrid\Filters\DateFilter;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
-use Illuminate\Database\Query\Builder;
+use Strucura\DataGrid\Filters\DateFilter;
 
 it('can handle DATE_IS filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::DATE_IS);
 
@@ -15,7 +15,7 @@ it('can handle DATE_IS filter type', function () {
 });
 
 it('can handle DATE_IS_NOT filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::DATE_IS_NOT);
 
@@ -23,7 +23,7 @@ it('can handle DATE_IS_NOT filter type', function () {
 });
 
 it('can handle BEFORE filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::BEFORE);
 
@@ -31,7 +31,7 @@ it('can handle BEFORE filter type', function () {
 });
 
 it('can handle AFTER filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::AFTER);
 
@@ -39,7 +39,7 @@ it('can handle AFTER filter type', function () {
 });
 
 it('applies the correct SQL expression for DATE_IS filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $query = Mockery::mock(Builder::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::DATE_IS);
@@ -54,7 +54,7 @@ it('applies the correct SQL expression for DATE_IS filter type', function () {
 });
 
 it('applies the correct SQL expression for DATE_IS_NOT filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $query = Mockery::mock(Builder::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::DATE_IS_NOT);
@@ -69,7 +69,7 @@ it('applies the correct SQL expression for DATE_IS_NOT filter type', function ()
 });
 
 it('applies the correct SQL expression for BEFORE filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $query = Mockery::mock(Builder::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::BEFORE);
@@ -84,7 +84,7 @@ it('applies the correct SQL expression for BEFORE filter type', function () {
 });
 
 it('applies the correct SQL expression for AFTER filter type', function () {
-    $filter = new DateFilter();
+    $filter = new DateFilter;
     $column = Mockery::mock(DateColumn::class);
     $query = Mockery::mock(Builder::class);
     $filterData = new FilterData('column', '2023-10-01', FilterTypeEnum::AFTER);
