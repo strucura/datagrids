@@ -1,9 +1,9 @@
 <?php
 
-namespace Strucura\Grids\Columns;
+namespace Strucura\DataGrid\Columns;
 
-use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Abstracts\AbstractColumn;
+use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
 class NumberColumn extends AbstractColumn
 {

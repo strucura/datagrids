@@ -1,12 +1,12 @@
 {
-    "name": "strucura/grids",
+    "name": "strucura/datagrids",
     "description": "Backend Implementation For Displaying Complex Tabular Data",
     "keywords": [
         "Strucura",
         "laravel",
-        "grids"
+        "data grids"
     ],
-    "homepage": "https://github.com/strucura/grids",
+    "homepage": "https://github.com/strucura/datagrids",
     "license": "MIT",
     "authors": [
         {
@@ -35,13 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Strucura\\Grids\\": "src/",
-            "Strucura\\Grids\\Database\\Factories\\": "database/factories/"
+            "Strucura\\DataGrid\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Strucura\\Grids\\Tests\\": "tests/",
+            "Strucura\\DataGrid\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -73,10 +72,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Strucura\\Grids\\GridsServiceProvider"
+                "Strucura\\DataGrid\\DataGridServiceProvider"
             ],
             "aliases": {
-                "Grids": "Strucura\\Grids\\Facades\\Grids"
+                "Grids": "Strucura\\DataGrid\\Facades\\DataGrid"
             }
         }
     },

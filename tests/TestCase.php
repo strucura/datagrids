@@ -1,10 +1,10 @@
 <?php
 
-namespace Strucura\Grids\Tests;
+namespace Strucura\DataGrid\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Strucura\Grids\GridsServiceProvider;
+use Strucura\DataGrid\DataGridServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Strucura\\Grids\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Strucura\\DataGrid\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            GridsServiceProvider::class,
+            DataGridServiceProvider::class,
         ];
     }
 

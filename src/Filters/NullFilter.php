@@ -1,13 +1,13 @@
 <?php
 
-namespace Strucura\Grids\Filters;
+namespace Strucura\DataGrid\Filters;
 
 use Illuminate\Database\Query\Builder;
-use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Abstracts\AbstractFilter;
-use Strucura\Grids\Contracts\FilterContract;
-use Strucura\Grids\Data\FilterData;
-use Strucura\Grids\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Abstracts\AbstractColumn;
+use Strucura\DataGrid\Abstracts\AbstractFilter;
+use Strucura\DataGrid\Contracts\FilterContract;
+use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class NullFilter extends AbstractFilter implements FilterContract
 {

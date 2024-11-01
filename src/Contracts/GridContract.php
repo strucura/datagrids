@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\Grids\Contracts;
+namespace Strucura\DataGrid\Contracts;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;

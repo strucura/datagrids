@@ -1,9 +1,9 @@
 <?php
 
-namespace Strucura\Grids\ValueTransformers;
+namespace Strucura\DataGrid\ValueTransformers;
 
 use Closure;
-use Strucura\Grids\Contracts\ValueTransformerContract;
+use Strucura\DataGrid\Contracts\ValueTransformerContract;
 
 class TimezoneValueTransformer implements ValueTransformerContract
 {

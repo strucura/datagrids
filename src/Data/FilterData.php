@@ -1,8 +1,8 @@
 <?php
 
-namespace Strucura\Grids\Data;
+namespace Strucura\DataGrid\Data;
 
-use Strucura\Grids\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class FilterData
 {

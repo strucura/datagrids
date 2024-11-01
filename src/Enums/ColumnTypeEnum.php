@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\Grids\Enums;
+namespace Strucura\DataGrid\Enums;
 
 enum ColumnTypeEnum: string
 {

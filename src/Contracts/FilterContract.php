@@ -1,10 +1,10 @@
 <?php
 
-namespace Strucura\Grids\Contracts;
+namespace Strucura\DataGrid\Contracts;
 
 use Illuminate\Database\Query\Builder;
-use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Data\FilterData;
+use Strucura\DataGrid\Abstracts\AbstractColumn;
+use Strucura\DataGrid\Data\FilterData;
 
 interface FilterContract
 {

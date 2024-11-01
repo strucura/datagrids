@@ -1,9 +1,9 @@
 <?php
 
-namespace Strucura\Grids\Abstracts;
+namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Pipeline\Pipeline;
-use Strucura\Grids\Contracts\FilterContract;
+use Strucura\DataGrid\Contracts\FilterContract;
 
 abstract class AbstractFilter implements FilterContract
 {

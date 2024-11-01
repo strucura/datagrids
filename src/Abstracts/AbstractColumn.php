@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\Grids\Abstracts;
+namespace Strucura\DataGrid\Abstracts;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -8,8 +8,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Traits\Macroable;
-use Strucura\Grids\Contracts\ColumnContract;
-use Strucura\Grids\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Contracts\ColumnContract;
+use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
 abstract class AbstractColumn implements ColumnContract
 {

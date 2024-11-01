@@ -1,8 +1,8 @@
 <?php
 
-namespace Strucura\Grids\Data;
+namespace Strucura\DataGrid\Data;
 
-use Strucura\Grids\Enums\SortTypeEnum;
+use Strucura\DataGrid\Enums\SortTypeEnum;
 
 class SortData
 {

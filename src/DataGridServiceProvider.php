@@ -1,11 +1,11 @@
 <?php
 
-namespace Strucura\Grids;
+namespace Strucura\DataGrid;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class GridsServiceProvider extends PackageServiceProvider
+class DataGridServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -15,7 +15,7 @@ class GridsServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('grids')
+            ->name('datagrids')
             ->hasConfigFile();
     }
 }

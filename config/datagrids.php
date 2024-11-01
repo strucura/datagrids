@@ -1,17 +1,17 @@
 <?php
 
-// config for Strucura/Grids
+// config for Strucura/DataGrid
 use Spatie\StructureDiscoverer\DiscoverConditions\DiscoverCondition;
-use Strucura\Grids\Contracts\GridContract;
-use Strucura\Grids\Filters\DateFilter;
-use Strucura\Grids\Filters\EqualityFilter;
-use Strucura\Grids\Filters\NumericFilter;
-use Strucura\Grids\Filters\StringFilter;
-use Strucura\Grids\ValueTransformers\BooleanValueTransformer;
-use Strucura\Grids\ValueTransformers\FloatValueTransformer;
-use Strucura\Grids\ValueTransformers\IntegerValueTransformer;
-use Strucura\Grids\ValueTransformers\NullValueTransformer;
-use Strucura\Grids\ValueTransformers\TimezoneValueTransformer;
+use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Filters\DateFilter;
+use Strucura\DataGrid\Filters\EqualityFilter;
+use Strucura\DataGrid\Filters\NumericFilter;
+use Strucura\DataGrid\Filters\StringFilter;
+use Strucura\DataGrid\ValueTransformers\BooleanValueTransformer;
+use Strucura\DataGrid\ValueTransformers\FloatValueTransformer;
+use Strucura\DataGrid\ValueTransformers\IntegerValueTransformer;
+use Strucura\DataGrid\ValueTransformers\NullValueTransformer;
+use Strucura\DataGrid\ValueTransformers\TimezoneValueTransformer;
 
 return [
     /**

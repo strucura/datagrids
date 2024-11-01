@@ -1,13 +1,13 @@
 <?php
 
-namespace Strucura\Grids\Actions;
+namespace Strucura\DataGrid\Actions;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
-use Strucura\Grids\Abstracts\AbstractColumn;
-use Strucura\Grids\Contracts\FilterContract;
-use Strucura\Grids\Contracts\GridContract;
-use Strucura\Grids\Enums\SortTypeEnum;
+use Strucura\DataGrid\Abstracts\AbstractColumn;
+use Strucura\DataGrid\Contracts\FilterContract;
+use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Enums\SortTypeEnum;
 
 /**
  * Class GenerateGridQueryAction

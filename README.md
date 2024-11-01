@@ -1,18 +1,18 @@
 # Grids 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/strucura/grids.svg?style=flat-square)](https://packagist.org/packages/strucura/grids)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/strucura/grids/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/strucura/grids/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/strucura/grids/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/strucura/grids/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/strucura/grids.svg?style=flat-square)](https://packagist.org/packages/strucura/grids)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/strucura/datagrids.svg?style=flat-square)](https://packagist.org/packages/strucura/datagrids)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/strucura/datagrids/run-tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/strucura/datagrids/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/strucura/datagrids/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/strucura/datagrids/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/strucura/datagrids.svg?style=flat-square)](https://packagist.org/packages/strucura/datagrids)
 
-Grids is a package for Laravel that provides a simple and front end agnostic way to create and manage data grids.
+A package for Laravel that provides a simple and front end agnostic way to create and manage data data grids.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require strucura/grids
+composer require strucura/datagrids
 ```
 
 ## Configuration
@@ -20,12 +20,13 @@ composer require strucura/grids
 Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag="grids-views"
+php artisan vendor:publish --tag="datagrids-config"
 ```
 
 ### Discovery of Grids
 
-The discovery of grids in the application is configured in the `config/grids.php` file. This configuration allows the package to automatically discover grid classes within specified paths and under certain conditions.
+The discovery of grids in the application is configured in the `config/datagrids.php` file. This configuration allows 
+the package to automatically discover grid classes within specified paths and under certain conditions.
 
 Here is how the discovery process is set up:
 
@@ -50,7 +51,7 @@ This setup ensures that any class within the specified paths that implements the
 
 Value transformers are used to perform data manipulations on the value of a filter before applying it to the query. 
 They ensure that the filter values are in the correct format and type required by the database query.  Value 
-transformers are registered in the `config/grids.php` file under the `value_transformers` key. Each transformer class must implement the `ValueTransformerContract` interface.
+transformers are registered in the `config/datagrids.php` file under the `value_transformers` key. Each transformer class must implement the `ValueTransformerContract` interface.
 
 ```php
 'value_transformers' => [
@@ -67,7 +68,7 @@ This configuration ensures that the specified transformers are applied to filter
 ### Filters
 
 Filters are used to apply specific conditions to the data being queried. They help in narrowing down the results 
-based on various criteria.  Filters are registered in the `config/grids.php` file under the `filters` key. Each 
+based on various criteria.  Filters are registered in the `config/datagrids.php` file under the `filters` key. Each 
 filter class must extend the `AbstractFilter` class and implement the `FilterContract` interface.
 
 ```php
