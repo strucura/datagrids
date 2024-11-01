@@ -26,7 +26,7 @@ class InFilter extends AbstractFilter
         // Normalize the values
         $values = collect($filterData->value)->map(function ($value) {
             return $this->getNormalizedValue($value);
-        })->filter()->toArray();
+        })->toArray();
 
         // You MUST have one parameter per item in the array
         $placeholders = implode(',', array_fill(0, count($values), '?'));

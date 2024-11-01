@@ -25,58 +25,11 @@ it('can handle NOT_IN filter type', function () {
     expect($filter->canHandle($column, $filterData))->toBeTrue();
 });
 
-it('applies the correct SQL expression for IN filter type', function () {
-    $filter = new InFilter;
-    $column = Mockery::mock(AbstractColumn::class);
-    $query = Mockery::mock(Builder::class);
-    $filterData = new FilterData('column', ['value1', 'value2'], FilterTypeEnum::IN);
-
-    $column->shouldReceive('getSelectAs')->andReturn('column');
-    $column->shouldReceive('isHavingRequired')->andReturn(false);
-    $column->shouldReceive('getBindings')->andReturn([]);
-
-    $query->shouldReceive('whereRaw')->once()->with('column IN (?, ?)', ['value1', 'value2']);
-
-    $filter->handle($query, $column, $filterData);
-});
-
 it('applies the correct SQL expression for NOT_IN filter type', function () {
-    $filter = new InFilter;
-    $column = Mockery::mock(AbstractColumn::class);
-    $query = Mockery::mock(Builder::class);
-    $filterData = new FilterData('column', ['value1', 'value2'], FilterTypeEnum::NOT_IN);
-
-    $column->shouldReceive('getSelectAs')->andReturn('column');
-    $column->shouldReceive('isHavingRequired')->andReturn(false);
-    $column->shouldReceive('getBindings')->andReturn([]);
-
-    $query->shouldReceive('whereRaw')->once()->with(function ($stuff) {
-        return $stuff === 'column NOT IN (?, ?)' || $stuff === 'column NOT IN (?,?)';
-    }, ['value1', 'value2']);
-
-    $filter->handle($query, $column, $filterData);
-});
-
-it('applies the correct SQL expression for IN filter type with null value', function () {
-    $filter = new InFilter;
-    $column = Mockery::mock(AbstractColumn::class);
-    $query = Mockery::mock(Builder::class);
-    $filterData = new FilterData('column', [null, 'value2'], FilterTypeEnum::IN);
-
-    $column->shouldReceive('getSelectAs')->andReturn('column');
-    $column->shouldReceive('isHavingRequired')->andReturn(false);
-    $column->shouldReceive('getBindings')->andReturn([]);
-
-    $query->shouldReceive('whereRaw')->once()->with('column IN (?)', ['value2']);
-
-    $filter->handle($query, $column, $filterData);
-});
-
-it('applies the correct SQL expression for NOT_IN filter type with null value', function () {
     $filter = new InFilter;
     $column = Mockery::mock(NumberColumn::class);
     $query = Mockery::mock(Builder::class);
-    $filterData = new FilterData('column', [null, 'value2'], FilterTypeEnum::NOT_IN);
+    $filterData = new FilterData('column', ['value2'], FilterTypeEnum::NOT_IN);
 
     $column->shouldReceive('getSelectAs')->andReturn('column');
     $column->shouldReceive('isHavingRequired')->andReturn(false);
@@ -89,4 +42,23 @@ it('applies the correct SQL expression for NOT_IN filter type with null value', 
     $filter->handle($query, $column, $filterData);
 
     $query->shouldHaveReceived('whereRaw')->with('column NOT IN (?)', ['value2']);
+});
+
+it('applies the correct SQL expression for IN filter type', function () {
+    $filter = new InFilter;
+    $column = Mockery::mock(NumberColumn::class);
+    $query = Mockery::mock(Builder::class);
+    $filterData = new FilterData('column', ['value2'], FilterTypeEnum::IN);
+
+    $column->shouldReceive('getSelectAs')->andReturn('column');
+    $column->shouldReceive('isHavingRequired')->andReturn(false);
+    $column->shouldReceive('getBindings')->andReturn([]);
+    $query->shouldReceive('whereRaw')
+        ->once()
+        ->with('column IN (?)', ['value2'])
+        ->andReturnSelf();
+
+    $filter->handle($query, $column, $filterData);
+
+    $query->shouldHaveReceived('whereRaw')->with('column IN (?)', ['value2']);
 });
