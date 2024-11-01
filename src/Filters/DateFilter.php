@@ -37,7 +37,7 @@ class DateFilter extends AbstractFilter
         };
 
         $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
-        $query->$method("$expression = ?", [...$column->getBindings(), $filterData->value]);
+        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 
         return $query;
     }
