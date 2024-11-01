@@ -77,7 +77,7 @@ class GenerateGridQueryAction
      */
     private function applySorts(Builder $query, Collection $sorts): void
     {
-        /** @var SortData[] $sort */
+        /** @var SortData[] $sorts */
         foreach ($sorts as $sort) {
             $query->orderBy($sort->column, $sort->sortType->value);
         }
