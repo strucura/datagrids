@@ -2,9 +2,9 @@
 
 namespace Strucura\DataGrid\Enums;
 
-enum SortTypeEnum: int
+enum SortTypeEnum: string
 {
-    case ASC = 1;
-    case DESC = -1;
-    case NONE = 0;
+    case ASC = 'asc'; // 1
+    case DESC = 'desc'; // -1
+    case NONE = 'none';
 }

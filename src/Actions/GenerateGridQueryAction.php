@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Contracts\FilterContract;
 use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 
 /**
@@ -51,7 +52,7 @@ class GenerateGridQueryAction
      */
     private function applyFilters(Builder $query, Collection $columns, Collection $filters): void
     {
-        $availableFilters = config('grids.filters');
+        $availableFilters = config('datagrids.filters');
 
         foreach ($filters as $filter) {
             $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);
@@ -77,9 +78,9 @@ class GenerateGridQueryAction
      */
     private function applySorts(Builder $query, Collection $sorts): void
     {
+        /** @var SortData[] $sort */
         foreach ($sorts as $sort) {
-            $direction = $sort->order === SortTypeEnum::ASC ? 'asc' : 'desc';
-            $query->orderBy($sort->column, $direction);
+            $query->orderBy($sort->column, $sort->sortType->value);
         }
     }
 }
