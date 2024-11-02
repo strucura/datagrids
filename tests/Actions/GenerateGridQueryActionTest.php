@@ -4,6 +4,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
+use Strucura\DataGrid\Abstracts\AbstractGrid;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Data\FilterData;
@@ -23,7 +24,7 @@ function mockColumn($alias, $selectAs, $bindings = [], $havingRequired = false)
 }
 
 it('applies filters correctly', function () {
-    $gridContract = Mockery::mock(GridContract::class);
+    $gridContract = Mockery::mock(AbstractGrid::class);
     $query = Mockery::mock(Builder::class);
     $column = mockColumn('column', 'column');
     $filterData = new FilterData('column', 'value', FilterTypeEnum::CONTAINS);

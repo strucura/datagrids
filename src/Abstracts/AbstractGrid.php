@@ -2,9 +2,7 @@
 
 namespace Strucura\DataGrid\Abstracts;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;
 use Strucura\DataGrid\Contracts\GridContract;
@@ -13,10 +11,6 @@ use Strucura\DataGrid\Requests\GridDataRequest;
 
 abstract class AbstractGrid implements GridContract
 {
-    abstract protected function getColumns(): Collection;
-
-    abstract protected function getQuery(): Builder;
-
     /**
      * Automatically generates the permission name based on the class name.
      *
