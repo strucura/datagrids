@@ -17,17 +17,17 @@ class GridDataRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first'               => ['required', 'int', 'min:0'],
-            'last'                => ['required', 'int', 'min:0'],
+            'first' => ['required', 'int', 'min:0'],
+            'last' => ['required', 'int', 'min:0'],
 
-            'sorts'             => ['nullable', 'array'],
-            'sorts.*.column'     => ['required', 'string', 'min:1'],
-            'sorts.*.sort_type'     => ['required', Rule::enum(SortTypeEnum::class)],
+            'sorts' => ['nullable', 'array'],
+            'sorts.*.column' => ['required', 'string', 'min:1'],
+            'sorts.*.sort_type' => ['required', Rule::enum(SortTypeEnum::class)],
 
             // Filters
-            'filters'             => ['nullable', 'array'],
-            'filters.*.column'       => ['required', 'string'],
-            'filters.*.value'     => ['present',],
+            'filters' => ['nullable', 'array'],
+            'filters.*.column' => ['required', 'string'],
+            'filters.*.value' => ['present'],
             'filters.*.filter_type' => ['required', Rule::enum(FilterTypeEnum::class)],
         ];
     }

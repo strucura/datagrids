@@ -13,8 +13,6 @@ abstract class AbstractGrid implements GridContract
 {
     /**
      * Automatically generates the permission name based on the class name.
-     *
-     * @return string
      */
     public function getPermissionName(): string
     {
@@ -23,8 +21,6 @@ abstract class AbstractGrid implements GridContract
 
     /**
      * Automatically generates the route name which will be used as Laravel's named route.
-     *
-     * @return string
      */
     public function getRouteName(): string
     {
@@ -33,8 +29,6 @@ abstract class AbstractGrid implements GridContract
 
     /**
      * Automatically generates the route path which will be used as the URL path.
-     *
-     * @return string
      */
     public function getRoutePath(): string
     {
@@ -44,8 +38,6 @@ abstract class AbstractGrid implements GridContract
     /**
      * Handles the API request to get the data for the grid.
      *
-     * @param GridDataRequest $request
-     * @return JsonResponse
      * @throws \Exception
      */
     public function handleData(GridDataRequest $request): JsonResponse
@@ -67,12 +59,10 @@ abstract class AbstractGrid implements GridContract
 
     /**
      * Handles building the schema for consumption by the front-end.
-     *
-     * @return JsonResponse
      */
     public function handleSchema(): JsonResponse
     {
-        $columns = $this->getColumns()->map(function(AbstractColumn $column) {
+        $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
         });
 
