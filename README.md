@@ -41,7 +41,8 @@ Here is how the discovery process is set up:
         app_path(''),
     ],
     'conditions' => [
-        DiscoverCondition::create()
+        ConditionBuilder::create()
+            ->classes()
             ->implementing(GridContract::class),
     ],
 ],
