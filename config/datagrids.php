@@ -1,7 +1,6 @@
 <?php
 
 // config for Strucura/DataGrid
-use Spatie\StructureDiscoverer\DiscoverConditions\DiscoverCondition;
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Filters\DateFilter;
