@@ -2,6 +2,7 @@
 
 // config for Strucura/DataGrid
 use Spatie\StructureDiscoverer\DiscoverConditions\DiscoverCondition;
+use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Filters\DateFilter;
 use Strucura\DataGrid\Filters\EqualityFilter;
@@ -22,7 +23,8 @@ return [
             app_path(''),
         ],
         'conditions' => [
-            DiscoverCondition::create()
+            ConditionBuilder::create()
+                ->classes()
                 ->implementing(GridContract::class),
         ],
     ],

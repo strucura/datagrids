@@ -24,7 +24,13 @@ abstract class AbstractGrid implements GridContract
      */
     public function getRouteName(): string
     {
-        return Str::of(static::class)->classBasename()->headline()->remove(' Grid')->toString();
+        return Str::of(static::class)
+            ->classBasename()
+            ->before('Grid')
+            ->snake('-')
+            ->plural()
+            ->prepend('grids.')
+            ->toString();
     }
 
     /**
@@ -32,7 +38,14 @@ abstract class AbstractGrid implements GridContract
      */
     public function getRoutePath(): string
     {
-        return Str::of(static::class)->classBasename()->snake()->prepend('/')->append('grid')->toString();
+        return Str::of(static::class)
+            ->classBasename()
+            ->before('Grid')
+            ->plural()
+            ->snake('-')
+            ->prepend('/')
+            ->prepend('grids')
+            ->toString();
     }
 
     /**
