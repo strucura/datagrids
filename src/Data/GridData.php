@@ -7,10 +7,7 @@ use Strucura\DataGrid\Requests\GridDataRequest;
 
 class GridData
 {
-    public function __construct(public Collection $filters, public Collection $sorts)
-    {
-
-    }
+    public function __construct(public Collection $filters, public Collection $sorts) {}
 
     public static function fromRequest(GridDataRequest $request): self
     {
