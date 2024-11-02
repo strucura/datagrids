@@ -3,6 +3,8 @@
 namespace Strucura\DataGrid\Data;
 
 use Illuminate\Support\Collection;
+use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\SortTypeEnum;
 use Strucura\DataGrid\Requests\GridDataRequest;
 
 class GridData
@@ -15,13 +17,20 @@ class GridData
 
         $filters = collect();
         foreach ($requestFilters as $filter) {
-            $filters->push(new FilterData($filter['column'], $filter['value'], $filter['filter_type']));
+            $filters->push(new FilterData(
+                $filter['column'],
+                $filter['value'],
+                FilterTypeEnum::tryFrom($filter['filter_type']))
+            );
         }
 
         $requestSorts = $request->input('sorts', []);
         $sorts = collect();
         foreach ($requestSorts as $sort) {
-            $sorts->push(new SortData($sort['column'], $sort['sort_type']));
+            $sorts->push(new SortData(
+                $sort['column'],
+                SortTypeEnum::tryFrom($sort['sort_type']))
+            );
         }
 
         return new self($filters, $sorts);
