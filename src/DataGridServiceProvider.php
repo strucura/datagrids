@@ -34,8 +34,8 @@ class DataGridServiceProvider extends PackageServiceProvider
         foreach ($discoveredGridFQCNs as $gridFQCN) {
             /** @var GridContract $grid */
             $grid = new $gridFQCN;
-            Route::post($grid->getRoutePath() .'/data', [$gridFQCN, 'handleData'])->name($grid->getRouteName().'.data');
-            Route::post($grid->getRoutePath() .'/schema', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.schema');
+            Route::post($grid->getRoutePath().'/data', [$gridFQCN, 'handleData'])->name($grid->getRouteName().'.data');
+            Route::post($grid->getRoutePath().'/schema', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.schema');
         }
     }
 }
