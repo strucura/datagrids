@@ -1,5 +1,5 @@
 <?php
 
-use Strucura\Grids\Tests\TestCase;
+use Strucura\DataGrid\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
