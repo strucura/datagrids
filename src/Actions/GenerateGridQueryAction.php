@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Contracts\FilterContract;
-use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Data\GridData;
 use Strucura\DataGrid\Data\SortData;
 
 /**
@@ -16,24 +16,27 @@ use Strucura\DataGrid\Data\SortData;
  */
 class GenerateGridQueryAction
 {
+    public static function make(): self
+    {
+        return new self;
+    }
+
     /**
      * Handle the generation of the grid query.
      *
-     * @param  GridContract  $gridContract  The grid contract instance.
-     * @param  Collection  $filters  The collection of filters to apply.
-     * @param  Collection  $sorts  The collection of sorts to apply.
+     * @param  Builder  $query  The query builder instance.
+     * @param  Collection  $columns  The collection of columns to select.
+     * @param  GridData  $gridData  The grid data containing the filters and sorts.
      * @return Builder The generated query builder instance.
      *
      * @throws \Exception
      */
-    public function handle(GridContract $gridContract, Collection $filters, Collection $sorts): Builder
+    public function handle(Builder $query, Collection $columns, GridData $gridData): Builder
     {
-        $query = $gridContract->getQuery();
+        $this->applyFilters($query, $columns, $gridData->filters);
+        $this->applySorts($query, $gridData->sorts);
 
-        $this->applyFilters($query, $gridContract->getColumns(), $filters);
-        $this->applySorts($query, $sorts);
-
-        foreach ($gridContract->getColumns() as $column) {
+        foreach ($columns as $column) {
             $query->selectRaw("{$column->getSelectAs()} as `{$column->getAlias()}`", $column->getBindings());
         }
 

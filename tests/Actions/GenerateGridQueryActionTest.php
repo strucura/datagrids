@@ -8,6 +8,7 @@ use Strucura\DataGrid\Abstracts\AbstractGrid;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Data\GridData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
@@ -38,7 +39,7 @@ it('applies filters correctly', function () {
     $query->shouldReceive('whereRaw')->once()->with('column LIKE ?', ['%value%']);
 
     $action = new GenerateGridQueryAction;
-    $action->handle($gridContract, $filters, $sorts);
+    $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new GridData($filters, $sorts));
 });
 
 it('applies sorts correctly', function () {
@@ -56,7 +57,7 @@ it('applies sorts correctly', function () {
     $query->shouldReceive('orderBy')->once()->with('column', 'asc');
 
     $action = new GenerateGridQueryAction;
-    $action->handle($gridContract, $filters, $sorts);
+    $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new GridData($filters, $sorts));
 });
 
 it('selects columns correctly', function () {
@@ -72,5 +73,5 @@ it('selects columns correctly', function () {
     $query->shouldReceive('selectRaw')->once()->with('column as `alias`', []);
 
     $action = new GenerateGridQueryAction;
-    $action->handle($gridContract, $filters, $sorts);
+    $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new GridData($filters, $sorts));
 });
