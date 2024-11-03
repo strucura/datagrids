@@ -132,8 +132,8 @@ allow for fetching the data for the grid, and for fetching the column schema for
 example, the following routes will be registered:
 
 ```
-POST       grids/users/data ........................ grids.users.data › App\UserGrid@handleData
-POST       grids/users/schema ...................... grids.users.schema › App\UserGrid@handleSchema
+POST       grids/users/data .................. grids.users.data › App\UserGrid@handleData
+POST       grids/users/schema ................ grids.users.schema › App\UserGrid@handleSchema
 ```
 
 Should you desire to customize the routes, you can do so on the grid class by overriding any of the following methods:
