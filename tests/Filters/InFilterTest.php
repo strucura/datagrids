@@ -1,7 +1,5 @@
 <?php
 
-// tests/Filters/InFilterTest.php
-
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Columns\NumberColumn;

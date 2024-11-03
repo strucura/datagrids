@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Strucura\DataGrid\Abstracts\AbstractGrid;
 use Strucura\DataGrid\Columns\NumberColumn;
 use Strucura\DataGrid\Columns\StringColumn;
+use Strucura\DataGrid\Contracts\GridContract;
 
-class UserGrid extends AbstractGrid
+class UserGrid extends AbstractGrid implements GridContract
 {
     public function getColumns(): Collection
     {

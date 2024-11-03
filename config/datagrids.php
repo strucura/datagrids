@@ -2,7 +2,7 @@
 
 // config for Strucura/DataGrid
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
-use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Abstracts\AbstractGrid;
 use Strucura\DataGrid\Filters\DateFilter;
 use Strucura\DataGrid\Filters\EqualityFilter;
 use Strucura\DataGrid\Filters\NumericFilter;
@@ -24,7 +24,7 @@ return [
         'conditions' => [
             ConditionBuilder::create()
                 ->classes()
-                ->implementing(GridContract::class),
+                ->extending(AbstractGrid::class),
         ],
     ],
 

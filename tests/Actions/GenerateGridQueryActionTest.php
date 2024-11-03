@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
-use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractGrid;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;

@@ -43,7 +43,7 @@ Here is how the discovery process is set up:
     'conditions' => [
         ConditionBuilder::create()
             ->classes()
-            ->implementing(GridContract::class),
+            ->extending(AbstractGrid::class),
     ],
 ],
 ```
@@ -86,6 +86,61 @@ filter class must extend the `AbstractFilter` class and implement the `FilterCon
 ```
 
 This configuration ensures that the specified filters are available for use in the application. Each filter class defines the conditions it can handle and the logic to apply those conditions to the query.
+
+## Usage
+
+To create a new grid, you need to define a class that extends the `AbstractGrid` class and implements the required methods. Below is an example of how to create a `UserGrid`:
+
+```php
+<?php
+
+namespace Strucura\DataGrid\Tests\Fakes;
+
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Strucura\DataGrid\Abstracts\AbstractGrid;
+use Strucura\DataGrid\Columns\DateTimeColumn;
+use Strucura\DataGrid\Columns\NumberColumn;
+use Strucura\DataGrid\Columns\StringColumn;
+use Strucura\DataGrid\Contracts\GridContract;
+
+class UserGrid extends AbstractGrid implements GridContract
+{
+    public function getColumns(): Collection
+    {
+        return collect([
+            NumberColumn::make('users.id', 'ID'),
+            StringColumn::make('users.name', 'Name'),
+            StringColumn::make('users.email', 'Email'),
+            DateTimeColumn::make('users.created_at', 'Created At'),
+            DateTimeColumn::make('users.created_at', 'Updated At'),
+        ]);
+    }
+
+    public function getQuery(): Builder
+    {
+        return DB::table('users');
+    }
+}
+```
+
+In this example, the `UserGrid` class defines the columns and the query for the grid. The `getColumns` method returns a collection of columns, and the `getQuery` method returns the query builder instance for the grid.
+
+Once created, and picked up by the discovery process, new routes will be registered for the grid.  These routes will 
+allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the `UserGrid` as an
+example, the following routes will be registered:
+
+```
+POST       grids/users/data ........................ grids.users.data › App\UserGrid@handleData
+POST       grids/users/schema ...................... grids.users.schema › App\UserGrid@handleSchema
+```
+
+Should you desire to customize the routes, you can do so on the grid class by overriding any of the following methods:
+
+- **getRoutePrefix**: Used to prefix the route path as well as the route name.
+- **getRouteName**: Used to define the route name.
+- **getRoutePath**: Used to define the route path .
 
 ## Testing
 

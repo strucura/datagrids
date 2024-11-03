@@ -1,7 +1,5 @@
 <?php
 
-// tests/Data/GridDataTest.php
-
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\GridData;

@@ -1,7 +1,5 @@
 <?php
 
-// tests/ValueTransformers/IntegerValueTransformerTest.php
-
 use Strucura\DataGrid\ValueTransformers\IntegerValueTransformer;
 
 it('converts numeric strings without a decimal point to integers', function () {

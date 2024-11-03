@@ -19,6 +19,11 @@ abstract class AbstractGrid implements GridContract
         return Str::of(static::class)->classBasename()->snake()->toString();
     }
 
+    public function getRoutePrefix(): string
+    {
+        return 'grids';
+    }
+
     /**
      * Automatically generates the route name which will be used as Laravel's named route.
      */
@@ -29,7 +34,7 @@ abstract class AbstractGrid implements GridContract
             ->before('Grid')
             ->snake('-')
             ->plural()
-            ->prepend('grids.')
+            ->prepend($this->getRoutePrefix().'.')
             ->toString();
     }
 
@@ -44,7 +49,7 @@ abstract class AbstractGrid implements GridContract
             ->plural()
             ->snake('-')
             ->prepend('/')
-            ->prepend('grids')
+            ->prepend($this->getRoutePrefix())
             ->toString();
     }
 

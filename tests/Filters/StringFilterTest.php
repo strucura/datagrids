@@ -1,7 +1,5 @@
 <?php
 
-// tests/Filters/StringFilterTest.php
-
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Data\FilterData;
