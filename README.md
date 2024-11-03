@@ -7,7 +7,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/strucura/datagrids/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/strucura/datagrids/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/strucura/datagrids.svg?style=flat-square)](https://packagist.org/packages/strucura/datagrids)
 
-A package for Laravel that provides a simple and front end agnostic way to create and manage data data grids.
+DataGrids is a versatile package designed for Laravel applications, providing a straightforward and front-end agnostic solution for creating and managing data grids. It simplifies the process of displaying and filtering data, making it easier for developers to implement complex data management features without extensive coding. The package supports automatic discovery and registration of data grids, ensuring seamless integration into existing projects. With built-in support for various data transformations and filtering options, DataGrids enhances the efficiency and functionality of data-driven applications.
 
 ## Installation
 
