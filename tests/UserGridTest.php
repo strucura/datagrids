@@ -80,7 +80,7 @@ it('gets grid schema correctly', function () {
             'sortable' => true,
             'filterable' => true,
             'hidden' => false,
-            'meta' => []
+            'meta' => [],
         ],
         [
             'field' => 'Name',
@@ -89,7 +89,7 @@ it('gets grid schema correctly', function () {
             'sortable' => true,
             'filterable' => true,
             'hidden' => false,
-            'meta' => []
+            'meta' => [],
         ],
         [
             'field' => 'Email',
@@ -98,7 +98,7 @@ it('gets grid schema correctly', function () {
             'sortable' => true,
             'filterable' => true,
             'hidden' => false,
-            'meta' => []
+            'meta' => [],
         ],
     ];
 
