@@ -76,11 +76,11 @@ it('gets grid schema correctly', function () {
         [
             'field' => 'ID',
             'header' => 'ID',
-            'data_type' => 'number',
+            'data_type' => 'integer',
             'sortable' => true,
             'filterable' => true,
             'hidden' => false,
-            'meta' => []
+            'meta' => [],
         ],
         [
             'field' => 'Name',
@@ -89,7 +89,7 @@ it('gets grid schema correctly', function () {
             'sortable' => true,
             'filterable' => true,
             'hidden' => false,
-            'meta' => []
+            'meta' => [],
         ],
         [
             'field' => 'Email',
@@ -98,7 +98,7 @@ it('gets grid schema correctly', function () {
             'sortable' => true,
             'filterable' => true,
             'hidden' => false,
-            'meta' => []
+            'meta' => [],
         ],
     ];
 

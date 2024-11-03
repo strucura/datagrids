@@ -5,21 +5,16 @@ namespace Strucura\DataGrid\Columns;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
-class NumberColumn extends AbstractColumn
+class IntegerColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Number;
+    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Integer;
 
-    public function asFloat(): static
-    {
-        return $this->setSelectAs('CAST('.$this->getSelectAs().' AS FLOAT)');
-    }
-
-    public function asInteger(): static
+    public function signed(): static
     {
         return $this->setSelectAs('CAST('.$this->getSelectAs().' AS SIGNED)');
     }
 
-    public function asUnsignedInteger(): static
+    public function unsigned(): static
     {
         return $this->setSelectAs('CAST('.$this->getSelectAs().' AS UNSIGNED)');
     }

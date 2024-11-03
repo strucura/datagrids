@@ -159,8 +159,8 @@ abstract class AbstractColumn implements ColumnContract
             'data_type' => $this->dataType,
             'sortable' => $this->sortable,
             'filterable' => $this->filterable,
-            'meta' => $this->meta,
             'hidden' => $this->isHidden,
+            'meta' => $this->meta,
         ];
     }
 }

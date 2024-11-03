@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Columns\NumberColumn;
+use Strucura\DataGrid\Columns\IntegerColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Filters\InFilter;
@@ -25,7 +25,7 @@ it('can handle NOT_IN filter type', function () {
 
 it('applies the correct SQL expression for NOT_IN filter type', function () {
     $filter = new InFilter;
-    $column = Mockery::mock(NumberColumn::class);
+    $column = Mockery::mock(IntegerColumn::class);
     $query = Mockery::mock(Builder::class);
     $filterData = new FilterData('column', ['value2'], FilterTypeEnum::NOT_IN);
 
@@ -44,7 +44,7 @@ it('applies the correct SQL expression for NOT_IN filter type', function () {
 
 it('applies the correct SQL expression for IN filter type', function () {
     $filter = new InFilter;
-    $column = Mockery::mock(NumberColumn::class);
+    $column = Mockery::mock(IntegerColumn::class);
     $query = Mockery::mock(Builder::class);
     $filterData = new FilterData('column', ['value2'], FilterTypeEnum::IN);
 
