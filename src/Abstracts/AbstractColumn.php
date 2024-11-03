@@ -23,6 +23,10 @@ abstract class AbstractColumn implements ColumnContract
 
     protected string $queryColumn;
 
+    protected bool $isHidden = false;
+
+    protected array $meta = [];
+
     /**
      * We are disabling this by default because we are not implementing sorting yet. When implemented, it will be
      * true by default.
@@ -136,6 +140,13 @@ abstract class AbstractColumn implements ColumnContract
         return false;
     }
 
+    public function hidden(): static
+    {
+        $this->isHidden = true;
+
+        return $this;
+    }
+
     /**
      * Convert the column definition to an array.  This is useful for helping us later easily convey the definition of
      * the column to front end components.
@@ -148,6 +159,8 @@ abstract class AbstractColumn implements ColumnContract
             'data_type' => $this->dataType,
             'sortable' => $this->sortable,
             'filterable' => $this->filterable,
+            'meta' => $this->meta,
+            'hidden' => $this->isHidden,
         ];
     }
 }

@@ -79,6 +79,8 @@ it('gets grid schema correctly', function () {
             'data_type' => 'number',
             'sortable' => true,
             'filterable' => true,
+            'hidden' => false,
+            'meta' => []
         ],
         [
             'field' => 'Name',
@@ -86,6 +88,8 @@ it('gets grid schema correctly', function () {
             'data_type' => 'string',
             'sortable' => true,
             'filterable' => true,
+            'hidden' => false,
+            'meta' => []
         ],
         [
             'field' => 'Email',
@@ -93,10 +97,12 @@ it('gets grid schema correctly', function () {
             'data_type' => 'string',
             'sortable' => true,
             'filterable' => true,
+            'hidden' => false,
+            'meta' => []
         ],
     ];
 
     foreach ($columns as $column) {
-        expect($data)->toContain($column);
+        expect($data)->toContainEqual($column);
     }
 });

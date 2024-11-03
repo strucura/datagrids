@@ -11,4 +11,5 @@ enum ColumnTypeEnum: string
     case DateTime = 'datetime';
     case Boolean = 'boolean';
     case Point = 'point';
+    case Enum = 'enum';
 }
