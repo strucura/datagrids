@@ -16,13 +16,21 @@ abstract class AbstractColumn implements ColumnContract
     use Macroable;
 
     protected QueryBuilder $bindings;
+
     protected string $selectAs;
+
     protected string $alias;
+
     protected string $queryColumn;
+
     protected bool $isHidden = false;
+
     protected array $meta = [];
+
     protected bool $sortable = true;
+
     protected bool $filterable = true;
+
     protected ColumnTypeEnum $dataType = ColumnTypeEnum::String;
 
     public function __construct(string $queryColumn, string $alias)
@@ -30,7 +38,7 @@ abstract class AbstractColumn implements ColumnContract
         $this->alias = $alias;
         $this->bindings = DB::query();
 
-        if (!empty($queryColumn) && !preg_match('/^\w+?\.\w+?$/', $queryColumn)) {
+        if (! empty($queryColumn) && ! preg_match('/^\w+?\.\w+?$/', $queryColumn)) {
             throw new Exception("Query column '$queryColumn' should be formatted as \"table_name.column_name\".");
         }
 
@@ -46,6 +54,7 @@ abstract class AbstractColumn implements ColumnContract
     public function addBinding($value): self
     {
         $this->bindings->addBinding($value);
+
         return $this;
     }
 
@@ -62,6 +71,7 @@ abstract class AbstractColumn implements ColumnContract
     public function setSelectAs(string $selectAs): static
     {
         $this->selectAs = $selectAs;
+
         return $this;
     }
 
@@ -73,18 +83,21 @@ abstract class AbstractColumn implements ColumnContract
     public function selectAsSubQuery(QueryBuilder|EloquentBuilder $builder): static
     {
         $this->bindings->mergeBindings($builder instanceof EloquentBuilder ? $builder->getQuery() : $builder);
+
         return $this->setSelectAs("({$builder->toSql()})");
     }
 
     public function withoutSorting(): static
     {
         $this->sortable = false;
+
         return $this;
     }
 
     public function withoutFiltering(): static
     {
         $this->filterable = false;
+
         return $this;
     }
 
@@ -95,12 +108,14 @@ abstract class AbstractColumn implements ColumnContract
                 return true;
             }
         }
+
         return false;
     }
 
     public function hidden(): static
     {
         $this->isHidden = true;
+
         return $this;
     }
 
