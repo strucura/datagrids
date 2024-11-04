@@ -11,14 +11,6 @@ use Strucura\DataGrid\Requests\GridDataRequest;
 
 abstract class AbstractGrid implements GridContract
 {
-    /**
-     * Automatically generates the permission name based on the class name.
-     */
-    public function getPermissionName(): string
-    {
-        return Str::of(static::class)->classBasename()->snake()->toString();
-    }
-
     public function getRoutePrefix(): string
     {
         return 'grids';
