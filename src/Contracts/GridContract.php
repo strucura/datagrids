@@ -9,8 +9,8 @@ use Strucura\DataGrid\Requests\GridDataRequest;
 
 interface GridContract
 {
-    public function getPermissionName(): string;
-
+    public function getRoutePrefix(): string;
+    
     public function getRoutePath(): string;
 
     public function getRouteName(): string;
