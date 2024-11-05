@@ -73,10 +73,7 @@
         "laravel": {
             "providers": [
                 "Strucura\\DataGrid\\DataGridServiceProvider"
-            ],
-            "aliases": {
-                "Grids": "Strucura\\DataGrid\\Facades\\DataGrid"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
