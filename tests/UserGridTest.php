@@ -5,6 +5,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Tests\Fakes\UserGrid;
 
 beforeEach(function () {
@@ -62,7 +63,7 @@ it('gets grid schema correctly', function () {
     $grid = new UserGrid;
 
     // Call the handleSchema method
-    $response = $grid->handleSchema();
+    $response = $grid->handleSchema(GridSchemaRequest::create($grid->getRoutePath(), 'POST'));
 
     // Assert that the response is a JsonResponse
     expect($response)->toBeInstanceOf(JsonResponse::class);

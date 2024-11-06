@@ -10,6 +10,6 @@ class DataGridsSharedWithUserSettingResolver implements DataGridSettingResolverC
 {
     public function resolve(Authenticatable $user, string $gridKey): Collection
     {
-        // TODO: Implement resolve() method.
+        return collect();
     }
 }

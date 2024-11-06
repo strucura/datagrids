@@ -7,16 +7,15 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;
 use Strucura\DataGrid\Actions\ResolveUserDataGridSettingsAction;
-use Strucura\DataGrid\Actions\SaveDataGridSettingAction;
+use Strucura\DataGrid\Actions\PersistDataGridSettingAction;
 use Strucura\DataGrid\Contracts\GridContract;
 use Strucura\DataGrid\Data\DataGridSettingData;
 use Strucura\DataGrid\Data\GridData;
-use Strucura\DataGrid\Http\Requests\DataGridSettingsRequest;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
+use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Http\Resources\PersistDataGridSettingResource;
-use Strucura\DataGrid\Models\DataGridSetting;
 
 abstract class AbstractGrid implements GridContract
 {
@@ -54,6 +53,11 @@ abstract class AbstractGrid implements GridContract
             ->toString();
     }
 
+    public function getDataGridKey(): string
+    {
+        return $this->getRouteName();
+    }
+
     /**
      * Handles the API request to get the data for the grid.
      *
@@ -88,22 +92,24 @@ abstract class AbstractGrid implements GridContract
         return response()->json($columns);
     }
 
-    public function handleSettings(DataGridSettingsRequest $request): AnonymousResourceCollection
+    public function handleRetrievingSettings(RetrieveDataGridSettingsRequest $request): AnonymousResourceCollection
     {
-        $action = new ResolveUserDataGridSettingsAction();
+        $action = new ResolveUserDataGridSettingsAction;
 
-        $dataGridSettings = $action->handle(auth()->user(), $request->get('grid_key'));
+        $dataGridSettings = $action->handle(auth()->user(), $this->getDataGridKey());
 
         return PersistDataGridSettingResource::collection($dataGridSettings);
     }
 
     public function handlePersistingSetting(PersistDataGridSettingRequest $request): PersistDataGridSettingResource
     {
-        $settings = DataGridSettingData::fromRequest($request);
-
-        $dataGridSetting = SaveDataGridSettingAction::make()->handle($settings);
+        $dataGridSetting = PersistDataGridSettingAction::make()->handle(new DataGridSettingData(
+            ownerId: auth()->id(),
+            gridKey: $this->getDataGridKey(),
+            name: $request->input('name'),
+            value: $request->input('value'),
+        ));
 
         return PersistDataGridSettingResource::make($dataGridSetting);
     }
-
 }

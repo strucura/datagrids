@@ -36,8 +36,8 @@ class DataGridServiceProvider extends PackageServiceProvider
             $grid = new $gridFQCN;
             Route::post($grid->getRoutePath().'/data', [$gridFQCN, 'handleData'])->name($grid->getRouteName().'.data');
             Route::post($grid->getRoutePath().'/schema', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.schema');
-            Route::get($grid->getRoutePath().'/settings', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.settings.index');
-            Route::post($grid->getRoutePath().'/settings', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.settings.store');
+            Route::get($grid->getRoutePath().'/settings', [$gridFQCN, 'handleSettings'])->name($grid->getRouteName().'.settings.index');
+            Route::post($grid->getRoutePath().'/settings', [$gridFQCN, 'handlePersistingSetting'])->name($grid->getRouteName().'.settings.store');
         }
     }
 }
