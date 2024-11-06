@@ -11,7 +11,7 @@ class ResolveUserDataGridSettingsAction
     public function handle(Authenticatable $user, string $gridKey): Collection
     {
         // Get all the resolvers from the config file
-        $resolvers = config('data_grids.resolvers');
+        $resolvers = config('data-grids.resolvers');
 
         // Initialize the settings collection
         $settings = collect();

@@ -30,13 +30,13 @@ class DataGridSetting extends Model
 
     public function owner(): BelongsTo
     {
-        return $this->belongsTo(config('data_grids.models.user'), 'owner_id', 'id');
+        return $this->belongsTo(config('data-grids.models.user'), 'owner_id', 'id');
     }
 
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(
-            config('data_grids.models.user'),
+            config('data-grids.models.user'),
             'data_grid_setting_user',
             'data_grid_setting_id',
             'user_id'

@@ -18,14 +18,14 @@ class DataGridServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('data_grids')
+            ->name('data-grids')
             ->hasConfigFile();
     }
 
-    public function packageRegistered()
+    public function packageRegistered(): void
     {
-        $paths = config('data_grids.discovery.paths');
-        $conditions = config('data_grids.discovery.conditions');
+        $paths = config('data-grids.discovery.paths');
+        $conditions = config('data-grids.discovery.conditions');
 
         $discoveredGridFQCNs = Discover::in(...$paths)
             ->any(...$conditions)
@@ -36,7 +36,7 @@ class DataGridServiceProvider extends PackageServiceProvider
             $grid = new $gridFQCN;
             Route::post($grid->getRoutePath().'/data', [$gridFQCN, 'handleData'])->name($grid->getRouteName().'.data');
             Route::post($grid->getRoutePath().'/schema', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.schema');
-            Route::get($grid->getRoutePath().'/settings', [$gridFQCN, 'handleSettings'])->name($grid->getRouteName().'.settings.index');
+            Route::get($grid->getRoutePath().'/settings', [$gridFQCN, 'handleRetrievingSettings'])->name($grid->getRouteName().'.settings.index');
             Route::post($grid->getRoutePath().'/settings', [$gridFQCN, 'handlePersistingSetting'])->name($grid->getRouteName().'.settings.store');
         }
     }

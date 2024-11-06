@@ -9,7 +9,7 @@ abstract class AbstractFilter implements FilterContract
 {
     public function getNormalizedValue(mixed $value): mixed
     {
-        $transformers = config('data_grids.value_transformers');
+        $transformers = config('data-grids.value_transformers');
 
         foreach ($transformers as $transformer) {
             /** @var Pipeline $pipeline */
