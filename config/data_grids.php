@@ -7,6 +7,9 @@ use Strucura\DataGrid\Filters\DateFilter;
 use Strucura\DataGrid\Filters\EqualityFilter;
 use Strucura\DataGrid\Filters\NumericFilter;
 use Strucura\DataGrid\Filters\StringFilter;
+use Strucura\DataGrid\Models\DataGridSetting;
+use Strucura\DataGrid\SettingResolvers\DataGridsSharedWithUserSettingResolver;
+use Strucura\DataGrid\SettingResolvers\OwnedDataGridSettingResolver;
 use Strucura\DataGrid\ValueTransformers\BooleanValueTransformer;
 use Strucura\DataGrid\ValueTransformers\FloatValueTransformer;
 use Strucura\DataGrid\ValueTransformers\IntegerValueTransformer;
@@ -47,5 +50,15 @@ return [
         NumericFilter::class,
         DateFilter::class,
         EqualityFilter::class,
+    ],
+
+    'setting_resolvers' => [
+        OwnedDataGridSettingResolver::class,
+        DataGridsSharedWithUserSettingResolver::class,
+    ],
+
+    'models' => [
+        'data_grid_setting' => DataGridSetting::class,
+        'user' => 'App\\Models\\User',
     ],
 ];

@@ -54,7 +54,7 @@ class GenerateGridQueryAction
      */
     private function applyFilters(Builder $query, Collection $columns, Collection $filters): void
     {
-        $availableFilters = config('datagrids.filters');
+        $availableFilters = config('data_grids.filters');
 
         foreach ($filters as $filter) {
             $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);

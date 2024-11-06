@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Requests;
+namespace Strucura\DataGrid\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

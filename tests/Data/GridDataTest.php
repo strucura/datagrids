@@ -6,7 +6,7 @@ use Strucura\DataGrid\Data\GridData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
-use Strucura\DataGrid\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\GridDataRequest;
 
 it('creates GridData from GridDataRequest', function () {
     // Create a GridDataRequest with necessary inputs

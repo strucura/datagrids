@@ -3,11 +3,20 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateGridQueryAction;
+use Strucura\DataGrid\Actions\ResolveUserDataGridSettingsAction;
+use Strucura\DataGrid\Actions\SaveDataGridSettingAction;
 use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Data\DataGridSettingData;
 use Strucura\DataGrid\Data\GridData;
-use Strucura\DataGrid\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\DataGridSettingsRequest;
+use Strucura\DataGrid\Http\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
+use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
+use Strucura\DataGrid\Http\Resources\PersistDataGridSettingResource;
+use Strucura\DataGrid\Models\DataGridSetting;
 
 abstract class AbstractGrid implements GridContract
 {
@@ -70,7 +79,7 @@ abstract class AbstractGrid implements GridContract
     /**
      * Handles building the schema for consumption by the front-end.
      */
-    public function handleSchema(): JsonResponse
+    public function handleSchema(GridSchemaRequest $request): JsonResponse
     {
         $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
@@ -78,4 +87,23 @@ abstract class AbstractGrid implements GridContract
 
         return response()->json($columns);
     }
+
+    public function handleSettings(DataGridSettingsRequest $request): AnonymousResourceCollection
+    {
+        $action = new ResolveUserDataGridSettingsAction();
+
+        $dataGridSettings = $action->handle(auth()->user(), $request->get('grid_key'));
+
+        return PersistDataGridSettingResource::collection($dataGridSettings);
+    }
+
+    public function handlePersistingSetting(PersistDataGridSettingRequest $request): PersistDataGridSettingResource
+    {
+        $settings = DataGridSettingData::fromRequest($request);
+
+        $dataGridSetting = SaveDataGridSettingAction::make()->handle($settings);
+
+        return PersistDataGridSettingResource::make($dataGridSetting);
+    }
+
 }

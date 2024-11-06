@@ -5,7 +5,7 @@ namespace Strucura\DataGrid\Data;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
-use Strucura\DataGrid\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\GridDataRequest;
 
 class GridData
 {

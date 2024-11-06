@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Strucura\DataGrid\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Tests\Fakes\UserGrid;
 
 beforeEach(function () {
