@@ -28,6 +28,6 @@ class ResolveUserDataGridSettingsAction
         // Return the unique settings
         return $settings->unique(function (DataGridSetting $setting) {
             return $setting->id;
-        });
+        })->sortBy('name',SORT_NATURAL);
     }
 }
