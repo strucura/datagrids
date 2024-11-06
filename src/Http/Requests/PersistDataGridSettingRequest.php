@@ -10,7 +10,7 @@ class PersistDataGridSettingRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'value' => 'required|json'
+            'value' => 'required|json',
         ];
     }
 }

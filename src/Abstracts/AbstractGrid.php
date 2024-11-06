@@ -16,7 +16,6 @@ use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Resources\PersistDataGridSettingResource;
-use Strucura\DataGrid\Models\DataGridSetting;
 
 abstract class AbstractGrid implements GridContract
 {
@@ -90,7 +89,7 @@ abstract class AbstractGrid implements GridContract
 
     public function handleSettings(DataGridSettingsRequest $request): AnonymousResourceCollection
     {
-        $action = new ResolveUserDataGridSettingsAction();
+        $action = new ResolveUserDataGridSettingsAction;
 
         $dataGridSettings = $action->handle(auth()->user(), $request->get('grid_key'));
 
@@ -105,5 +104,4 @@ abstract class AbstractGrid implements GridContract
 
         return PersistDataGridSettingResource::make($dataGridSetting);
     }
-
 }

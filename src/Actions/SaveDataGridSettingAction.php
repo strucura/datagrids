@@ -9,7 +9,7 @@ class SaveDataGridSettingAction
 {
     public static function make(): self
     {
-        return new self();
+        return new self;
     }
 
     public function handle(DataGridSettingData $data): DataGridSetting
@@ -18,7 +18,7 @@ class SaveDataGridSettingAction
             'owner_id' => $data->ownerId,
             'grid_key' => $data->gridKey,
             'name' => $data->name,
-        ])->firstOr(function() use ($data) {
+        ])->firstOr(function () use ($data) {
             return new DataGridSetting([
                 'owner_id' => $data->ownerId,
                 'grid_key' => $data->gridKey,
