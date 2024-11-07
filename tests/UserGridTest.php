@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
-use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
-use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\Tests\Fakes\UserGrid;
 
@@ -127,7 +125,7 @@ class UserGridTest extends TestCase
     {
         $user = User::query()->forceCreate([
             'name' => 'John Doe',
-            'email' => 'john.doe@example.com'
+            'email' => 'john.doe@example.com',
         ]);
 
         $grid = new UserGrid;
@@ -138,7 +136,7 @@ class UserGridTest extends TestCase
             'name' => 'setting1',
             'value' => json_encode(['foo' => 'bar']),
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
         ]);
 
         DataGridSetting::query()->create([
@@ -152,7 +150,7 @@ class UserGridTest extends TestCase
 
         // Create a RetrieveDataGridSettingsRequest
         $request = RetrieveDataGridSettingsRequest::create($grid->getRoutePath(), 'GET', []);
-        $request->setUserResolver(function() use ($user) {
+        $request->setUserResolver(function () use ($user) {
             return $user;
         });
 

@@ -2,7 +2,6 @@
 
 namespace Strucura\DataGrid\SettingResolvers;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Contracts\DataGridSettingResolverContract;

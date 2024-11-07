@@ -1,6 +1,7 @@
 <?php
 
 // config for Strucura/DataGrid
+use Illuminate\Foundation\Auth\User;
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Abstracts\AbstractGrid;
 use Strucura\DataGrid\Filters\DateFilter;
@@ -15,7 +16,6 @@ use Strucura\DataGrid\ValueTransformers\FloatValueTransformer;
 use Strucura\DataGrid\ValueTransformers\IntegerValueTransformer;
 use Strucura\DataGrid\ValueTransformers\NullValueTransformer;
 use Strucura\DataGrid\ValueTransformers\TimezoneValueTransformer;
-use Illuminate\Foundation\Auth\User;
 
 return [
     /**
