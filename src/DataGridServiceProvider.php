@@ -19,7 +19,9 @@ class DataGridServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('data-grids')
-            ->hasConfigFile();
+            ->hasConfigFile()
+            ->hasMigration('2024_11_04_140837_create_data_grid_settings_table.php')
+            ->hasMigration('2024_11_06_133920_create_data_grid_setting_user_table.php');
     }
 
     public function packageRegistered(): void

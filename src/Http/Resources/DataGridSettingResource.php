@@ -7,7 +7,7 @@ use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\Transpose\Attributes\DerivePropertiesFromModel;
 
 #[DerivePropertiesFromModel(DataGridSetting::class)]
-class PersistDataGridSettingResource extends JsonResource
+class DataGridSettingResource extends JsonResource
 {
     public function toArray($request): array
     {

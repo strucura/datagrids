@@ -10,7 +10,7 @@ use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
-use Strucura\DataGrid\Http\Resources\PersistDataGridSettingResource;
+use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 
 interface GridContract
 {
@@ -26,7 +26,7 @@ interface GridContract
 
     public function handleRetrievingSettings(RetrieveDataGridSettingsRequest $request): AnonymousResourceCollection;
 
-    public function handlePersistingSetting(PersistDataGridSettingRequest $request): PersistDataGridSettingResource;
+    public function handlePersistingSetting(PersistDataGridSettingRequest $request): DataGridSettingResource;
 
     public function getColumns(): Collection;
 

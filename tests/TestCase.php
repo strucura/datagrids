@@ -27,10 +27,9 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_grids_table.php.stub';
+        $migration = include __DIR__.'/../database/migrations/2024_11_04_140837_create_data_grid_settings_table.php';
+        $migration = include __DIR__.'/../database/migrations/2024_11_06_133920_create_data_grid_setting_user_table.php';
         $migration->up();
-        */
+
     }
 }

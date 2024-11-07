@@ -13,8 +13,6 @@ class RetrieveDataGridSettingsRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'grid_key' => 'required|string',
-        ];
+        return [];
     }
 }
