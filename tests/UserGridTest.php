@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
-use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
-use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\Tests\Fakes\UserGrid;
 
@@ -132,7 +130,7 @@ class UserGridTest extends TestCase
             'name' => 'setting1',
             'value' => json_encode(['foo' => 'bar']),
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
         ]);
 
         DataGridSetting::query()->create([
