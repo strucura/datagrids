@@ -3,6 +3,7 @@
 namespace Strucura\DataGrid\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
@@ -124,10 +125,15 @@ class UserGridTest extends TestCase
 
     public function testRetrievesGridSettingsCorrectly()
     {
+        $user = User::query()->forceCreate([
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com'
+        ]);
+
         $grid = new UserGrid;
 
         DataGridSetting::query()->create([
-            'owner_id' => 1,
+            'owner_id' => $user->id,
             'grid_key' => $grid->getDataGridKey(),
             'name' => 'setting1',
             'value' => json_encode(['foo' => 'bar']),
@@ -136,7 +142,7 @@ class UserGridTest extends TestCase
         ]);
 
         DataGridSetting::query()->create([
-            'owner_id' => 1,
+            'owner_id' => $user->id,
             'grid_key' => $grid->getDataGridKey(),
             'name' => 'setting2',
             'value' => json_encode(['baz' => 'qux']),
@@ -146,6 +152,9 @@ class UserGridTest extends TestCase
 
         // Create a RetrieveDataGridSettingsRequest
         $request = RetrieveDataGridSettingsRequest::create($grid->getRoutePath(), 'GET', []);
+        $request->setUserResolver(function() use ($user) {
+            return $user;
+        });
 
         // Call the handleRetrievingSettings method
         $response = $grid->handleRetrievingSettings($request);
@@ -158,9 +167,9 @@ class UserGridTest extends TestCase
 
         $this->assertCount(2, $data);
         $this->assertEquals('setting1', $data[0]['name']);
-        $this->assertEquals(['foo' => 'bar'], $data[0]['value']);
+        $this->assertEquals(json_encode(['foo' => 'bar']), $data[0]['value']);
         $this->assertEquals('setting2', $data[1]['name']);
-        $this->assertEquals(['baz' => 'qux'], $data[1]['value']);
+        $this->assertEquals(json_encode(['baz' => 'qux']), $data[1]['value']);
     }
 
     public function testGetsDataGridKeyCorrectly()

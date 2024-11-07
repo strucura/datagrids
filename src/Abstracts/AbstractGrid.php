@@ -96,7 +96,7 @@ abstract class AbstractGrid implements GridContract
     {
         $action = new ResolveUserDataGridSettingsAction;
 
-        $dataGridSettings = $action->handle(auth()->user(), $this->getDataGridKey());
+        $dataGridSettings = $action->handle($request->user(), $this->getDataGridKey());
 
         return DataGridSettingResource::collection($dataGridSettings);
     }

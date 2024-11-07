@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('data_grid_setting_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('data_grid_setting_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignIdFor(config('data-grids.models.data_grid_setting'))->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(config('data-grids.models.user'))->constrained()->cascadeOnDelete();
             $table->timestamps();
-
-            $table->foreign('data_grid_setting_id')->references('id')->on('data_grid_settings')->cascadeOnDelete();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

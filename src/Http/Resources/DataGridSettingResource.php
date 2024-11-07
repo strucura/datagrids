@@ -14,7 +14,8 @@ class DataGridSettingResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'owner_id' => $this->resource->owner_id,
-            'key' => $this->resource->key,
+            'grid_key' => $this->resource->grid_key,
+            'name' => $this->resource->name,
             'value' => $this->resource->value,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,

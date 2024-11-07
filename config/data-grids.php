@@ -15,6 +15,7 @@ use Strucura\DataGrid\ValueTransformers\FloatValueTransformer;
 use Strucura\DataGrid\ValueTransformers\IntegerValueTransformer;
 use Strucura\DataGrid\ValueTransformers\NullValueTransformer;
 use Strucura\DataGrid\ValueTransformers\TimezoneValueTransformer;
+use Illuminate\Foundation\Auth\User;
 
 return [
     /**
@@ -59,6 +60,6 @@ return [
 
     'models' => [
         'data_grid_setting' => DataGridSetting::class,
-        'user' => 'App\\Models\\User',
+        'user' => User::class,
     ],
 ];
