@@ -89,7 +89,8 @@ This configuration ensures that the specified filters are available for use in t
 
 ## Usage
 
-To create a new grid, you need to define a class that extends the `AbstractGrid` class and implements the required methods. Below is an example of how to create a `UserGrid`:
+To create a new grid, you need to define a class that extends the `AbstractGrid` class and implements the required 
+methods. Below is an example of how to create a `ActiveUserGrid`:
 
 ```php
 <?php
@@ -105,7 +106,7 @@ use Strucura\DataGrid\Columns\IntegerColumn;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Contracts\GridContract;
 
-class UserGrid extends AbstractGrid implements GridContract
+class ActiveUserGrid extends AbstractGrid implements GridContract
 {
     public function getColumns(): Collection
     {
@@ -125,10 +126,12 @@ class UserGrid extends AbstractGrid implements GridContract
 }
 ```
 
-In this example, the `UserGrid` class defines the columns and the query for the grid. The `getColumns` method returns a collection of columns, and the `getQuery` method returns the query builder instance for the grid.
+In this example, the `ActiveUserGrid` class defines the columns and the query for the grid. The `getColumns` method 
+returns a collection of columns, and the `getQuery` method returns the query builder instance for the grid.
 
 Once created, and picked up by the discovery process, new routes will be registered for the grid.  These routes will 
-allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the `UserGrid` as an
+allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the `ActiveUserGrid` 
+as an
 example, the following routes will be registered:
 
 ```
