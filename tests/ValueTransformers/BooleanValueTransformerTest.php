@@ -1,38 +1,47 @@
 <?php
 
+namespace Strucura\DataGrid\Tests\ValueTransformers;
+
 use Strucura\DataGrid\ValueTransformers\BooleanValueTransformer;
+use Strucura\DataGrid\Tests\TestCase;
 
-it('converts "true" and "on" strings to true', function () {
-    $transformer = new BooleanValueTransformer;
-    $next = fn ($value) => $value;
+class BooleanValueTransformerTest extends TestCase
+{
+    public function testConvertsTrueAndOnStringsToTrue()
+    {
+        $transformer = new BooleanValueTransformer;
+        $next = fn ($value) => $value;
 
-    $result1 = $transformer->handle('true', $next);
-    $result2 = $transformer->handle('on', $next);
+        $result1 = $transformer->handle('true', $next);
+        $result2 = $transformer->handle('on', $next);
 
-    expect($result1)->toBeTrue()
-        ->and($result2)->toBeTrue();
-});
+        $this->assertTrue($result1);
+        $this->assertTrue($result2);
+    }
 
-it('converts "false" and "off" strings to false', function () {
-    $transformer = new BooleanValueTransformer;
-    $next = fn ($value) => $value;
+    public function testConvertsFalseAndOffStringsToFalse()
+    {
+        $transformer = new BooleanValueTransformer;
+        $next = fn ($value) => $value;
 
-    $result1 = $transformer->handle('false', $next);
-    $result2 = $transformer->handle('off', $next);
+        $result1 = $transformer->handle('false', $next);
+        $result2 = $transformer->handle('off', $next);
 
-    expect($result1)->toBeFalse()
-        ->and($result2)->toBeFalse();
-});
+        $this->assertFalse($result1);
+        $this->assertFalse($result2);
+    }
 
-it('leaves other values unchanged', function () {
-    $transformer = new BooleanValueTransformer;
-    $next = fn ($value) => $value;
+    public function testLeavesOtherValuesUnchanged()
+    {
+        $transformer = new BooleanValueTransformer;
+        $next = fn ($value) => $value;
 
-    $result1 = $transformer->handle('abc', $next);
-    $result2 = $transformer->handle(123, $next);
-    $result3 = $transformer->handle(null, $next);
+        $result1 = $transformer->handle('abc', $next);
+        $result2 = $transformer->handle(123, $next);
+        $result3 = $transformer->handle(null, $next);
 
-    expect($result1)->toBe('abc')
-        ->and($result2)->toBe(123)
-        ->and($result3)->toBeNull();
-});
+        $this->assertSame('abc', $result1);
+        $this->assertSame(123, $result2);
+        $this->assertNull($result3);
+    }
+}

@@ -4,10 +4,20 @@
 use Illuminate\Foundation\Auth\User;
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Abstracts\AbstractGrid;
-use Strucura\DataGrid\Filters\DateFilter;
-use Strucura\DataGrid\Filters\EqualityFilter;
-use Strucura\DataGrid\Filters\NumericFilter;
-use Strucura\DataGrid\Filters\StringFilter;
+use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
+use Strucura\DataGrid\Filters\Dates\DateBeforeFilter;
+use Strucura\DataGrid\Filters\Dates\DateIsFilter;
+use Strucura\DataGrid\Filters\Dates\DateIsNotFilter;
+use Strucura\DataGrid\Filters\In\InFilter;
+use Strucura\DataGrid\Filters\In\NotInFilter;
+use Strucura\DataGrid\Filters\Numeric\GreaterThanFilter;
+use Strucura\DataGrid\Filters\Numeric\GreaterThanOrEqualToFilter;
+use Strucura\DataGrid\Filters\Numeric\LessThanFilter;
+use Strucura\DataGrid\Filters\Numeric\LessThanOrEqualToFilter;
+use Strucura\DataGrid\Filters\String\ContainsFilter;
+use Strucura\DataGrid\Filters\String\DoesNotContainFilter;
+use Strucura\DataGrid\Filters\String\EndsWithFilter;
+use Strucura\DataGrid\Filters\String\StartsWithFilter;
 use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\SettingResolvers\DataGridsSharedWithUserSettingResolver;
 use Strucura\DataGrid\SettingResolvers\OwnedDataGridSettingResolver;
@@ -47,10 +57,27 @@ return [
      * A list of filters that can be applied to a data source.
      */
     'filters' => [
-        StringFilter::class,
-        NumericFilter::class,
-        DateFilter::class,
-        EqualityFilter::class,
+        // Dates
+        DateAfterFilter::class,
+        DateBeforeFilter::class,
+        DateIsFilter::class,
+        DateIsNotFilter::class,
+
+        // In
+        InFilter::class,
+        NotInFilter::class,
+
+        // Numeric
+        GreaterThanFilter::class,
+        GreaterThanOrEqualToFilter::class,
+        LessThanFilter::class,
+        LessThanOrEqualToFilter::class,
+
+        // String
+        ContainsFilter::class,
+        DoesNotContainFilter::class,
+        EndsWithFilter::class,
+        StartsWithFilter::class,
     ],
 
     'setting_resolvers' => [

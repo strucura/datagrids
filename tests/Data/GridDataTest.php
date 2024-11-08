@@ -1,5 +1,7 @@
 <?php
 
+namespace Strucura\DataGrid\Tests;
+
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\GridData;
@@ -7,40 +9,45 @@ use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
+use Strucura\DataGrid\Tests\TestCase;
 
-it('creates GridData from GridDataRequest', function () {
-    // Create a GridDataRequest with necessary inputs
-    $request = GridDataRequest::create('/grid-data', 'GET', [
-        'filters' => [
-            ['column' => 'name', 'value' => 'John', 'filter_type' => 'equals'],
-            ['column' => 'age', 'value' => 30, 'filter_type' => 'gt'],
-        ],
-        'sorts' => [
-            ['column' => 'name', 'sort_type' => 'asc'],
-            ['column' => 'age', 'sort_type' => 'desc'],
-        ],
-    ]);
+class GridDataTest extends TestCase
+{
+    public function testCreatesGridDataFromGridDataRequest()
+    {
+        // Create a GridDataRequest with necessary inputs
+        $request = GridDataRequest::create('/grid-data', 'GET', [
+            'filters' => [
+                ['column' => 'name', 'value' => 'John', 'filter_type' => 'equals'],
+                ['column' => 'age', 'value' => 30, 'filter_type' => 'gt'],
+            ],
+            'sorts' => [
+                ['column' => 'name', 'sort_type' => 'asc'],
+                ['column' => 'age', 'sort_type' => 'desc'],
+            ],
+        ]);
 
-    // Create GridData from the request
-    $gridData = GridData::fromRequest($request);
+        // Create GridData from the request
+        $gridData = GridData::fromRequest($request);
 
-    // Assert filters
-    expect($gridData->filters)->toBeInstanceOf(Collection::class)
-        ->and($gridData->filters)->toHaveCount(2)
-        ->and($gridData->filters[0])->toBeInstanceOf(FilterData::class)
-        ->and($gridData->filters[0]->column)->toBe('name')
-        ->and($gridData->filters[0]->value)->toBe('John')
-        ->and($gridData->filters[0]->filterType)->toBe(FilterTypeEnum::EQUALS)
-        ->and($gridData->filters[1]->column)->toBe('age')
-        ->and($gridData->filters[1]->value)->toBe(30)
-        ->and($gridData->filters[1]->filterType)->toBe(FilterTypeEnum::GREATER_THAN)
-        ->and($gridData->sorts)->toBeInstanceOf(Collection::class)
-        ->and($gridData->sorts)->toHaveCount(2)
-        ->and($gridData->sorts[0])->toBeInstanceOf(SortData::class)
-        ->and($gridData->sorts[0]->column)->toBe('name')
-        ->and($gridData->sorts[0]->sortType)->toBe(SortTypeEnum::ASC)
-        ->and($gridData->sorts[1]->column)->toBe('age')
-        ->and($gridData->sorts[1]->sortType)->toBe(SortTypeEnum::DESC);
+        // Assert filters
+        $this->assertInstanceOf(Collection::class, $gridData->filters);
+        $this->assertCount(2, $gridData->filters);
+        $this->assertInstanceOf(FilterData::class, $gridData->filters[0]);
+        $this->assertEquals('name', $gridData->filters[0]->column);
+        $this->assertEquals('John', $gridData->filters[0]->value);
+        $this->assertEquals(FilterTypeEnum::EQUALS, $gridData->filters[0]->filterType);
+        $this->assertEquals('age', $gridData->filters[1]->column);
+        $this->assertEquals(30, $gridData->filters[1]->value);
+        $this->assertEquals(FilterTypeEnum::GREATER_THAN, $gridData->filters[1]->filterType);
 
-    // Assert sorts
-});
+        // Assert sorts
+        $this->assertInstanceOf(Collection::class, $gridData->sorts);
+        $this->assertCount(2, $gridData->sorts);
+        $this->assertInstanceOf(SortData::class, $gridData->sorts[0]);
+        $this->assertEquals('name', $gridData->sorts[0]->column);
+        $this->assertEquals(SortTypeEnum::ASC, $gridData->sorts[0]->sortType);
+        $this->assertEquals('age', $gridData->sorts[1]->column);
+        $this->assertEquals(SortTypeEnum::DESC, $gridData->sorts[1]->sortType);
+    }
+}

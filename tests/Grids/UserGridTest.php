@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Tests;
+namespace Strucura\DataGrid\Tests\Grids;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Auth\User;
@@ -13,6 +13,7 @@ use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\Tests\Fakes\UserGrid;
+use Strucura\DataGrid\Tests\TestCase;
 
 class UserGridTest extends TestCase
 {
