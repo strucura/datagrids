@@ -17,7 +17,7 @@ class NotInFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', ['value1', 'value2'], FilterTypeEnum::NOT_IN);
 
-        $filter = new NotInFilter();
+        $filter = new NotInFilter;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class NotInFilterTest extends TestCase
             ->with('created_at NOT IN (?,?)', ['2023-01-01 00:00:00', '2023-01-02 00:00:00'])
             ->andReturnSelf();
 
-        $filter = new NotInFilter();
+        $filter = new NotInFilter;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

@@ -17,7 +17,7 @@ class EqualsFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 'value', FilterTypeEnum::EQUALS);
 
-        $filter = new EqualsFilter();
+        $filter = new EqualsFilter;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class EqualsFilterTest extends TestCase
             ->with('created_at = ?', ['2023-01-01 00:00:00'])
             ->andReturnSelf();
 
-        $filter = new EqualsFilter();
+        $filter = new EqualsFilter;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

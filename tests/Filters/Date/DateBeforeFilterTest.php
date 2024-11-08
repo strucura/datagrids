@@ -17,7 +17,7 @@ class DateBeforeFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', '2024-10-12', FilterTypeEnum::DATE_BEFORE);
 
-        $filter = new DateBeforeFilter();
+        $filter = new DateBeforeFilter;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class DateBeforeFilterTest extends TestCase
             ->with('created_at < DATE_FORMAT(?, \'%Y-%m-%d %T\')', ['2023-01-01 00:00:00'])
             ->andReturnSelf();
 
-        $filter = new DateBeforeFilter();
+        $filter = new DateBeforeFilter;
         $filter->handle($query, $column, $filterData);
     }
 }
