@@ -132,10 +132,10 @@ allow for fetching the data for the grid, and for fetching the column schema for
 example, the following routes will be registered:
 
 ```
-POST       grids/active-users/data ............... grids.active-users.data › App\ActiveUserGrid@handleData
-POST       grids/active-users/schema ............. grids.active-users.schema › App\ActiveUserGrid@handleSchema
-GET|HEAD   grids/active-users/settings ........... grids.active-users.settings.index › App\ActiveUserGrid@handleRetrievingSettings
-POST       grids/active-users/settings ........... grids.active-users.settings.store › App\ActiveUserGrid@handlePersistingSetting
+POST       grids/active-users/data ............... grids.active-users.data
+POST       grids/active-users/schema ............. grids.active-users.schema
+GET|HEAD   grids/active-users/settings ........... grids.active-users.settings.index
+POST       grids/active-users/settings ........... grids.active-users.settings.store
 ```
 
 Should you desire to customize the routes, you can do so on the grid class by overriding any of the following methods:
