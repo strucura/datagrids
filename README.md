@@ -7,7 +7,12 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/strucura/datagrids/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/strucura/datagrids/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/strucura/datagrids.svg?style=flat-square)](https://packagist.org/packages/strucura/datagrids)
 
-DataGrids is a versatile package designed for Laravel applications, providing a straightforward and front-end agnostic solution for creating and managing data grids. It simplifies the process of displaying and filtering data, making it easier for developers to implement complex data management features without extensive coding. The package supports automatic discovery and registration of data grids, ensuring seamless integration into existing projects. With built-in support for various data transformations and filtering options, DataGrids enhances the efficiency and functionality of data-driven applications.
+DataGrids is a versatile package designed for Laravel applications, providing a straightforward and front-end 
+agnostic solution for creating and managing data grids. It simplifies the process of displaying and filtering data, 
+making it easier for developers to implement complex data management features without extensive coding. The package 
+supports automatic discovery and registration of data grids, ensuring seamless integration into existing projects. 
+With built-in support for various data normalizations and filtering options, DataGrids enhances the efficiency and 
+functionality of data-driven applications.
 
 ## Installation
 
@@ -50,23 +55,24 @@ Here is how the discovery process is set up:
 
 This setup ensures that any class within the specified paths that implements the `GridContract` interface will be automatically discovered and registered as a grid in the application.
 
-### Value Transformers
+### Normalizers
 
-Value transformers are used to perform data manipulations on the value of a filter before applying it to the query. 
+Normalizers are used to perform data manipulations on the value of a filter before applying it to the query. 
 They ensure that the filter values are in the correct format and type required by the database query.  Value 
-transformers are registered in the `config/datagrids.php` file under the `value_transformers` key. Each transformer class must implement the `ValueTransformerContract` interface.
+normalizers are registered in the `config/datagrids.php` file under the `normalizers` key. Each normalizer class must 
+implement the `NormalizerContract` interface.
 
 ```php
-'value_transformers' => [
-    BooleanValueTransformer::class,
-    TimezoneValueTransformer::class,
-    FloatValueTransformer::class,
-    IntegerValueTransformer::class,
-    NullValueTransformer::class,
+'normalizers' => [
+    BooleanNormalizer::class,
+    TimezoneNormalizer::class,
+    FloatNormalizer::class,
+    IntegerNormalizer::class,
+    NullNormalizer::class,
 ],
 ```
 
-This configuration ensures that the specified transformers are applied to filter values in the order they are listed.
+This configuration ensures that the specified normalizers are applied to filter values in the order they are listed.
 
 ### Filters
 

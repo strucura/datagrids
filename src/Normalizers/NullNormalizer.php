@@ -1,11 +1,11 @@
 <?php
 
-namespace Strucura\DataGrid\ValueTransformers;
+namespace Strucura\DataGrid\Normalizers;
 
 use Closure;
-use Strucura\DataGrid\Contracts\ValueTransformerContract;
+use Strucura\DataGrid\Contracts\NormalizerContract;
 
-class NullValueTransformer implements ValueTransformerContract
+class NullNormalizer implements NormalizerContract
 {
     public function handle(mixed $value, Closure $next): mixed
     {

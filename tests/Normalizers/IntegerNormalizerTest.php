@@ -1,19 +1,19 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\ValueTransformers;
+namespace Strucura\DataGrid\Tests\Normalizers;
 
+use Strucura\DataGrid\Normalizers\IntegerNormalizer;
 use Strucura\DataGrid\Tests\TestCase;
-use Strucura\DataGrid\ValueTransformers\IntegerValueTransformer;
 
-class IntegerValueTransformerTest extends TestCase
+class IntegerNormalizerTest extends TestCase
 {
     public function testConvertsNumericStringsWithoutDecimalPointToIntegers()
     {
-        $transformer = new IntegerValueTransformer;
+        $normalizer = new IntegerNormalizer;
         $next = fn ($value) => $value;
 
-        $result1 = $transformer->handle('123', $next);
-        $result2 = $transformer->handle('0', $next);
+        $result1 = $normalizer->handle('123', $next);
+        $result2 = $normalizer->handle('0', $next);
 
         $this->assertSame(123, $result1);
         $this->assertSame(0, $result2);
@@ -21,22 +21,22 @@ class IntegerValueTransformerTest extends TestCase
 
     public function testLeavesNumericStringsWithDecimalPointUnchanged()
     {
-        $transformer = new IntegerValueTransformer;
+        $normalizer = new IntegerNormalizer;
         $next = fn ($value) => $value;
 
-        $result = $transformer->handle('123.45', $next);
+        $result = $normalizer->handle('123.45', $next);
 
         $this->assertSame('123.45', $result);
     }
 
     public function testLeavesNonNumericValuesUnchanged()
     {
-        $transformer = new IntegerValueTransformer;
+        $normalizer = new IntegerNormalizer;
         $next = fn ($value) => $value;
 
-        $result1 = $transformer->handle('abc', $next);
-        $result2 = $transformer->handle(true, $next);
-        $result3 = $transformer->handle(null, $next);
+        $result1 = $normalizer->handle('abc', $next);
+        $result2 = $normalizer->handle(true, $next);
+        $result3 = $normalizer->handle(null, $next);
 
         $this->assertSame('abc', $result1);
         $this->assertTrue($result2);
