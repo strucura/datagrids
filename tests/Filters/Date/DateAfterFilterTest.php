@@ -4,7 +4,4 @@ namespace Strucura\DataGrid\Tests\Filters\Date;
 
 use Strucura\DataGrid\Tests\TestCase;
 
-class DateAfterFilterTest extends TestCase
-{
-
-}
+class DateAfterFilterTest extends TestCase {}

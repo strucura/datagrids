@@ -12,7 +12,7 @@ class DateIsNotFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return in_array($filterData->filterType, [FilterTypeEnum::BEFORE, FilterTypeEnum::DATE_BEFORE]);
+        return $filterData->filterType === FilterTypeEnum::DATE_IS_NOT;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder

@@ -2,8 +2,8 @@
 
 namespace Strucura\DataGrid\Tests\ValueTransformers;
 
-use Strucura\DataGrid\ValueTransformers\BooleanValueTransformer;
 use Strucura\DataGrid\Tests\TestCase;
+use Strucura\DataGrid\ValueTransformers\BooleanValueTransformer;
 
 class BooleanValueTransformerTest extends TestCase
 {

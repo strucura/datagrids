@@ -9,7 +9,6 @@ use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
-use Strucura\DataGrid\Tests\TestCase;
 
 class GridDataTest extends TestCase
 {

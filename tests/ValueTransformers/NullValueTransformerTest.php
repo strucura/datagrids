@@ -2,8 +2,8 @@
 
 namespace Strucura\DataGrid\Tests\ValueTransformers;
 
-use Strucura\DataGrid\ValueTransformers\NullValueTransformer;
 use Strucura\DataGrid\Tests\TestCase;
+use Strucura\DataGrid\ValueTransformers\NullValueTransformer;
 
 class NullValueTransformerTest extends TestCase
 {
