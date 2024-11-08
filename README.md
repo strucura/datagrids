@@ -76,12 +76,27 @@ filter class must extend the `AbstractFilter` class and implement the `FilterCon
 
 ```php
 'filters' => [
-    StringFilter::class,
-    NumericFilter::class,
-    DateFilter::class,
-    EqualityFilter::class,
+    // Dates
+    DateAfterFilter::class,
+    DateBeforeFilter::class,
+    DateIsFilter::class,
+    DateIsNotFilter::class,
+
+    // In
     InFilter::class,
-    NullFilter::class,
+    NotInFilter::class,
+
+    // Numeric
+    GreaterThanFilter::class,
+    GreaterThanOrEqualToFilter::class,
+    LessThanFilter::class,
+    LessThanOrEqualToFilter::class,
+
+    // String
+    ContainsFilter::class,
+    DoesNotContainFilter::class,
+    EndsWithFilter::class,
+    StartsWithFilter::class,
 ],
 ```
 
