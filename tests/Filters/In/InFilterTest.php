@@ -17,7 +17,7 @@ class InFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', ['value1', 'value2'], FilterTypeEnum::IN);
 
-        $filter = new InFilter();
+        $filter = new InFilter;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -26,18 +26,18 @@ class InFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', ['2023-01-01 00:00:00', '2023-01-02 00:00:00'], FilterTypeEnum::IN);
+        $filterData = new FilterData('created_at', ['value1', 'value2'], FilterTypeEnum::IN);
 
-        $column->shouldReceive('getSelectAs')->andReturn('created_at');
+        $column->shouldReceive('getSelectAs')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 
         $query->shouldReceive('whereRaw')
             ->once()
-            ->with('created_at IN (?,?)', ['2023-01-01 00:00:00', '2023-01-02 00:00:00'])
+            ->with('key IN (?,?)', ['value1', 'value2'])
             ->andReturnSelf();
 
-        $filter = new InFilter();
+        $filter = new InFilter;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);
