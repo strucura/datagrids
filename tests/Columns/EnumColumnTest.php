@@ -2,7 +2,4 @@
 
 namespace Strucura\DataGrid\Tests\Columns;
 
-enum EnumColumnTest
-{
-
-}
+enum EnumColumnTest {}

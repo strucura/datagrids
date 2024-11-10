@@ -2,7 +2,6 @@
 
 namespace Strucura\DataGrid\Tests\Columns;
 
-use Strucura\DataGrid\Columns\PointColumn;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Enums\ColumnTypeEnum;
 use Strucura\DataGrid\Tests\TestCase;
