@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Tests;
+namespace Strucura\DataGrid\Tests\Data;
 
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Data\FilterData;
@@ -9,6 +9,7 @@ use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
+use Strucura\DataGrid\Tests\TestCase;
 
 class GridDataTest extends TestCase
 {
