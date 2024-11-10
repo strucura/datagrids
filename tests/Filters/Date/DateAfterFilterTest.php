@@ -12,7 +12,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class DateAfterFilterTest extends TestCase
 {
-    public function testCanHandle()
+    public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', '2024-10-12', FilterTypeEnum::DATE_AFTER);
@@ -22,7 +22,7 @@ class DateAfterFilterTest extends TestCase
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
 
-    public function testHandle()
+    public function test_handle()
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);

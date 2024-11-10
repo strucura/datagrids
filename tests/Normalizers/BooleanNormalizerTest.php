@@ -7,7 +7,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class BooleanNormalizerTest extends TestCase
 {
-    public function testConvertsTrueAndOnStringsToTrue()
+    public function test_converts_true_and_on_strings_to_true()
     {
         $normalizer = new BooleanNormalizer;
         $next = fn ($value) => $value;
@@ -19,7 +19,7 @@ class BooleanNormalizerTest extends TestCase
         $this->assertTrue($result2);
     }
 
-    public function testConvertsFalseAndOffStringsToFalse()
+    public function test_converts_false_and_off_strings_to_false()
     {
         $normalizer = new BooleanNormalizer;
         $next = fn ($value) => $value;
@@ -31,7 +31,7 @@ class BooleanNormalizerTest extends TestCase
         $this->assertFalse($result2);
     }
 
-    public function testLeavesOtherValuesUnchanged()
+    public function test_leaves_other_values_unchanged()
     {
         $normalizer = new BooleanNormalizer;
         $next = fn ($value) => $value;

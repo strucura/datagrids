@@ -7,7 +7,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class IntegerNormalizerTest extends TestCase
 {
-    public function testConvertsNumericStringsWithoutDecimalPointToIntegers()
+    public function test_converts_numeric_strings_without_decimal_point_to_integers()
     {
         $normalizer = new IntegerNormalizer;
         $next = fn ($value) => $value;
@@ -19,7 +19,7 @@ class IntegerNormalizerTest extends TestCase
         $this->assertSame(0, $result2);
     }
 
-    public function testLeavesNumericStringsWithDecimalPointUnchanged()
+    public function test_leaves_numeric_strings_with_decimal_point_unchanged()
     {
         $normalizer = new IntegerNormalizer;
         $next = fn ($value) => $value;
@@ -29,7 +29,7 @@ class IntegerNormalizerTest extends TestCase
         $this->assertSame('123.45', $result);
     }
 
-    public function testLeavesNonNumericValuesUnchanged()
+    public function test_leaves_non_numeric_values_unchanged()
     {
         $normalizer = new IntegerNormalizer;
         $next = fn ($value) => $value;

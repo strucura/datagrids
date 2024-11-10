@@ -28,7 +28,7 @@ class GenerateGridQueryActionTest extends TestCase
         return $column;
     }
 
-    public function testAppliesFiltersCorrectly()
+    public function test_applies_filters_correctly()
     {
         $gridContract = $this->createMock(AbstractGrid::class);
         $query = $this->createMock(Builder::class);
@@ -47,7 +47,7 @@ class GenerateGridQueryActionTest extends TestCase
         $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new GridData($filters, $sorts));
     }
 
-    public function testAppliesSortsCorrectly()
+    public function test_applies_sorts_correctly()
     {
         $gridContract = $this->createMock(GridContract::class);
         $query = $this->createMock(Builder::class);
@@ -66,7 +66,7 @@ class GenerateGridQueryActionTest extends TestCase
         $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new GridData($filters, $sorts));
     }
 
-    public function testSelectsColumnsCorrectly()
+    public function test_selects_columns_correctly()
     {
         $gridContract = $this->createMock(GridContract::class);
         $query = $this->createMock(Builder::class);

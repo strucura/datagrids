@@ -34,7 +34,7 @@ class UserGridTest extends TestCase
         parent::tearDown();
     }
 
-    public function testGetsGridDataCorrectly()
+    public function test_gets_grid_data_correctly()
     {
         // Seed the database with test data
         DB::table('users')->insert([
@@ -71,7 +71,7 @@ class UserGridTest extends TestCase
         $this->assertEquals('jane@example.com', $data[1]['Email']);
     }
 
-    public function testGetsGridSchemaCorrectly()
+    public function test_gets_grid_schema_correctly()
     {
         // Create an instance of UserGrid
         $grid = new UserGrid;
@@ -122,7 +122,7 @@ class UserGridTest extends TestCase
         }
     }
 
-    public function testRetrievesGridSettingsCorrectly()
+    public function test_retrieves_grid_settings_correctly()
     {
         $user = User::query()->forceCreate([
             'name' => 'John Doe',
@@ -171,7 +171,7 @@ class UserGridTest extends TestCase
         $this->assertEquals(json_encode(['baz' => 'qux']), $data[1]['value']);
     }
 
-    public function testGetsDataGridKeyCorrectly()
+    public function test_gets_data_grid_key_correctly()
     {
         // Create an instance of UserGrid
         $grid = new UserGrid;

@@ -12,7 +12,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class LessThanOrEqualToFilterTest extends TestCase
 {
-    public function testCanHandle()
+    public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 10, FilterTypeEnum::LESS_THAN_OR_EQUAL_TO);
@@ -22,7 +22,7 @@ class LessThanOrEqualToFilterTest extends TestCase
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
 
-    public function testHandle()
+    public function test_handle()
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);

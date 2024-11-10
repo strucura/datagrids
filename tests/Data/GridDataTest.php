@@ -13,7 +13,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class GridDataTest extends TestCase
 {
-    public function testCreatesGridDataFromGridDataRequest()
+    public function test_creates_grid_data_from_grid_data_request()
     {
         // Create a GridDataRequest with necessary inputs
         $request = GridDataRequest::create('/grid-data', 'GET', [

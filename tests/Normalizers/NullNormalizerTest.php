@@ -7,7 +7,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class NullNormalizerTest extends TestCase
 {
-    public function testConvertsNullStringToNull()
+    public function test_converts_null_string_to_null()
     {
         $normalizer = new NullNormalizer;
         $next = fn ($value) => $value;
@@ -17,7 +17,7 @@ class NullNormalizerTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testConvertsEmptyStringToNull()
+    public function test_converts_empty_string_to_null()
     {
         $normalizer = new NullNormalizer;
         $next = fn ($value) => $value;
@@ -27,7 +27,7 @@ class NullNormalizerTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testLeavesOtherValuesUnchanged()
+    public function test_leaves_other_values_unchanged()
     {
         $normalizer = new NullNormalizer;
         $next = fn ($value) => $value;

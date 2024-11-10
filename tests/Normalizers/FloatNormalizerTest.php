@@ -7,7 +7,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class FloatNormalizerTest extends TestCase
 {
-    public function testConvertsNumericStringsWithDecimalPointToFloats()
+    public function test_converts_numeric_strings_with_decimal_point_to_floats()
     {
         $normalizer = new FloatNormalizer;
         $next = fn ($value) => $value;
@@ -19,7 +19,7 @@ class FloatNormalizerTest extends TestCase
         $this->assertSame(0.0, $result2);
     }
 
-    public function testLeavesNumericStringsWithoutDecimalPointUnchanged()
+    public function test_leaves_numeric_strings_without_decimal_point_unchanged()
     {
         $normalizer = new FloatNormalizer;
         $next = fn ($value) => $value;
@@ -29,7 +29,7 @@ class FloatNormalizerTest extends TestCase
         $this->assertSame('123', $result);
     }
 
-    public function testLeavesNonNumericValuesUnchanged()
+    public function test_leaves_non_numeric_values_unchanged()
     {
         $normalizer = new FloatNormalizer;
         $next = fn ($value) => $value;
