@@ -7,7 +7,7 @@ use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
 
-class GridData
+class DataGridData
 {
     public function __construct(public Collection $filters, public Collection $sorts) {}
 

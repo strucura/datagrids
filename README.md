@@ -121,13 +121,13 @@ namespace Strucura\DataGrid\Tests\Fakes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Strucura\DataGrid\Abstracts\AbstractGrid;
+use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Columns\DateTimeColumn;
 use Strucura\DataGrid\Columns\IntegerColumn;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Contracts\GridContract;
 
-class ActiveUserGrid extends AbstractGrid implements GridContract
+class ActiveUserGrid extends AbstractDataGrid implements GridContract
 {
     public function getColumns(): Collection
     {

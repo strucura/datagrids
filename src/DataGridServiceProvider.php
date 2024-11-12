@@ -18,7 +18,7 @@ class DataGridServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('data-grids')
+            ->name('datagrids')
             ->hasConfigFile();
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -26,8 +26,8 @@ class DataGridServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $paths = config('data-grids.discovery.paths');
-        $conditions = config('data-grids.discovery.conditions');
+        $paths = config('datagrids.discovery.paths');
+        $conditions = config('datagrids.discovery.conditions');
 
         $discoveredGridFQCNs = Discover::in(...$paths)
             ->any(...$conditions)

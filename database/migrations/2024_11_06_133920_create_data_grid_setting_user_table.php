@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('data_grid_setting_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(config('data-grids.models.data_grid_setting'))->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(config('data-grids.models.user'))->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(config('datagrids.models.data_grid_setting'))->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(config('datagrids.models.user'))->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

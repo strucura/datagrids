@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Contracts\FilterContract;
-use Strucura\DataGrid\Data\GridData;
+use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\SortData;
 
 /**
@@ -26,12 +26,12 @@ class GenerateGridQueryAction
      *
      * @param  Builder  $query  The query builder instance.
      * @param  Collection  $columns  The collection of columns to select.
-     * @param  GridData  $gridData  The grid data containing the filters and sorts.
+     * @param  DataGridData  $gridData  The grid data containing the filters and sorts.
      * @return Builder The generated query builder instance.
      *
      * @throws \Exception
      */
-    public function handle(Builder $query, Collection $columns, GridData $gridData): Builder
+    public function handle(Builder $query, Collection $columns, DataGridData $gridData): Builder
     {
         $this->applyFilters($query, $columns, $gridData->filters);
         $this->applySorts($query, $gridData->sorts);
@@ -54,7 +54,7 @@ class GenerateGridQueryAction
      */
     private function applyFilters(Builder $query, Collection $columns, Collection $filters): void
     {
-        $availableFilters = config('data-grids.filters');
+        $availableFilters = config('datagrids.filters');
 
         foreach ($filters as $filter) {
             $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);

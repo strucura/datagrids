@@ -3,7 +3,7 @@
 // config for Strucura/DataGrid
 use Illuminate\Foundation\Auth\User;
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
-use Strucura\DataGrid\Abstracts\AbstractGrid;
+use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
 use Strucura\DataGrid\Filters\Dates\DateBeforeFilter;
 use Strucura\DataGrid\Filters\Dates\DateIsFilter;
@@ -38,7 +38,7 @@ return [
         'conditions' => [
             ConditionBuilder::create()
                 ->classes()
-                ->extending(AbstractGrid::class),
+                ->extending(AbstractDataGrid::class),
         ],
     ],
 

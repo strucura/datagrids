@@ -12,7 +12,7 @@ use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Models\DataGridSetting;
-use Strucura\DataGrid\Tests\Fakes\UserGrid;
+use Strucura\DataGrid\Tests\Fakes\UserDataGrid;
 use Strucura\DataGrid\Tests\TestCase;
 
 class UserGridTest extends TestCase
@@ -50,8 +50,8 @@ class UserGridTest extends TestCase
             'sorts' => [],
         ]);
 
-        // Create an instance of UserGrid
-        $grid = new UserGrid;
+        // Create an instance of UserDataGrid
+        $grid = new UserDataGrid;
 
         // Call the handleData method
         $response = $grid->handleData($request);
@@ -73,8 +73,8 @@ class UserGridTest extends TestCase
 
     public function test_gets_grid_schema_correctly()
     {
-        // Create an instance of UserGrid
-        $grid = new UserGrid;
+        // Create an instance of UserDataGrid
+        $grid = new UserDataGrid;
 
         // Call the handleSchema method
         $response = $grid->handleSchema(GridSchemaRequest::create($grid->getRoutePath(), 'POST'));
@@ -129,7 +129,7 @@ class UserGridTest extends TestCase
             'email' => 'john.doe@example.com',
         ]);
 
-        $grid = new UserGrid;
+        $grid = new UserDataGrid;
 
         DataGridSetting::query()->create([
             'owner_id' => $user->id,
@@ -173,8 +173,8 @@ class UserGridTest extends TestCase
 
     public function test_gets_data_grid_key_correctly()
     {
-        // Create an instance of UserGrid
-        $grid = new UserGrid;
+        // Create an instance of UserDataGrid
+        $grid = new UserDataGrid;
 
         // Call the getDataGridKey method
         $key = $grid->getDataGridKey();

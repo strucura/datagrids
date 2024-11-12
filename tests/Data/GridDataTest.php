@@ -3,8 +3,8 @@
 namespace Strucura\DataGrid\Tests\Data;
 
 use Illuminate\Support\Collection;
+use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Data\GridData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
@@ -27,8 +27,8 @@ class GridDataTest extends TestCase
             ],
         ]);
 
-        // Create GridData from the request
-        $gridData = GridData::fromRequest($request);
+        // Create DataGridData from the request
+        $gridData = DataGridData::fromRequest($request);
 
         // Assert filters
         $this->assertInstanceOf(Collection::class, $gridData->filters);

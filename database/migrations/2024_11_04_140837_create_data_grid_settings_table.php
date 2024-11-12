@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('data_grid_settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(config('data-grids.models.user'), 'owner_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(config('datagrids.models.user'), 'owner_id')->constrained()->cascadeOnDelete();
             $table->string('grid_key');
             $table->string('name');
             $table->json('value');

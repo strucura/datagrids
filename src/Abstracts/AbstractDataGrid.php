@@ -9,15 +9,15 @@ use Strucura\DataGrid\Actions\GenerateGridQueryAction;
 use Strucura\DataGrid\Actions\PersistDataGridSettingAction;
 use Strucura\DataGrid\Actions\ResolveUserDataGridSettingsAction;
 use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\DataGridSettingData;
-use Strucura\DataGrid\Data\GridData;
 use Strucura\DataGrid\Http\Requests\GridDataRequest;
 use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 
-abstract class AbstractGrid implements GridContract
+abstract class AbstractDataGrid implements GridContract
 {
     public function getRoutePrefix(): string
     {
@@ -31,7 +31,7 @@ abstract class AbstractGrid implements GridContract
     {
         return Str::of(static::class)
             ->classBasename()
-            ->before('Grid')
+            ->before('DataGrid')
             ->snake('-')
             ->plural()
             ->prepend($this->getRoutePrefix().'.')
@@ -45,7 +45,7 @@ abstract class AbstractGrid implements GridContract
     {
         return Str::of(static::class)
             ->classBasename()
-            ->before('Grid')
+            ->before('DataGrid')
             ->plural()
             ->snake('-')
             ->prepend('/')
@@ -71,7 +71,7 @@ abstract class AbstractGrid implements GridContract
         $results = GenerateGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
-            GridData::fromRequest($request)
+            DataGridData::fromRequest($request)
         )
             ->take($last - $first)
             ->offset($first)

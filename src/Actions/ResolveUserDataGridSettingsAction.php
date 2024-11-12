@@ -12,7 +12,7 @@ class ResolveUserDataGridSettingsAction
     public function handle(User $user, string $gridKey): Collection
     {
         // Get all the resolvers from the config file
-        $resolvers = config('data-grids.setting_resolvers', []);
+        $resolvers = config('datagrids.setting_resolvers', []);
 
         // Initialize the settings collection
         $settings = collect();

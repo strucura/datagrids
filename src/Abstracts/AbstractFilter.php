@@ -9,7 +9,7 @@ abstract class AbstractFilter implements FilterContract
 {
     public function getNormalizedValue(mixed $value): mixed
     {
-        $normalizers = config('data-grids.normalizers');
+        $normalizers = config('datagrids.normalizers');
 
         /** @var Pipeline $pipeline */
         $pipeline = app(Pipeline::class);
