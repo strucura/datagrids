@@ -7,7 +7,12 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/strucura/datagrids/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/strucura/datagrids/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/strucura/datagrids.svg?style=flat-square)](https://packagist.org/packages/strucura/datagrids)
 
-DataGrids is a versatile package designed for Laravel applications, providing a straightforward and front-end agnostic solution for creating and managing data grids. It simplifies the process of displaying and filtering data, making it easier for developers to implement complex data management features without extensive coding. The package supports automatic discovery and registration of data grids, ensuring seamless integration into existing projects. With built-in support for various data transformations and filtering options, DataGrids enhances the efficiency and functionality of data-driven applications.
+DataGrids is a versatile package designed for Laravel applications, providing a straightforward and front-end 
+agnostic solution for creating and managing data grids. It simplifies the process of displaying and filtering data, 
+making it easier for developers to implement complex data management features without extensive coding. The package 
+supports automatic discovery and registration of data grids, ensuring seamless integration into existing projects. 
+With built-in support for various data normalizations and filtering options, DataGrids enhances the efficiency and 
+functionality of data-driven applications.
 
 ## Installation
 
@@ -50,23 +55,24 @@ Here is how the discovery process is set up:
 
 This setup ensures that any class within the specified paths that implements the `GridContract` interface will be automatically discovered and registered as a grid in the application.
 
-### Value Transformers
+### Normalizers
 
-Value transformers are used to perform data manipulations on the value of a filter before applying it to the query. 
+Normalizers are used to perform data manipulations on the value of a filter before applying it to the query. 
 They ensure that the filter values are in the correct format and type required by the database query.  Value 
-transformers are registered in the `config/datagrids.php` file under the `value_transformers` key. Each transformer class must implement the `ValueTransformerContract` interface.
+normalizers are registered in the `config/datagrids.php` file under the `normalizers` key. Each normalizer class must 
+implement the `NormalizerContract` interface.
 
 ```php
-'value_transformers' => [
-    BooleanValueTransformer::class,
-    TimezoneValueTransformer::class,
-    FloatValueTransformer::class,
-    IntegerValueTransformer::class,
-    NullValueTransformer::class,
+'normalizers' => [
+    BooleanNormalizer::class,
+    TimezoneNormalizer::class,
+    FloatNormalizer::class,
+    IntegerNormalizer::class,
+    NullNormalizer::class,
 ],
 ```
 
-This configuration ensures that the specified transformers are applied to filter values in the order they are listed.
+This configuration ensures that the specified normalizers are applied to filter values in the order they are listed.
 
 ### Filters
 
@@ -76,12 +82,27 @@ filter class must extend the `AbstractFilter` class and implement the `FilterCon
 
 ```php
 'filters' => [
-    StringFilter::class,
-    NumericFilter::class,
-    DateFilter::class,
-    EqualityFilter::class,
+    // Dates
+    DateAfterFilter::class,
+    DateBeforeFilter::class,
+    DateIsFilter::class,
+    DateIsNotFilter::class,
+
+    // In
     InFilter::class,
-    NullFilter::class,
+    NotInFilter::class,
+
+    // Numeric
+    GreaterThanFilter::class,
+    GreaterThanOrEqualToFilter::class,
+    LessThanFilter::class,
+    LessThanOrEqualToFilter::class,
+
+    // String
+    ContainsFilter::class,
+    DoesNotContainFilter::class,
+    EndsWithFilter::class,
+    StartsWithFilter::class,
 ],
 ```
 
@@ -89,7 +110,8 @@ This configuration ensures that the specified filters are available for use in t
 
 ## Usage
 
-To create a new grid, you need to define a class that extends the `AbstractGrid` class and implements the required methods. Below is an example of how to create a `UserGrid`:
+To create a new grid, you need to define a class that extends the `AbstractDataGrid` class and implements the required 
+methods. Below is an example of how to create a `ActiveUserDataGrid`:
 
 ```php
 <?php
@@ -99,13 +121,13 @@ namespace Strucura\DataGrid\Tests\Fakes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Strucura\DataGrid\Abstracts\AbstractGrid;
+use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Columns\DateTimeColumn;
 use Strucura\DataGrid\Columns\IntegerColumn;
 use Strucura\DataGrid\Columns\StringColumn;
-use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Contracts\DataGridContract;
 
-class UserGrid extends AbstractGrid implements GridContract
+class ActiveUserDataGrid extends AbstractDataGrid implements DataGridContract
 {
     public function getColumns(): Collection
     {
@@ -125,15 +147,20 @@ class UserGrid extends AbstractGrid implements GridContract
 }
 ```
 
-In this example, the `UserGrid` class defines the columns and the query for the grid. The `getColumns` method returns a collection of columns, and the `getQuery` method returns the query builder instance for the grid.
+In this example, the `ActiveUserDataGrid` class defines the columns and the query for the grid. The `getColumns` method 
+returns a collection of columns, and the `getQuery` method returns the query builder instance for the grid.
 
 Once created, and picked up by the discovery process, new routes will be registered for the grid.  These routes will 
-allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the `UserGrid` as an
+allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the 
+`ActiveUserDataGrid` 
+as an
 example, the following routes will be registered:
 
 ```
-POST       grids/users/data .................. grids.users.data › App\UserGrid@handleData
-POST       grids/users/schema ................ grids.users.schema › App\UserGrid@handleSchema
+POST       grids/active-users/data ............... grids.active-users.data
+POST       grids/active-users/schema ............. grids.active-users.schema
+GET|HEAD   grids/active-users/settings ........... grids.active-users.settings.index
+POST       grids/active-users/settings ........... grids.active-users.settings.store
 ```
 
 Should you desire to customize the routes, you can do so on the grid class by overriding any of the following methods:
@@ -142,23 +169,39 @@ Should you desire to customize the routes, you can do so on the grid class by ov
 - **getRouteName**: Used to define the route name.
 - **getRoutePath**: Used to define the route path .
 
+### Grid Settings
+
+Grid settings are used to store user preferences for a grid, such as column visibility, column order, and sorting.
+The settings are stored in the database and can be accessed and modified by the user. The package provides a
+settings controller and routes for managing grid settings.
+
+Settings are stored in the `data_grid_settings` table, and each setting is associated with the user who created it and
+the key of the grid it belongs to.  Since grids are typically shared across users, the concept of setting resolvers
+is used to determine if a specific user has access to a setting.  By default, the package provides two resolvers:
+
+- **OwnedDataGridSettingResolver**: This resolver ensures that a setting is accessible to the user who created it.
+- **DataGridsSharedWithUserSettingResolver**: Ensures that a setting is accessible to a user if the grid was shared 
+  with them.
+
+These setting resolvers are registered in the configuration file and can be customized as needed. See:
+
+```php
+'setting_resolvers' => [
+    OwnedDataGridSettingResolver::class,
+    DataGridsSharedWithUserSettingResolver::class,
+],
+```
+
 ## Testing
 
 ```bash
 composer test
 ```
 
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+If you discover any security-related issues, please email [security@strucura.com](mailto:security@strucura.com) 
+instead of using the issue tracker.
 
 ## Credits
 
@@ -167,4 +210,4 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## License
 
-ihe MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

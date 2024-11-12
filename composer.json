@@ -19,7 +19,8 @@
         "php": "^8.2",
         "illuminate/contracts": "^10.0||^11.0",
         "spatie/laravel-package-tools": "^1.16",
-        "spatie/php-structure-discoverer": "^2.2"
+        "spatie/php-structure-discoverer": "^2.2",
+        "strucura/transpose": "^0.0.7"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
@@ -40,23 +41,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Strucura\\DataGrid\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "Strucura\\DataGrid\\Tests\\": "tests/"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@composer run prepare",
-        "clear": "@php vendor/bin/testbench package:purge-grids --ansi",
-        "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "build": [
-            "@composer run prepare",
-            "@php vendor/bin/testbench workbench:build --ansi"
-        ],
-        "start": [
-            "Composer\\Config::disableProcessTimeout",
-            "@composer run build",
-            "@php vendor/bin/testbench serve"
-        ],
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
