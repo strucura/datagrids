@@ -110,8 +110,8 @@ This configuration ensures that the specified filters are available for use in t
 
 ## Usage
 
-To create a new grid, you need to define a class that extends the `AbstractGrid` class and implements the required 
-methods. Below is an example of how to create a `ActiveUserGrid`:
+To create a new grid, you need to define a class that extends the `AbstractDataGrid` class and implements the required 
+methods. Below is an example of how to create a `ActiveUserDataGrid`:
 
 ```php
 <?php
@@ -147,11 +147,12 @@ class ActiveUserGrid extends AbstractDataGrid implements GridContract
 }
 ```
 
-In this example, the `ActiveUserGrid` class defines the columns and the query for the grid. The `getColumns` method 
+In this example, the `ActiveUserDataGrid` class defines the columns and the query for the grid. The `getColumns` method 
 returns a collection of columns, and the `getQuery` method returns the query builder instance for the grid.
 
 Once created, and picked up by the discovery process, new routes will be registered for the grid.  These routes will 
-allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the `ActiveUserGrid` 
+allow for fetching the data for the grid, and for fetching the column schema for the grid.  Using the 
+`ActiveUserDataGrid` 
 as an
 example, the following routes will be registered:
 
