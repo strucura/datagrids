@@ -13,7 +13,7 @@ class OwnedDataGridSettingResolver implements DataGridSettingResolverContract
     {
         return DataGridSetting::query()
             ->where('owner_id', $user->getAuthIdentifier())
-            ->where('grid_key', $gridKey)
+            ->where('data_grid_key', $gridKey)
             ->get();
     }
 }

@@ -2,32 +2,13 @@
 
 namespace Strucura\DataGrid\Tests\SettingResolvers;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\Schema;
 use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\SettingResolvers\OwnedDataGridSettingResolver;
 use Strucura\DataGrid\Tests\TestCase;
 
 class OwnedDataGridSettingResolverTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->timestamps();
-        });
-    }
-
-    protected function tearDown(): void
-    {
-        Schema::dropIfExists('users');
-        parent::tearDown();
-    }
-
     public function test_resolve_returns_correct_settings()
     {
         $user = User::query()->forceCreate([
@@ -38,7 +19,7 @@ class OwnedDataGridSettingResolverTest extends TestCase
 
         $setting = DataGridSetting::query()->create([
             'owner_id' => $user->getAuthIdentifier(),
-            'grid_key' => $gridKey,
+            'data_grid_key' => $gridKey,
             'name' => 'Test Setting',
             'value' => ['test' => 'value'],
         ]);
@@ -60,7 +41,7 @@ class OwnedDataGridSettingResolverTest extends TestCase
 
         DataGridSetting::query()->create([
             'owner_id' => $owningUser->getAuthIdentifier(),
-            'grid_key' => $gridKey,
+            'data_grid_key' => $gridKey,
             'name' => 'Test Setting',
             'value' => ['test' => 'value'],
         ]);

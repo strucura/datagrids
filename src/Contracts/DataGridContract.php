@@ -6,13 +6,13 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
-use Strucura\DataGrid\Http\Requests\GridDataRequest;
-use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
+use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
+use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 
-interface GridContract
+interface DataGridContract
 {
     public function getRoutePrefix(): string;
 
@@ -20,9 +20,9 @@ interface GridContract
 
     public function getRouteName(): string;
 
-    public function handleData(GridDataRequest $request): JsonResponse;
+    public function handleData(DataGridDataRequest $request): JsonResponse;
 
-    public function handleSchema(GridSchemaRequest $request): JsonResponse;
+    public function handleSchema(DataGridSchemaRequest $request): JsonResponse;
 
     public function handleRetrievingSettings(RetrieveDataGridSettingsRequest $request): AnonymousResourceCollection;
 

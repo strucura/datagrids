@@ -125,9 +125,9 @@ use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Columns\DateTimeColumn;
 use Strucura\DataGrid\Columns\IntegerColumn;
 use Strucura\DataGrid\Columns\StringColumn;
-use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Contracts\DataGridContract;
 
-class ActiveUserGrid extends AbstractDataGrid implements GridContract
+class ActiveUserDataGrid extends AbstractDataGrid implements DataGridContract
 {
     public function getColumns(): Collection
     {

@@ -8,15 +8,15 @@ use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
-use Strucura\DataGrid\Http\Requests\GridDataRequest;
+use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Tests\TestCase;
 
 class GridDataTest extends TestCase
 {
     public function test_creates_grid_data_from_grid_data_request()
     {
-        // Create a GridDataRequest with necessary inputs
-        $request = GridDataRequest::create('/grid-data', 'GET', [
+        // Create a DataGridDataRequest with necessary inputs
+        $request = DataGridDataRequest::create('/grid-data', 'GET', [
             'filters' => [
                 ['column' => 'name', 'value' => 'John', 'filter_type' => 'equals'],
                 ['column' => 'age', 'value' => 30, 'filter_type' => 'gt'],

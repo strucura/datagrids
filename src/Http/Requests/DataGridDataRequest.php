@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 
-class GridDataRequest extends FormRequest
+class DataGridDataRequest extends FormRequest
 {
     public function authorize(): bool
     {

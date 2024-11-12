@@ -16,12 +16,12 @@ class PersistDataGridSettingAction
     {
         $dataGridSetting = DataGridSetting::query()->where([
             'owner_id' => $data->ownerId,
-            'grid_key' => $data->gridKey,
+            'data_grid_key' => $data->dataGridKey,
             'name' => $data->name,
         ])->firstOr(function () use ($data) {
             return new DataGridSetting([
                 'owner_id' => $data->ownerId,
-                'grid_key' => $data->gridKey,
+                'data_grid_key' => $data->dataGridKey,
                 'name' => $data->name,
             ]);
         });

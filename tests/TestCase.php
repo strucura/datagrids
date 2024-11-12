@@ -3,6 +3,8 @@
 namespace Strucura\DataGrid\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Strucura\DataGrid\DataGridServiceProvider;
 
@@ -18,6 +20,12 @@ class TestCase extends Orchestra
 
         $this->artisan('migrate:refresh', ['--database' => 'testing']);
 
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->timestamps();
+        });
     }
 
     protected function getPackageProviders($app): array

@@ -2,38 +2,20 @@
 
 namespace Strucura\DataGrid\Tests\Grids;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Strucura\DataGrid\Http\Requests\GridDataRequest;
-use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
+use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
+use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\Tests\Fakes\UserDataGrid;
 use Strucura\DataGrid\Tests\TestCase;
 
-class UserGridTest extends TestCase
+class UserDataGridTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->timestamps();
-        });
-    }
-
-    protected function tearDown(): void
-    {
-        Schema::dropIfExists('users');
-        parent::tearDown();
-    }
-
     public function test_gets_grid_data_correctly()
     {
         // Seed the database with test data
@@ -42,15 +24,15 @@ class UserGridTest extends TestCase
             ['name' => 'Jane Doe', 'email' => 'jane@example.com', 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        // Create a GridDataRequest with necessary inputs
-        $request = GridDataRequest::create('/grid-data', 'GET', [
+        // Create a DataGridDataRequest with necessary inputs
+        $request = DataGridDataRequest::create('/grid-data', 'GET', [
             'first' => 0,
             'last' => 100,
             'filters' => [],
             'sorts' => [],
         ]);
 
-        // Create an instance of UserDataGrid
+        // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
 
         // Call the handleData method
@@ -73,11 +55,11 @@ class UserGridTest extends TestCase
 
     public function test_gets_grid_schema_correctly()
     {
-        // Create an instance of UserDataGrid
+        // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
 
         // Call the handleSchema method
-        $response = $grid->handleSchema(GridSchemaRequest::create($grid->getRoutePath(), 'POST'));
+        $response = $grid->handleSchema(DataGridSchemaRequest::create($grid->getRoutePath(), 'POST'));
 
         // Assert that the response is a JsonResponse
         $this->assertInstanceOf(JsonResponse::class, $response);
@@ -133,7 +115,7 @@ class UserGridTest extends TestCase
 
         DataGridSetting::query()->create([
             'owner_id' => $user->id,
-            'grid_key' => $grid->getDataGridKey(),
+            'data_grid_key' => $grid->getDataGridKey(),
             'name' => 'setting1',
             'value' => json_encode(['foo' => 'bar']),
             'created_at' => now(),
@@ -142,7 +124,7 @@ class UserGridTest extends TestCase
 
         DataGridSetting::query()->create([
             'owner_id' => $user->id,
-            'grid_key' => $grid->getDataGridKey(),
+            'data_grid_key' => $grid->getDataGridKey(),
             'name' => 'setting2',
             'value' => json_encode(['baz' => 'qux']),
             'created_at' => now(),
@@ -173,7 +155,7 @@ class UserGridTest extends TestCase
 
     public function test_gets_data_grid_key_correctly()
     {
-        // Create an instance of UserDataGrid
+        // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
 
         // Call the getDataGridKey method

@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('data_grid_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(config('datagrids.models.user'), 'owner_id')->constrained()->cascadeOnDelete();
-            $table->string('grid_key');
+            $table->string('data_grid_key');
             $table->string('name');
             $table->json('value');
             $table->timestamps();
 
-            $table->unique(['owner_id', 'grid_key', 'name']);
+            $table->unique(['owner_id', 'data_grid_key', 'name']);
         });
     }
 

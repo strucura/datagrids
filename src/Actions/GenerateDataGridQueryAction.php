@@ -10,11 +10,11 @@ use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\SortData;
 
 /**
- * Class GenerateGridQueryAction
+ * Class GenerateDataGridQueryAction
  *
  * This class is responsible for generating a query for a grid based on the provided filters and sorts.
  */
-class GenerateGridQueryAction
+class GenerateDataGridQueryAction
 {
     public static function make(): self
     {

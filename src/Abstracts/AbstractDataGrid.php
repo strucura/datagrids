@@ -5,19 +5,19 @@ namespace Strucura\DataGrid\Abstracts;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
-use Strucura\DataGrid\Actions\GenerateGridQueryAction;
+use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
 use Strucura\DataGrid\Actions\PersistDataGridSettingAction;
 use Strucura\DataGrid\Actions\ResolveUserDataGridSettingsAction;
-use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Contracts\DataGridContract;
 use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\DataGridSettingData;
-use Strucura\DataGrid\Http\Requests\GridDataRequest;
-use Strucura\DataGrid\Http\Requests\GridSchemaRequest;
+use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
+use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
 use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
 use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 
-abstract class AbstractDataGrid implements GridContract
+abstract class AbstractDataGrid implements DataGridContract
 {
     public function getRoutePrefix(): string
     {
@@ -63,12 +63,12 @@ abstract class AbstractDataGrid implements GridContract
      *
      * @throws \Exception
      */
-    public function handleData(GridDataRequest $request): JsonResponse
+    public function handleData(DataGridDataRequest $request): JsonResponse
     {
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
-        $results = GenerateGridQueryAction::make()->handle(
+        $results = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
             DataGridData::fromRequest($request)
@@ -83,7 +83,7 @@ abstract class AbstractDataGrid implements GridContract
     /**
      * Handles building the schema for consumption by the front-end.
      */
-    public function handleSchema(GridSchemaRequest $request): JsonResponse
+    public function handleSchema(DataGridSchemaRequest $request): JsonResponse
     {
         $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
@@ -105,7 +105,7 @@ abstract class AbstractDataGrid implements GridContract
     {
         $dataGridSetting = PersistDataGridSettingAction::make()->handle(new DataGridSettingData(
             ownerId: auth()->id(),
-            gridKey: $this->getDataGridKey(),
+            dataGridKey: $this->getDataGridKey(),
             name: $request->input('name'),
             value: $request->input('value'),
         ));

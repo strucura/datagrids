@@ -6,7 +6,7 @@ class DataGridSettingData
 {
     public function __construct(
         public int $ownerId,
-        public string $gridKey,
+        public string $dataGridKey,
         public string $name,
         public array $value,
     ) {}

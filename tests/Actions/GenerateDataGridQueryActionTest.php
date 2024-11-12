@@ -6,8 +6,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractDataGrid;
-use Strucura\DataGrid\Actions\GenerateGridQueryAction;
-use Strucura\DataGrid\Contracts\GridContract;
+use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
+use Strucura\DataGrid\Contracts\DataGridContract;
 use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\SortData;
@@ -43,13 +43,13 @@ class GenerateDataGridQueryActionTest extends TestCase
         $query->expects($this->once())->method('selectRaw')->with('column as `column`', []);
         $query->expects($this->once())->method('whereRaw')->with('column LIKE ?', ['%value%']);
 
-        $action = new GenerateGridQueryAction;
+        $action = new GenerateDataGridQueryAction;
         $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new DataGridData($filters, $sorts));
     }
 
     public function test_applies_sorts_correctly()
     {
-        $gridContract = $this->createMock(GridContract::class);
+        $gridContract = $this->createMock(DataGridContract::class);
         $query = $this->createMock(Builder::class);
         $column = $this->mockColumn('column', 'column');
         $sortData = new SortData('column', SortTypeEnum::ASC);
@@ -62,13 +62,13 @@ class GenerateDataGridQueryActionTest extends TestCase
         $query->expects($this->once())->method('selectRaw')->with('column as `column`', []);
         $query->expects($this->once())->method('orderBy')->with('column', 'asc');
 
-        $action = new GenerateGridQueryAction;
+        $action = new GenerateDataGridQueryAction;
         $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new DataGridData($filters, $sorts));
     }
 
     public function test_selects_columns_correctly()
     {
-        $gridContract = $this->createMock(GridContract::class);
+        $gridContract = $this->createMock(DataGridContract::class);
         $query = $this->createMock(Builder::class);
         $column = $this->mockColumn('alias', 'column');
         $filters = new Collection;
@@ -79,7 +79,7 @@ class GenerateDataGridQueryActionTest extends TestCase
 
         $query->expects($this->once())->method('selectRaw')->with('column as `alias`', []);
 
-        $action = new GenerateGridQueryAction;
+        $action = new GenerateDataGridQueryAction;
         $action->handle($gridContract->getQuery(), $gridContract->getColumns(), new DataGridData($filters, $sorts));
     }
 }
