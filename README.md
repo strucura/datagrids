@@ -48,12 +48,13 @@ Here is how the discovery process is set up:
     'conditions' => [
         ConditionBuilder::create()
             ->classes()
-            ->extending(AbstractGrid::class),
+            ->extending(AbstractDataGrid::class),
     ],
 ],
 ```
 
-This setup ensures that any class within the specified paths that implements the `GridContract` interface will be automatically discovered and registered as a grid in the application.
+This setup ensures that any class within the specified paths that implements the `DataGridContract` interface will be 
+automatically discovered and registered as a grid in the application.
 
 ### Normalizers
 
@@ -169,9 +170,9 @@ Should you desire to customize the routes, you can do so on the grid class by ov
 - **getRouteName**: Used to define the route name.
 - **getRoutePath**: Used to define the route path .
 
-### Grid Settings
+### Data Grid Settings
 
-Grid settings are used to store user preferences for a grid, such as column visibility, column order, and sorting.
+Data grid settings are used to store user preferences for a grid, such as column visibility, column order, and sorting.
 The settings are stored in the database and can be accessed and modified by the user. The package provides a
 settings controller and routes for managing grid settings.
 
