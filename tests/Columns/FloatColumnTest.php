@@ -19,7 +19,7 @@ class FloatColumnTest extends TestCase
         $column = new FloatColumn('table.column', 'alias');
         $array = $column->toArray();
 
-        $this->assertArrayHasKey('field', $array);
+        $this->assertArrayHasKey('column', $array);
         $this->assertArrayHasKey('header', $array);
         $this->assertArrayHasKey('data_type', $array);
         $this->assertArrayHasKey('sortable', $array);
@@ -27,7 +27,7 @@ class FloatColumnTest extends TestCase
         $this->assertArrayHasKey('hidden', $array);
         $this->assertArrayHasKey('meta', $array);
 
-        $this->assertEquals('alias', $array['field']);
+        $this->assertEquals('alias', $array['column']);
         $this->assertEquals('alias', $array['header']);
         $this->assertEquals(ColumnTypeEnum::Float, $array['data_type']);
         $this->assertTrue($array['sortable']);

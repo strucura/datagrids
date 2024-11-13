@@ -19,7 +19,7 @@ class DateColumnTest extends TestCase
         $column = new DateColumn('table.column', 'alias');
         $array = $column->toArray();
 
-        $this->assertArrayHasKey('field', $array);
+        $this->assertArrayHasKey('column', $array);
         $this->assertArrayHasKey('header', $array);
         $this->assertArrayHasKey('data_type', $array);
         $this->assertArrayHasKey('sortable', $array);
@@ -27,7 +27,7 @@ class DateColumnTest extends TestCase
         $this->assertArrayHasKey('hidden', $array);
         $this->assertArrayHasKey('meta', $array);
 
-        $this->assertEquals('alias', $array['field']);
+        $this->assertEquals('alias', $array['column']);
         $this->assertEquals('alias', $array['header']);
         $this->assertEquals(ColumnTypeEnum::Date, $array['data_type']);
         $this->assertTrue($array['sortable']);

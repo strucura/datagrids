@@ -3,19 +3,13 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
-use Strucura\DataGrid\Actions\PersistDataGridSettingAction;
-use Strucura\DataGrid\Actions\ResolveUserDataGridSettingsAction;
 use Strucura\DataGrid\Contracts\DataGridContract;
 use Strucura\DataGrid\Data\DataGridData;
-use Strucura\DataGrid\Data\DataGridSettingData;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
-use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
-use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
-use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 
 abstract class AbstractDataGrid implements DataGridContract
 {
@@ -53,6 +47,14 @@ abstract class AbstractDataGrid implements DataGridContract
             ->toString();
     }
 
+    public function getPermissionName(): string
+    {
+        return Str::of(static::class)
+            ->classBasename()
+            ->snake('_')
+            ->toString();
+    }
+
     public function getDataGridKey(): string
     {
         return $this->getRouteName();
@@ -65,6 +67,8 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleData(DataGridDataRequest $request): JsonResponse
     {
+        Gate::authorize($this->getPermissionName());
+
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
@@ -85,31 +89,12 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleSchema(DataGridSchemaRequest $request): JsonResponse
     {
+        Gate::authorize($this->getPermissionName());
+
         $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
         });
 
         return response()->json($columns);
-    }
-
-    public function handleRetrievingSettings(RetrieveDataGridSettingsRequest $request): AnonymousResourceCollection
-    {
-        $action = new ResolveUserDataGridSettingsAction;
-
-        $dataGridSettings = $action->handle($request->user(), $this->getDataGridKey());
-
-        return DataGridSettingResource::collection($dataGridSettings);
-    }
-
-    public function handlePersistingSetting(PersistDataGridSettingRequest $request): DataGridSettingResource
-    {
-        $dataGridSetting = PersistDataGridSettingAction::make()->handle(new DataGridSettingData(
-            ownerId: auth()->id(),
-            dataGridKey: $this->getDataGridKey(),
-            name: $request->input('name'),
-            value: $request->input('value'),
-        ));
-
-        return DataGridSettingResource::make($dataGridSetting);
     }
 }
