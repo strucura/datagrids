@@ -2,6 +2,7 @@
 
 namespace Strucura\DataGrid\Tests\Grids;
 
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
@@ -13,6 +14,11 @@ class UserDataGridTest extends TestCase
 {
     public function test_gets_grid_data_correctly()
     {
+        $mock = $this->partialMock(Gate::class, function ($mock) {
+            $mock->shouldReceive('authorize')->with('user_data_grid')->once()->andReturn(true);
+        });
+        $this->app->instance(Gate::class, $mock);
+
         // Seed the database with test data
         DB::table('users')->insert([
             ['name' => 'John Doe', 'email' => 'john@example.com', 'created_at' => now(), 'updated_at' => now()],
@@ -50,6 +56,11 @@ class UserDataGridTest extends TestCase
 
     public function test_gets_grid_schema_correctly()
     {
+        $mock = $this->partialMock(Gate::class, function ($mock) {
+            $mock->shouldReceive('authorize')->with('user_data_grid')->once()->andReturn(true);
+        });
+        $this->app->instance(Gate::class, $mock);
+
         // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
 
@@ -109,5 +120,17 @@ class UserDataGridTest extends TestCase
 
         // Assert that the returned key matches the expected key
         $this->assertEquals('grids.users', $key);
+    }
+
+    public function test_gets_permission_name_correctly()
+    {
+        // Create an instance of UserDataDataGrid
+        $grid = new UserDataGrid;
+
+        // Call the getPermissionName method
+        $permissionName = $grid->getPermissionName();
+
+        // Assert that the returned permission name matches the expected permission name
+        $this->assertEquals('user_data_grid', $permissionName);
     }
 }
