@@ -160,8 +160,6 @@ example, the following routes will be registered:
 ```
 POST       grids/active-users/data ............... grids.active-users.data
 POST       grids/active-users/schema ............. grids.active-users.schema
-GET|HEAD   grids/active-users/settings ........... grids.active-users.settings.index
-POST       grids/active-users/settings ........... grids.active-users.settings.store
 ```
 
 Should you desire to customize the routes, you can do so on the grid class by overriding any of the following methods:
@@ -169,29 +167,6 @@ Should you desire to customize the routes, you can do so on the grid class by ov
 - **getRoutePrefix**: Used to prefix the route path as well as the route name.
 - **getRouteName**: Used to define the route name.
 - **getRoutePath**: Used to define the route path .
-
-### Data Grid Settings
-
-Data grid settings are used to store user preferences for a grid, such as column visibility, column order, and sorting.
-The settings are stored in the database and can be accessed and modified by the user. The package provides a
-settings controller and routes for managing grid settings.
-
-Settings are stored in the `data_grid_settings` table, and each setting is associated with the user who created it and
-the key of the grid it belongs to.  Since grids are typically shared across users, the concept of setting resolvers
-is used to determine if a specific user has access to a setting.  By default, the package provides two resolvers:
-
-- **OwnedDataGridSettingResolver**: This resolver ensures that a setting is accessible to the user who created it.
-- **DataGridsSharedWithUserSettingResolver**: Ensures that a setting is accessible to a user if the grid was shared 
-  with them.
-
-These setting resolvers are registered in the configuration file and can be customized as needed. See:
-
-```php
-'setting_resolvers' => [
-    OwnedDataGridSettingResolver::class,
-    DataGridsSharedWithUserSettingResolver::class,
-],
-```
 
 ## Testing
 
