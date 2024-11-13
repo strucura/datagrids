@@ -77,7 +77,7 @@ class UserDataGridTest extends TestCase
 
         $columns = [
             [
-                'field' => 'ID',
+                'column' => 'ID',
                 'header' => 'ID',
                 'data_type' => 'integer',
                 'sortable' => true,
@@ -86,7 +86,7 @@ class UserDataGridTest extends TestCase
                 'meta' => [],
             ],
             [
-                'field' => 'Name',
+                'column' => 'Name',
                 'header' => 'Name',
                 'data_type' => 'string',
                 'sortable' => true,
@@ -95,7 +95,7 @@ class UserDataGridTest extends TestCase
                 'meta' => [],
             ],
             [
-                'field' => 'Email',
+                'column' => 'Email',
                 'header' => 'Email',
                 'data_type' => 'string',
                 'sortable' => true,

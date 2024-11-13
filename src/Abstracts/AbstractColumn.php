@@ -122,7 +122,7 @@ abstract class AbstractColumn implements ColumnContract
     public function toArray(): array
     {
         return [
-            'field' => $this->alias,
+            'column' => $this->alias,
             'header' => $this->alias,
             'data_type' => $this->dataType,
             'sortable' => $this->sortable,
