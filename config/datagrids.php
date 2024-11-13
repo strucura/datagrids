@@ -1,7 +1,6 @@
 <?php
 
 // config for Strucura/DataGrid
-use Illuminate\Foundation\Auth\User;
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
@@ -18,14 +17,11 @@ use Strucura\DataGrid\Filters\String\ContainsFilter;
 use Strucura\DataGrid\Filters\String\DoesNotContainFilter;
 use Strucura\DataGrid\Filters\String\EndsWithFilter;
 use Strucura\DataGrid\Filters\String\StartsWithFilter;
-use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\Normalizers\BooleanNormalizer;
 use Strucura\DataGrid\Normalizers\FloatNormalizer;
 use Strucura\DataGrid\Normalizers\IntegerNormalizer;
 use Strucura\DataGrid\Normalizers\NullNormalizer;
 use Strucura\DataGrid\Normalizers\TimezoneNormalizer;
-use Strucura\DataGrid\SettingResolvers\DataGridsSharedWithUserSettingResolver;
-use Strucura\DataGrid\SettingResolvers\OwnedDataGridSettingResolver;
 
 return [
     /**
@@ -78,15 +74,5 @@ return [
         DoesNotContainFilter::class,
         EndsWithFilter::class,
         StartsWithFilter::class,
-    ],
-
-    'setting_resolvers' => [
-        OwnedDataGridSettingResolver::class,
-        DataGridsSharedWithUserSettingResolver::class,
-    ],
-
-    'models' => [
-        'data_grid_setting' => DataGridSetting::class,
-        'user' => User::class,
     ],
 ];

@@ -3,19 +3,12 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
-use Strucura\DataGrid\Actions\PersistDataGridSettingAction;
-use Strucura\DataGrid\Actions\ResolveUserDataGridSettingsAction;
 use Strucura\DataGrid\Contracts\DataGridContract;
 use Strucura\DataGrid\Data\DataGridData;
-use Strucura\DataGrid\Data\DataGridSettingData;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
-use Strucura\DataGrid\Http\Requests\PersistDataGridSettingRequest;
-use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
-use Strucura\DataGrid\Http\Resources\DataGridSettingResource;
 
 abstract class AbstractDataGrid implements DataGridContract
 {
@@ -90,26 +83,5 @@ abstract class AbstractDataGrid implements DataGridContract
         });
 
         return response()->json($columns);
-    }
-
-    public function handleRetrievingSettings(RetrieveDataGridSettingsRequest $request): AnonymousResourceCollection
-    {
-        $action = new ResolveUserDataGridSettingsAction;
-
-        $dataGridSettings = $action->handle($request->user(), $this->getDataGridKey());
-
-        return DataGridSettingResource::collection($dataGridSettings);
-    }
-
-    public function handlePersistingSetting(PersistDataGridSettingRequest $request): DataGridSettingResource
-    {
-        $dataGridSetting = PersistDataGridSettingAction::make()->handle(new DataGridSettingData(
-            ownerId: auth()->id(),
-            dataGridKey: $this->getDataGridKey(),
-            name: $request->input('name'),
-            value: $request->input('value'),
-        ));
-
-        return DataGridSettingResource::make($dataGridSetting);
     }
 }
