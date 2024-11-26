@@ -21,15 +21,15 @@ class GridDataTest extends TestCase
             'filter_sets' => [
                 [
                     'filters' => [
-                        ['column' => 'name', 'value' => 'Doe', 'filter_type' => 'equals'],
-                        ['column' => 'age', 'value' => 40, 'filter_type' => 'lt'],
+                        ['column' => 'name', 'value' => 'Doe', 'filter_operator' => 'equals'],
+                        ['column' => 'age', 'value' => 40, 'filter_operator' => 'lt'],
                     ],
-                    'filter_operator' => 'and',
+                    'filter_set_operator' => 'and',
                 ],
             ],
             'sorts' => [
-                ['column' => 'name', 'sort_type' => 'asc'],
-                ['column' => 'age', 'sort_type' => 'desc'],
+                ['column' => 'name', 'sort_operator' => 'asc'],
+                ['column' => 'age', 'sort_operator' => 'desc'],
             ],
         ]);
 
