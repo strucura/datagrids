@@ -3,8 +3,8 @@
 namespace Strucura\DataGrid\Data;
 
 use Illuminate\Support\Collection;
-use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\SortOperator;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 

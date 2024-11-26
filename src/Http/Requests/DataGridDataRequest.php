@@ -4,8 +4,8 @@ namespace Strucura\DataGrid\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\SortOperator;
 
 class DataGridDataRequest extends FormRequest

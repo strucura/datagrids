@@ -10,8 +10,8 @@ use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\FilterSetData;
 use Strucura\DataGrid\Data\SortData;
-use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\SortOperator;
 use Strucura\DataGrid\Tests\TestCase;
 

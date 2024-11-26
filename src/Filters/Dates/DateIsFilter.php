@@ -6,8 +6,8 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 
 class DateIsFilter extends AbstractFilter
 {
