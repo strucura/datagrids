@@ -68,7 +68,7 @@ abstract class AbstractDataGrid implements DataGridContract
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
-        $results = GenerateDataGridQueryAction::make()->handle(
+        $data = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
             DataGridData::fromRequest($request)
@@ -77,9 +77,15 @@ abstract class AbstractDataGrid implements DataGridContract
             ->offset($first)
             ->get();
 
+        $total = GenerateDataGridQueryAction::make()->handle(
+            $this->getQuery(),
+            $this->getColumns(),
+            DataGridData::fromRequest($request)
+        )->count();
+
         return response()->json([
-            'data' => $results,
-            'total' => $this->getQuery()->count(),
+            'data' => $data,
+            'total' => $total,
         ]);
     }
 
