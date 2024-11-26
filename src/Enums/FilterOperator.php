@@ -2,7 +2,7 @@
 
 namespace Strucura\DataGrid\Enums;
 
-enum FilterTypeEnum: string
+enum FilterOperator: string
 {
     case STRING_STARTS_WITH = 'stringStartsWith';
     case STRING_CONTAINS = 'stringContains';

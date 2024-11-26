@@ -7,13 +7,13 @@ use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterSetOperator;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 
 class EndsWithFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterTypeEnum::STRING_ENDS_WITH;
+        return $filterData->filterType === FilterOperator::STRING_ENDS_WITH;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

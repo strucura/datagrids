@@ -2,14 +2,14 @@
 
 namespace Strucura\DataGrid\Data;
 
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 
 class FilterData
 {
     public function __construct(
-        public string $column,
-        public mixed $value,
-        public FilterTypeEnum $filterType,
-        public array $conditions = []
+        public string         $column,
+        public mixed          $value,
+        public FilterOperator $filterType,
+        public array          $conditions = []
     ) {}
 }

@@ -11,8 +11,8 @@ use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\FilterSetData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterSetOperator;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
-use Strucura\DataGrid\Enums\SortTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\SortOperator;
 use Strucura\DataGrid\Tests\TestCase;
 
 class GenerateDataGridQueryActionTest extends TestCase
@@ -26,9 +26,9 @@ class GenerateDataGridQueryActionTest extends TestCase
         $column->shouldReceive('getBindings')->andReturn([]);
         $column->shouldReceive('isHavingRequired')->andReturn(false);
 
-        $filterData = new FilterData('test_column', 'test_value', FilterTypeEnum::EQUALS);
+        $filterData = new FilterData('test_column', 'test_value', FilterOperator::EQUALS);
         $filterSetData = new FilterSetData(collect([$filterData]), FilterSetOperator::AND);
-        $sortData = new SortData('test_column', SortTypeEnum::ASC);
+        $sortData = new SortData('test_column', SortOperator::ASC);
 
         $gridData = new DataGridData(collect([$filterSetData]), collect([$sortData]));
 

@@ -4,8 +4,8 @@ namespace Strucura\DataGrid\Data;
 
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Enums\FilterSetOperator;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
-use Strucura\DataGrid\Enums\SortTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\SortOperator;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 
 class DataGridData
@@ -27,13 +27,13 @@ class DataGridData
                 $filters->push(new FilterData(
                     $filter['column'],
                     $filter['value'],
-                    FilterTypeEnum::tryFrom($filter['filter_type'])
+                    FilterOperator::tryFrom($filter['filter_operator'])
                 ));
             }
 
             $filterSets->push(new FilterSetData(
                 $filters,
-                FilterSetOperator::tryFrom($filterSetsRequestItem['filter_operator'])
+                FilterSetOperator::tryFrom($filterSetsRequestItem['filter_set_operator'])
             ));
         }
 
@@ -42,7 +42,7 @@ class DataGridData
         foreach ($requestSorts as $sort) {
             $sorts->push(new SortData(
                 $sort['column'],
-                SortTypeEnum::tryFrom($sort['sort_type']))
+                SortOperator::tryFrom($sort['sort_operator']))
             );
         }
 

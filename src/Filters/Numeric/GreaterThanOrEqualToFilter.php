@@ -7,13 +7,13 @@ use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterSetOperator;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 
 class GreaterThanOrEqualToFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterTypeEnum::GREATER_THAN_OR_EQUAL_TO;
+        return $filterData->filterType === FilterOperator::GREATER_THAN_OR_EQUAL_TO;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

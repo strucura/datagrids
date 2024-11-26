@@ -7,8 +7,8 @@ use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\FilterSetData;
 use Strucura\DataGrid\Data\SortData;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
-use Strucura\DataGrid\Enums\SortTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\SortOperator;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Tests\TestCase;
 
@@ -50,18 +50,18 @@ class GridDataTest extends TestCase
         $this->assertInstanceOf(FilterData::class, $filterSet->filters[0]);
         $this->assertEquals('name', $filterSet->filters[0]->column);
         $this->assertEquals('Doe', $filterSet->filters[0]->value);
-        $this->assertEquals(FilterTypeEnum::EQUALS, $filterSet->filters[0]->filterType);
+        $this->assertEquals(FilterOperator::EQUALS, $filterSet->filters[0]->filterType);
         $this->assertEquals('age', $filterSet->filters[1]->column);
         $this->assertEquals(40, $filterSet->filters[1]->value);
-        $this->assertEquals(FilterTypeEnum::LESS_THAN, $filterSet->filters[1]->filterType);
+        $this->assertEquals(FilterOperator::LESS_THAN, $filterSet->filters[1]->filterType);
 
         // Assert sorts
         $this->assertInstanceOf(Collection::class, $gridData->sorts);
         $this->assertCount(2, $gridData->sorts);
         $this->assertInstanceOf(SortData::class, $gridData->sorts[0]);
         $this->assertEquals('name', $gridData->sorts[0]->column);
-        $this->assertEquals(SortTypeEnum::ASC, $gridData->sorts[0]->sortType);
+        $this->assertEquals(SortOperator::ASC, $gridData->sorts[0]->sortType);
         $this->assertEquals('age', $gridData->sorts[1]->column);
-        $this->assertEquals(SortTypeEnum::DESC, $gridData->sorts[1]->sortType);
+        $this->assertEquals(SortOperator::DESC, $gridData->sorts[1]->sortType);
     }
 }

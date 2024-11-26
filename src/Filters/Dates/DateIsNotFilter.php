@@ -7,13 +7,13 @@ use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterSetOperator;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 
 class DateIsNotFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterTypeEnum::DATE_IS_NOT;
+        return $filterData->filterType === FilterOperator::DATE_IS_NOT;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
