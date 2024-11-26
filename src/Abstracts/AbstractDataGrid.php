@@ -77,7 +77,10 @@ abstract class AbstractDataGrid implements DataGridContract
             ->offset($first)
             ->get();
 
-        return response()->json($results);
+        return response()->json([
+            'data' => $results,
+            'total' => $this->getQuery()->count(),
+        ]);
     }
 
     /**
@@ -89,7 +92,9 @@ abstract class AbstractDataGrid implements DataGridContract
             return $column->toArray();
         });
 
-        return response()->json($columns);
+        return response()->json([
+            'columns' => $columns,
+        ]);
     }
 
     public function handleRetrievingSettings(RetrieveDataGridSettingsRequest $request): AnonymousResourceCollection
