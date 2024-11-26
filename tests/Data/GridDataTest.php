@@ -5,6 +5,7 @@ namespace Strucura\DataGrid\Tests\Data;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Data\FilterSetData;
 use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
@@ -17,9 +18,14 @@ class GridDataTest extends TestCase
     {
         // Create a DataGridDataRequest with necessary inputs
         $request = DataGridDataRequest::create('/grid-data', 'GET', [
-            'filters' => [
-                ['column' => 'name', 'value' => 'John', 'filter_type' => 'equals'],
-                ['column' => 'age', 'value' => 30, 'filter_type' => 'gt'],
+            'filter_sets' => [
+                [
+                    'filters' => [
+                        ['column' => 'name', 'value' => 'Doe', 'filter_type' => 'equals'],
+                        ['column' => 'age', 'value' => 40, 'filter_type' => 'lt'],
+                    ],
+                    'filter_operator' => 'and',
+                ],
             ],
             'sorts' => [
                 ['column' => 'name', 'sort_type' => 'asc'],
@@ -31,15 +37,23 @@ class GridDataTest extends TestCase
         $gridData = DataGridData::fromRequest($request);
 
         // Assert filters
-        $this->assertInstanceOf(Collection::class, $gridData->filters);
-        $this->assertCount(2, $gridData->filters);
-        $this->assertInstanceOf(FilterData::class, $gridData->filters[0]);
-        $this->assertEquals('name', $gridData->filters[0]->column);
-        $this->assertEquals('John', $gridData->filters[0]->value);
-        $this->assertEquals(FilterTypeEnum::EQUALS, $gridData->filters[0]->filterType);
-        $this->assertEquals('age', $gridData->filters[1]->column);
-        $this->assertEquals(30, $gridData->filters[1]->value);
-        $this->assertEquals(FilterTypeEnum::GREATER_THAN, $gridData->filters[1]->filterType);
+        $this->assertInstanceOf(Collection::class, $gridData->filterSets);
+        $this->assertCount(1, $gridData->filterSets);
+        $this->assertInstanceOf(FilterSetData::class, $gridData->filterSets[0]);
+
+        $filterSet = $gridData->filterSets[0];
+
+        $this->assertInstanceOf(FilterSetData::class, $filterSet);
+        $this->assertInstanceOf(Collection::class, $filterSet->filters);
+        $this->assertCount(2, $filterSet->filters);
+
+        $this->assertInstanceOf(FilterData::class, $filterSet->filters[0]);
+        $this->assertEquals('name', $filterSet->filters[0]->column);
+        $this->assertEquals('Doe', $filterSet->filters[0]->value);
+        $this->assertEquals(FilterTypeEnum::EQUALS, $filterSet->filters[0]->filterType);
+        $this->assertEquals('age', $filterSet->filters[1]->column);
+        $this->assertEquals(40, $filterSet->filters[1]->value);
+        $this->assertEquals(FilterTypeEnum::LESS_THAN, $filterSet->filters[1]->filterType);
 
         // Assert sorts
         $this->assertInstanceOf(Collection::class, $gridData->sorts);

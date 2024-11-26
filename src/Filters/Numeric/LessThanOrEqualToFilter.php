@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class LessThanOrEqualToFilter extends AbstractFilter
@@ -15,11 +16,13 @@ class LessThanOrEqualToFilter extends AbstractFilter
         return $filterData->filterType === FilterTypeEnum::LESS_THAN_OR_EQUAL_TO;
     }
 
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         $expression = $column->getSelectAs().' <= ?';
-        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
-        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
+        $bindings = [...$column->getBindings(), $filterData->value];
+
+        $method = $this->getQueryMethod($column, $filterOperator);
+        $query->$method($expression, $bindings);
 
         return $query;
     }

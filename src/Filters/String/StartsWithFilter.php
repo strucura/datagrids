@@ -6,21 +6,25 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class StartsWithFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterTypeEnum::STARTS_WITH;
+        return $filterData->filterType === FilterTypeEnum::STRING_STARTS_WITH;
     }
 
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         $expression = $column->getSelectAs().' LIKE ?';
         $value = $filterData->value.'%';
-        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
-        $query->$method($expression, [...$column->getBindings(), $value]);
+
+        $bindings = [...$column->getBindings(), $value];
+
+        $method = $this->getQueryMethod($column, $filterOperator);
+        $query->$method($expression, $bindings);
 
         return $query;
     }

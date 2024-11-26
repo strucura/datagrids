@@ -4,6 +4,7 @@ namespace Strucura\DataGrid\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 use Strucura\DataGrid\Enums\SortTypeEnum;
 
@@ -24,11 +25,12 @@ class DataGridDataRequest extends FormRequest
             'sorts.*.column' => ['required', 'string', 'min:1'],
             'sorts.*.sort_type' => ['required', Rule::enum(SortTypeEnum::class)],
 
-            // Filters
-            'filters' => ['nullable', 'array'],
-            'filters.*.column' => ['required', 'string'],
-            'filters.*.value' => ['present'],
-            'filters.*.filter_type' => ['required', Rule::enum(FilterTypeEnum::class)],
+            'filter_sets' => ['nullable', 'array'],
+            'filter_sets.*.operator' => ['required', Rule::enum(FilterSetOperator::class)],
+            'filter_sets.*.filters' => ['required', 'array'],
+            'filter_sets.*.filters.*.column' => ['required', 'string', 'min:1'],
+            'filter_sets.*.filters.*.value' => ['present'],
+            'filter_sets.*.filters.*.filter_type' => ['required', Rule::enum(FilterTypeEnum::class)],
         ];
     }
 }

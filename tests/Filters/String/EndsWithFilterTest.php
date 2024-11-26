@@ -15,7 +15,7 @@ class EndsWithFilterTest extends TestCase
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', 'value', FilterTypeEnum::ENDS_WITH);
+        $filterData = new FilterData('column', 'value', FilterTypeEnum::STRING_ENDS_WITH);
 
         $filter = new EndsWithFilter;
 
@@ -26,7 +26,7 @@ class EndsWithFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('name', 'value', FilterTypeEnum::ENDS_WITH);
+        $filterData = new FilterData('name', 'value', FilterTypeEnum::STRING_ENDS_WITH);
 
         $column->shouldReceive('getSelectAs')->andReturn('name');
         $column->shouldReceive('isHavingRequired')->andReturn(false);

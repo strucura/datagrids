@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Filters\String;
+namespace Strucura\DataGrid\Filters\Dates;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
@@ -9,21 +9,18 @@ use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 
-class ContainsFilter extends AbstractFilter
+class DateOnOrAfterFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterTypeEnum::STRING_CONTAINS;
+        return $filterData->filterType === FilterTypeEnum::DATE_ON_OR_AFTER;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = $column->getSelectAs().' LIKE ?';
-        $value = '%'.$filterData->value.'%';
-        $bindings = [...$column->getBindings(), $value];
-
+        $expression = "{$column->getSelectAs()} >= DATE_FORMAT(?, '%Y-%m-%d %T')";
         $method = $this->getQueryMethod($column, $filterOperator);
-        $query->$method($expression, $bindings);
+        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 
         return $query;
     }

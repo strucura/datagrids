@@ -10,5 +10,6 @@ class FilterData
         public string $column,
         public mixed $value,
         public FilterTypeEnum $filterType,
+        public array $conditions = []
     ) {}
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class DateAfterFilter extends AbstractFilter
@@ -15,10 +16,10 @@ class DateAfterFilter extends AbstractFilter
         return $filterData->filterType === FilterTypeEnum::DATE_AFTER;
     }
 
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         $expression = "{$column->getSelectAs()} > DATE_FORMAT(?, '%Y-%m-%d %T')";
-        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
+        $method = $this->getQueryMethod($column, $filterOperator);
         $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 
         return $query;

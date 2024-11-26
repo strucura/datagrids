@@ -15,7 +15,7 @@ class StartsWithFilterTest extends TestCase
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', 'value', FilterTypeEnum::STARTS_WITH);
+        $filterData = new FilterData('column', 'value', FilterTypeEnum::STRING_STARTS_WITH);
 
         $filter = new StartsWithFilter;
 
@@ -26,7 +26,7 @@ class StartsWithFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('name', 'value', FilterTypeEnum::STARTS_WITH);
+        $filterData = new FilterData('name', 'value', FilterTypeEnum::STRING_STARTS_WITH);
 
         $column->shouldReceive('getSelectAs')->andReturn('name');
         $column->shouldReceive('isHavingRequired')->andReturn(false);

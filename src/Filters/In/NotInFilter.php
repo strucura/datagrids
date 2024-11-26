@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class NotInFilter extends AbstractFilter
@@ -18,7 +19,7 @@ class NotInFilter extends AbstractFilter
     /**
      * @throws \Exception
      */
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         // Normalize the values
         $values = collect($filterData->value)->map(function ($value) {
@@ -32,7 +33,7 @@ class NotInFilter extends AbstractFilter
         // Build the expression
         $expression = $column->getSelectAs()." NOT IN ($placeholders)";
 
-        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
+        $method = $this->getQueryMethod($column, $filterOperator);
         $query->$method($expression, $bindings);
 
         return $query;

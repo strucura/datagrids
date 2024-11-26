@@ -15,7 +15,7 @@ class ContainsFilterTest extends TestCase
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', 'value', FilterTypeEnum::CONTAINS);
+        $filterData = new FilterData('column', 'value', FilterTypeEnum::STRING_CONTAINS);
 
         $filter = new ContainsFilter;
 
@@ -26,7 +26,7 @@ class ContainsFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('name', 'value', FilterTypeEnum::CONTAINS);
+        $filterData = new FilterData('name', 'value', FilterTypeEnum::STRING_CONTAINS);
 
         $column->shouldReceive('getSelectAs')->andReturn('name');
         $column->shouldReceive('isHavingRequired')->andReturn(false);

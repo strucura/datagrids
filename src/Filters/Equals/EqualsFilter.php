@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 use Strucura\DataGrid\Enums\FilterTypeEnum;
 
 class EqualsFilter extends AbstractFilter
@@ -15,16 +16,13 @@ class EqualsFilter extends AbstractFilter
         return $filterData->filterType === FilterTypeEnum::EQUALS && $this->getNormalizedValue($filterData->value) !== null;
     }
 
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         $expression = $this->buildExpression($column, $filterData);
         $bindings = $this->buildBindings($column, $filterData);
 
-        if ($column->isHavingRequired()) {
-            $query->havingRaw($expression, $bindings);
-        } else {
-            $query->whereRaw($expression, $bindings);
-        }
+        $method = $this->getQueryMethod($column, $filterOperator);
+        $query->$method($expression, $bindings);
 
         return $query;
     }
