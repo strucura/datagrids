@@ -44,13 +44,15 @@ class UserDataGridTest extends TestCase
         // Assert that the response data matches the expected data
         $data = $response->getData(true);
 
-        $this->assertCount(2, $data);
-        $this->assertEquals(1, $data[0]['ID']);
-        $this->assertEquals('John Doe', $data[0]['Name']);
-        $this->assertEquals('john@example.com', $data[0]['Email']);
-        $this->assertEquals(2, $data[1]['ID']);
-        $this->assertEquals('Jane Doe', $data[1]['Name']);
-        $this->assertEquals('jane@example.com', $data[1]['Email']);
+        $this->assertEquals(2, $data['total_rows']);
+        $rows = $data['rows'];
+        $this->assertCount(2, $rows);
+        $this->assertEquals(1, $rows[0]['ID']);
+        $this->assertEquals('John Doe', $rows[0]['Name']);
+        $this->assertEquals('john@example.com', $rows[0]['Email']);
+        $this->assertEquals(2, $rows[1]['ID']);
+        $this->assertEquals('Jane Doe', $rows[1]['Name']);
+        $this->assertEquals('jane@example.com', $rows[1]['Email']);
     }
 
     public function test_gets_grid_schema_correctly()
@@ -67,7 +69,7 @@ class UserDataGridTest extends TestCase
         // Assert that the response data matches the expected schema
         $data = $response->getData(true);
 
-        $this->assertCount(3, $data);
+        $this->assertCount(3, $data['columns']);
 
         $columns = [
             [
@@ -100,7 +102,7 @@ class UserDataGridTest extends TestCase
         ];
 
         foreach ($columns as $column) {
-            $this->assertContains($column, $data);
+            $this->assertContains($column, $data['columns']);
         }
     }
 

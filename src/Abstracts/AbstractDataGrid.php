@@ -84,8 +84,8 @@ abstract class AbstractDataGrid implements DataGridContract
         )->count();
 
         return response()->json([
-            'data' => $data,
-            'total' => $total,
+            'rows' => $data,
+            'total_rows' => $total,
         ]);
     }
 
