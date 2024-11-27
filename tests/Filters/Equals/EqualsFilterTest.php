@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Filters\Equals\EqualsFilter;
 use Strucura\DataGrid\Tests\TestCase;
 
@@ -15,7 +15,7 @@ class EqualsFilterTest extends TestCase
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', 'value', FilterTypeEnum::EQUALS);
+        $filterData = new FilterData('column', 'value', FilterOperator::EQUALS);
 
         $filter = new EqualsFilter;
 
@@ -26,7 +26,7 @@ class EqualsFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterTypeEnum::EQUALS);
+        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterOperator::EQUALS);
 
         $column->shouldReceive('getSelectAs')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);

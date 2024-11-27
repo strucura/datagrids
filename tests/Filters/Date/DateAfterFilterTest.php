@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
 use Strucura\DataGrid\Tests\TestCase;
 
@@ -15,7 +15,7 @@ class DateAfterFilterTest extends TestCase
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', '2024-10-12', FilterTypeEnum::DATE_AFTER);
+        $filterData = new FilterData('column', '2024-10-12', FilterOperator::DATE_AFTER);
 
         $filter = new DateAfterFilter;
 
@@ -26,7 +26,7 @@ class DateAfterFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterTypeEnum::DATE_AFTER);
+        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterOperator::DATE_AFTER);
 
         $column->shouldReceive('getSelectAs')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);

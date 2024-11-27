@@ -6,20 +6,23 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 
 class GreaterThanFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterTypeEnum::GREATER_THAN;
+        return $filterData->filterType === FilterOperator::GREATER_THAN;
     }
 
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData): Builder
+    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         $expression = $column->getSelectAs().' > ?';
-        $method = $column->isHavingRequired() ? 'havingRaw' : 'whereRaw';
-        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
+        $bindings = [...$column->getBindings(), $filterData->value];
+
+        $method = $this->getQueryMethod($column, $filterOperator);
+        $query->$method($expression, $bindings);
 
         return $query;
     }

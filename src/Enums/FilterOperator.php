@@ -2,12 +2,12 @@
 
 namespace Strucura\DataGrid\Enums;
 
-enum FilterTypeEnum: string
+enum FilterOperator: string
 {
-    case STARTS_WITH = 'startsWith';
-    case CONTAINS = 'contains';
-    case DOES_NOT_CONTAIN = 'doesNotContain';
-    case ENDS_WITH = 'endsWith';
+    case STRING_STARTS_WITH = 'stringStartsWith';
+    case STRING_CONTAINS = 'stringContains';
+    case STRING_DOES_NOT_CONTAIN = 'stringDoesNotContain';
+    case STRING_ENDS_WITH = 'stringEndsWith';
     case EQUALS = 'equals';
     case NOT_EQUALS = 'doesNotEquals';
     case IN = 'in';
@@ -21,4 +21,6 @@ enum FilterTypeEnum: string
     case DATE_IS_NOT = 'dateIsNot';
     case DATE_BEFORE = 'dateBefore';
     case DATE_AFTER = 'dateAfter';
+    case DATE_ON_OR_BEFORE = 'dateOnOrBefore';
+    case DATE_ON_OR_AFTER = 'dateOnOrAfter';
 }

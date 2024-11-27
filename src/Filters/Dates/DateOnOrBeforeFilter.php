@@ -9,16 +9,16 @@ use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
-class DateIsNotFilter extends AbstractFilter
+class DateOnOrBeforeFilter extends AbstractFilter
 {
     public function canHandle(AbstractColumn $column, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::DATE_IS_NOT;
+        return $filterData->filterType === FilterOperator::DATE_ON_OR_BEFORE;
     }
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = "{$column->getSelectAs()} < DATE_FORMAT(?, '%Y-%m-%d %T')";
+        $expression = "{$column->getSelectAs()} <= DATE_FORMAT(?, '%Y-%m-%d %T')";
         $method = $this->getQueryMethod($column, $filterOperator);
         $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 

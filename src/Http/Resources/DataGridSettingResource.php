@@ -3,10 +3,7 @@
 namespace Strucura\DataGrid\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Strucura\DataGrid\Models\DataGridSetting;
-use Strucura\Transpose\Attributes\DerivePropertiesFromModel;
 
-#[DerivePropertiesFromModel(DataGridSetting::class)]
 class DataGridSettingResource extends JsonResource
 {
     public function toArray($request): array
