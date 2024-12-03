@@ -4,6 +4,7 @@ namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
 use Strucura\DataGrid\Actions\PersistDataGridSettingAction;
@@ -68,20 +69,20 @@ abstract class AbstractDataGrid implements DataGridContract
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
-        $data = GenerateDataGridQueryAction::make()->handle(
+        $query = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
             DataGridData::fromRequest($request)
-        )
+        );
+
+        $data = $query
             ->take($last - $first)
             ->offset($first)
             ->get();
 
-        $total = GenerateDataGridQueryAction::make()->handle(
-            $this->getQuery(),
-            $this->getColumns(),
-            DataGridData::fromRequest($request)
-        )->count();
+        $total = DB::table('fake')
+            ->fromSub($query, 'query')
+            ->count();
 
         return response()->json([
             'rows' => $data,
