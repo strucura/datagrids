@@ -7,7 +7,7 @@ use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
 class IntegerColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Integer;
+    protected ColumnTypeEnum $columnType = ColumnTypeEnum::Integer;
 
     public function signed(): static
     {

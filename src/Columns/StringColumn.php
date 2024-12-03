@@ -7,5 +7,5 @@ use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
 class StringColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::String;
+    protected ColumnTypeEnum $columnType = ColumnTypeEnum::String;
 }
