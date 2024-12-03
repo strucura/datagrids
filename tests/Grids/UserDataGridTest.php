@@ -75,7 +75,7 @@ class UserDataGridTest extends TestCase
             [
                 'field' => 'ID',
                 'header' => 'ID',
-                'data_type' => 'integer',
+                'column_type' => 'integer',
                 'sortable' => true,
                 'filterable' => true,
                 'hidden' => false,
@@ -84,7 +84,7 @@ class UserDataGridTest extends TestCase
             [
                 'field' => 'Name',
                 'header' => 'Name',
-                'data_type' => 'string',
+                'column_type' => 'string',
                 'sortable' => true,
                 'filterable' => true,
                 'hidden' => false,
@@ -93,7 +93,7 @@ class UserDataGridTest extends TestCase
             [
                 'field' => 'Email',
                 'header' => 'Email',
-                'data_type' => 'string',
+                'column_type' => 'string',
                 'sortable' => true,
                 'filterable' => true,
                 'hidden' => false,

@@ -7,5 +7,5 @@ use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
 class BooleanColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Boolean;
+    protected ColumnTypeEnum $columnType = ColumnTypeEnum::Boolean;
 }

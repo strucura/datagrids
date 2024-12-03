@@ -31,7 +31,7 @@ abstract class AbstractColumn implements ColumnContract
 
     protected bool $filterable = true;
 
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::String;
+    protected ColumnTypeEnum $columnType = ColumnTypeEnum::String;
 
     public function __construct(string $queryColumn, string $alias)
     {
@@ -49,6 +49,11 @@ abstract class AbstractColumn implements ColumnContract
     public static function make(Expression|string $queryColumn, string $alias): self
     {
         return new static($queryColumn, $alias);
+    }
+
+    public function getColumnType(): ColumnTypeEnum
+    {
+        return $this->columnType;
     }
 
     public function addBinding($value): self
@@ -124,7 +129,7 @@ abstract class AbstractColumn implements ColumnContract
         return [
             'field' => $this->alias,
             'header' => $this->alias,
-            'data_type' => $this->dataType,
+            'column_type' => $this->columnType,
             'sortable' => $this->sortable,
             'filterable' => $this->filterable,
             'hidden' => $this->isHidden,

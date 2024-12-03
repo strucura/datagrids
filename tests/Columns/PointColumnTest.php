@@ -11,7 +11,7 @@ class PointColumnTest extends TestCase
     public function test_point_column_initializes_with_correct_data_type()
     {
         $column = new PointColumn('table.column', 'alias');
-        $this->assertEquals(ColumnTypeEnum::Point, $column->toArray()['data_type']);
+        $this->assertEquals(ColumnTypeEnum::Point, $column->toArray()['column_type']);
     }
 
     public function test_point_column_to_array_structure()
@@ -21,7 +21,7 @@ class PointColumnTest extends TestCase
 
         $this->assertArrayHasKey('field', $array);
         $this->assertArrayHasKey('header', $array);
-        $this->assertArrayHasKey('data_type', $array);
+        $this->assertArrayHasKey('column_type', $array);
         $this->assertArrayHasKey('sortable', $array);
         $this->assertArrayHasKey('filterable', $array);
         $this->assertArrayHasKey('hidden', $array);
@@ -29,7 +29,7 @@ class PointColumnTest extends TestCase
 
         $this->assertEquals('alias', $array['field']);
         $this->assertEquals('alias', $array['header']);
-        $this->assertEquals(ColumnTypeEnum::Point, $array['data_type']);
+        $this->assertEquals(ColumnTypeEnum::Point, $array['column_type']);
         $this->assertTrue($array['sortable']);
         $this->assertFalse($array['filterable']);
         $this->assertFalse($array['hidden']);

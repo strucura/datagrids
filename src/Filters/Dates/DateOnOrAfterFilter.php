@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
 use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Enums\ColumnTypeEnum;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
@@ -18,7 +19,14 @@ class DateOnOrAfterFilter extends AbstractFilter
 
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = "{$column->getSelectAs()} >= DATE_FORMAT(?, '%Y-%m-%d %T')";
+        if ($column->getColumnType() === ColumnTypeEnum::Date) {
+            $expression = "{$column->getSelectAs()} >= DATE_FORMAT(?, '%Y-%m-%d')";
+        } elseif ($column->getColumnType() === ColumnTypeEnum::DateTime) {
+            $expression = "{$column->getSelectAs()} >= DATE_FORMAT(?, '%Y-%m-%d %T')";
+        } else {
+            throw new \Exception('Column type not supported.');
+        }
+
         $method = $this->getQueryMethod($column, $filterOperator);
         $query->$method($expression, [...$column->getBindings(), $filterData->value]);
 

@@ -7,5 +7,5 @@ use Strucura\DataGrid\Enums\ColumnTypeEnum;
 
 class TimeColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::Time;
+    protected ColumnTypeEnum $columnType = ColumnTypeEnum::Time;
 }
