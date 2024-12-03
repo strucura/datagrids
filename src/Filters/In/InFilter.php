@@ -36,6 +36,11 @@ class InFilter extends AbstractFilter
         $method = $this->getQueryMethod($column, $filterOperator);
         $query->$method($expression, $bindings);
 
+        // If one of the values is null, we need to add a whereNull clause
+        if (in_array(null, $values)) {
+            $query->orWhereNull($column->getSelectAs());
+        }
+
         return $query;
     }
 }
