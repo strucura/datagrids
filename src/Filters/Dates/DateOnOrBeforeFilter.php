@@ -17,6 +17,9 @@ class DateOnOrBeforeFilter extends AbstractFilter
         return $filterData->filterType === FilterOperator::DATE_ON_OR_BEFORE;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         if ($column->getColumnType() === ColumnTypeEnum::Date) {
