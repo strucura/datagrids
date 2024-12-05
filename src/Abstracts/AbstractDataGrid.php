@@ -47,14 +47,6 @@ abstract class AbstractDataGrid implements DataGridContract
             ->toString();
     }
 
-    public function getPermissionName(): string
-    {
-        return Str::of(static::class)
-            ->classBasename()
-            ->snake('_')
-            ->toString();
-    }
-
     public function getDataGridKey(): string
     {
         return $this->getRouteName();
@@ -67,8 +59,6 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleData(DataGridDataRequest $request): JsonResponse
     {
-        Gate::authorize($this->getPermissionName());
-
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
@@ -98,8 +88,6 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleSchema(DataGridSchemaRequest $request): JsonResponse
     {
-        Gate::authorize($this->getPermissionName());
-
         $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
         });
