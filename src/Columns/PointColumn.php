@@ -9,7 +9,7 @@ class PointColumn extends AbstractColumn
 {
     protected ColumnTypeEnum $columnType = ColumnTypeEnum::Point;
 
-    protected bool $filterable = false;
+    protected bool $isFilterable = false;
 
     public function setSelectAs(string $selectAs): static
     {
