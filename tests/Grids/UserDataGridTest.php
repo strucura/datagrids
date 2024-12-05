@@ -4,6 +4,7 @@ namespace Strucura\DataGrid\Tests\Grids;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 use Strucura\DataGrid\Tests\Fakes\UserDataGrid;
@@ -13,6 +14,14 @@ class UserDataGridTest extends TestCase
 {
     public function test_gets_grid_data_correctly()
     {
+        // Create an instance of UserDataDataGrid
+        $grid = new UserDataGrid;
+
+        // Mock the Gate facade to bypass authorization with specific permission
+        Gate::shouldReceive('authorize')
+            ->with($grid->getPermissionName())
+            ->andReturn(true);
+
         // Seed the database with test data
         DB::table('users')->insert([
             ['name' => 'John Doe', 'email' => 'john@example.com', 'created_at' => now(), 'updated_at' => now()],
@@ -27,8 +36,7 @@ class UserDataGridTest extends TestCase
             'sorts' => [],
         ]);
 
-        // Create an instance of UserDataDataGrid
-        $grid = new UserDataGrid;
+
 
         // Call the handleData method
         $response = $grid->handleData($request);
@@ -54,6 +62,10 @@ class UserDataGridTest extends TestCase
     {
         // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
+
+        Gate::shouldReceive('authorize')
+            ->with($grid->getPermissionName())
+            ->andReturn(true);
 
         // Call the handleSchema method
         $response = $grid->handleSchema(DataGridSchemaRequest::create($grid->getRoutePath(), 'POST'));
