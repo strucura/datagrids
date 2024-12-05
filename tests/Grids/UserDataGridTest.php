@@ -2,9 +2,7 @@
 
 namespace Strucura\DataGrid\Tests\Grids;
 
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
