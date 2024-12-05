@@ -69,12 +69,10 @@ class GenerateDataGridQueryAction
     /**
      * Apply the filters in the filter set to the query
      *
-     * @param Builder $query The query builder instance
-     * @param Collection $columns The collection of columns
-     * @param Collection $filters The collection of filters to apply in the set
-     * @param FilterSetOperator $filterSetOperator The operator to use between filters
-     *
-     * @return void
+     * @param  Builder  $query  The query builder instance
+     * @param  Collection  $columns  The collection of columns
+     * @param  Collection  $filters  The collection of filters to apply in the set
+     * @param  FilterSetOperator  $filterSetOperator  The operator to use between filters
      *
      * @throws Exception
      */
@@ -98,10 +96,8 @@ class GenerateDataGridQueryAction
     /**
      * Find the filter class that can handle the given column and filter
      *
-     * @param AbstractColumn $column The column to filter on
-     * @param FilterData $filter The filter data
-     *
-     * @return FilterContract|null
+     * @param  AbstractColumn  $column  The column to filter on
+     * @param  FilterData  $filter  The filter data
      */
     private function getMatchingFilterClass(AbstractColumn $column, FilterData $filter): ?FilterContract
     {
@@ -123,8 +119,6 @@ class GenerateDataGridQueryAction
      *
      * @param  Builder  $query  The query builder instance.
      * @param  Collection  $sorts  The collection of sorts to apply.
-     *
-     * @return void
      */
     private function applySorts(Builder $query, Collection $sorts): void
     {

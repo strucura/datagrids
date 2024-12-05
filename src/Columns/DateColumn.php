@@ -17,7 +17,6 @@ class DateColumn extends AbstractColumn
     /**
      * Provides instructions to the frontend on how to display the date
      *
-     * @param string $dateFormat
      * @return $this
      */
     public function displayFormat(string $dateFormat): static
