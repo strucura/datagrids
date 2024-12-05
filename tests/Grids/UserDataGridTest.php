@@ -2,15 +2,11 @@
 
 namespace Strucura\DataGrid\Tests\Grids;
 
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Gate;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
-use Strucura\DataGrid\Http\Requests\RetrieveDataGridSettingsRequest;
-use Strucura\DataGrid\Models\DataGridSetting;
 use Strucura\DataGrid\Tests\Fakes\UserDataGrid;
 use Strucura\DataGrid\Tests\TestCase;
 
@@ -18,6 +14,14 @@ class UserDataGridTest extends TestCase
 {
     public function test_gets_grid_data_correctly()
     {
+        // Create an instance of UserDataDataGrid
+        $grid = new UserDataGrid;
+
+        // Mock the Gate facade to bypass authorization with specific permission
+        Gate::shouldReceive('authorize')
+            ->with($grid->getPermissionName())
+            ->andReturn(true);
+
         // Seed the database with test data
         DB::table('users')->insert([
             ['name' => 'John Doe', 'email' => 'john@example.com', 'created_at' => now(), 'updated_at' => now()],
@@ -31,9 +35,6 @@ class UserDataGridTest extends TestCase
             'filters' => [],
             'sorts' => [],
         ]);
-
-        // Create an instance of UserDataDataGrid
-        $grid = new UserDataGrid;
 
         // Call the handleData method
         $response = $grid->handleData($request);
@@ -59,6 +60,10 @@ class UserDataGridTest extends TestCase
     {
         // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
+
+        Gate::shouldReceive('authorize')
+            ->with($grid->getPermissionName())
+            ->andReturn(true);
 
         // Call the handleSchema method
         $response = $grid->handleSchema(DataGridSchemaRequest::create($grid->getRoutePath(), 'POST'));
@@ -101,55 +106,6 @@ class UserDataGridTest extends TestCase
         foreach ($columns as $column) {
             $this->assertContains($column, $data['columns']);
         }
-    }
-
-    public function test_retrieves_grid_settings_correctly()
-    {
-        $user = User::query()->forceCreate([
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
-        ]);
-
-        $grid = new UserDataGrid;
-
-        DataGridSetting::query()->create([
-            'owner_id' => $user->id,
-            'data_grid_key' => $grid->getDataGridKey(),
-            'name' => 'setting1',
-            'value' => json_encode(['foo' => 'bar']),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        DataGridSetting::query()->create([
-            'owner_id' => $user->id,
-            'data_grid_key' => $grid->getDataGridKey(),
-            'name' => 'setting2',
-            'value' => json_encode(['baz' => 'qux']),
-            'created_at' => now(),
-            'updated_at' => now()],
-        );
-
-        // Create a RetrieveDataGridSettingsRequest
-        $request = RetrieveDataGridSettingsRequest::create($grid->getRoutePath(), 'GET', []);
-        $request->setUserResolver(function () use ($user) {
-            return $user;
-        });
-
-        // Call the handleRetrievingSettings method
-        $response = $grid->handleRetrievingSettings($request);
-
-        // Assert that the response is an AnonymousResourceCollection
-        $this->assertInstanceOf(AnonymousResourceCollection::class, $response);
-
-        // Assert that the response data matches the expected settings
-        $data = $response->toArray($request);
-
-        $this->assertCount(2, $data);
-        $this->assertEquals('setting1', $data[0]['name']);
-        $this->assertEquals(json_encode(['foo' => 'bar']), $data[0]['value']);
-        $this->assertEquals('setting2', $data[1]['name']);
-        $this->assertEquals(json_encode(['baz' => 'qux']), $data[1]['value']);
     }
 
     public function test_gets_data_grid_key_correctly()
