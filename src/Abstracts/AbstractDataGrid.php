@@ -3,6 +3,8 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
 use Strucura\DataGrid\Contracts\DataGridContract;
@@ -58,27 +60,40 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleData(DataGridDataRequest $request): JsonResponse
     {
+        if (method_exists($this, 'getPermissionName')) {
+            Gate::authorize($this->getPermissionName());
+        }
+
+        // Get the first and last row numbers for the current page
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
-        $data = GenerateDataGridQueryAction::make()->handle(
+        /**
+         * Base data grid query
+         */
+        $query = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
             DataGridData::fromRequest($request)
-        )
-            ->take($last - $first)
+        );
+
+        /**
+         * Isolate the data for the current page
+         */
+        $data = $query->take($last - $first)
             ->offset($first)
             ->get();
 
-        $total = GenerateDataGridQueryAction::make()->handle(
-            $this->getQuery(),
-            $this->getColumns(),
-            DataGridData::fromRequest($request)
-        )->count();
+        /**
+         * Get the total row count.  We need to use a subquery to avoid issues when performing group by operations.
+         */
+        $total = DB::table('fake')
+            ->fromSub($query, 'query')
+            ->count();
 
         return response()->json([
             'rows' => $data,
-            'row_count' => $total,
+            'total_row_count' => $total,
         ]);
     }
 
@@ -87,6 +102,11 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleSchema(DataGridSchemaRequest $request): JsonResponse
     {
+        if (method_exists($this, 'getPermissionName')) {
+            Gate::authorize($this->getPermissionName());
+        }
+
+        // Get the columns for the grid
         $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
         });

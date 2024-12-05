@@ -8,6 +8,12 @@ use Strucura\DataGrid\Enums\FilterSetOperator;
 
 abstract class AbstractFilter implements FilterContract
 {
+    /**
+     * Normalize the value before using it in the query.
+     *
+     * @param mixed $value
+     * @return mixed
+     */
     public function getNormalizedValue(mixed $value): mixed
     {
         $normalizers = config('datagrids.normalizers');
@@ -20,6 +26,13 @@ abstract class AbstractFilter implements FilterContract
             ->thenReturn();
     }
 
+    /**
+     * Get the query method to be used in the query builder.
+     *
+     * @param AbstractColumn $column
+     * @param FilterSetOperator $filterSetOperator
+     * @return string
+     */
     public function getQueryMethod(AbstractColumn $column, FilterSetOperator $filterSetOperator): string
     {
         $queryMethod = $column->isHavingRequired()
