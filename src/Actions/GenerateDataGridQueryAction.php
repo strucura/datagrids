@@ -2,12 +2,16 @@
 
 namespace Strucura\DataGrid\Actions;
 
+use Exception;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Contracts\FilterContract;
 use Strucura\DataGrid\Data\DataGridData;
+use Strucura\DataGrid\Data\FilterData;
+use Strucura\DataGrid\Data\FilterSetData;
 use Strucura\DataGrid\Data\SortData;
+use Strucura\DataGrid\Enums\FilterSetOperator;
 
 /**
  * Class GenerateDataGridQueryAction
@@ -25,51 +29,81 @@ class GenerateDataGridQueryAction
      * Handle the generation of the grid query.
      *
      * @param  Builder  $query  The query builder instance.
-     * @param  Collection  $columns  The collection of columns to select.
+     * @param  Collection<AbstractColumn>  $columns  The collection of columns to select.
      * @param  DataGridData  $gridData  The grid data containing the filters and sorts.
      * @return Builder The generated query builder instance.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(Builder $query, Collection $columns, DataGridData $gridData): Builder
     {
-        $this->applyFilters($query, $columns, $gridData->filters);
+        $this->applyFilterSets($query, $columns, $gridData->filterSets);
         $this->applySorts($query, $gridData->sorts);
 
         foreach ($columns as $column) {
-            $query->selectRaw("{$column->getSelectAs()} as `{$column->getAlias()}`", $column->getBindings());
+            $query->selectRaw("{$column->getSelectAs()} as `{$column->getColumnName()}`", $column->getBindings());
         }
 
         return $query;
     }
 
     /**
-     * Apply filters to the query.
+     * Apply filter sets to the query.
      *
      * @param  Builder  $query  The query builder instance.
-     * @param  Collection  $columns  The collection of columns.
-     * @param  Collection  $filters  The collection of filters to apply.
+     * @param  Collection<AbstractColumn>  $columns  The collection of columns.
+     * @param  Collection<FilterSetData>  $filterSets  The collection of filters to apply.
      *
-     * @throws \Exception If a filter cannot be applied.
+     * @throws Exception If a filter cannot be applied.
      */
-    private function applyFilters(Builder $query, Collection $columns, Collection $filters): void
+    private function applyFilterSets(Builder $query, Collection $columns, Collection $filterSets): void
     {
-        $availableFilters = config('datagrids.filters');
+        /** @var FilterSetData $filterSet */
+        foreach ($filterSets as $filterSet) {
+            $query->where(function (Builder $query) use ($columns, $filterSet) {
+                $this->applyFilters($query, $columns, $filterSet->filters, $filterSet->filterOperator);
+            });
+        }
+    }
 
+    /**
+     * Apply the filters in the filter set to the query
+     *
+     * @throws Exception
+     */
+    private function applyFilters(Builder $query, Collection $columns, Collection $filters, FilterSetOperator $filterSetOperator): void
+    {
         foreach ($filters as $filter) {
-            $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);
+            /** @var AbstractColumn|null $column */
+            $column = $columns->first(fn (AbstractColumn $col) => $col->getColumnName() === $filter->column);
             if (! $column) {
                 continue;
             }
 
-            foreach ($availableFilters as $filterClass) {
-                /** @var FilterContract $filterInstance */
-                $filterInstance = app($filterClass);
-                if ($filterInstance->canHandle($column, $filter)) {
-                    $filterInstance->handle($query, $column, $filter);
-                }
+            $filterClass = $this->getMatchingFilterClass($column, $filter);
+            if (! $filterClass) {
+                throw new Exception("No filter found for column {$column->getColumnName()} with filter type {$filter->filterType->value}");
+            }
+            $filterClass->handle($query, $column, $filter, $filterSetOperator);
+        }
+    }
+
+    /**
+     * Find the filter class that can handle the given column and filter
+     */
+    private function getMatchingFilterClass(AbstractColumn $column, FilterData $filter): ?FilterContract
+    {
+        $availableFilters = config('datagrids.filters');
+
+        foreach ($availableFilters as $filterClass) {
+            /** @var FilterContract $filterInstance */
+            $filterInstance = app($filterClass);
+            if ($filterInstance->canHandle($column, $filter)) {
+                return $filterInstance;
             }
         }
+
+        return null;
     }
 
     /**

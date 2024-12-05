@@ -11,7 +11,7 @@ class IntegerColumnTest extends TestCase
     public function test_integer_column_initializes_with_correct_data_type()
     {
         $column = new IntegerColumn('table.column', 'alias');
-        $this->assertEquals(ColumnTypeEnum::Integer, $column->toArray()['data_type']);
+        $this->assertEquals(ColumnTypeEnum::Integer, $column->toArray()['type']);
     }
 
     public function test_integer_column_to_array_structure()
@@ -19,20 +19,18 @@ class IntegerColumnTest extends TestCase
         $column = new IntegerColumn('table.column', 'alias');
         $array = $column->toArray();
 
-        $this->assertArrayHasKey('column', $array);
-        $this->assertArrayHasKey('header', $array);
-        $this->assertArrayHasKey('data_type', $array);
-        $this->assertArrayHasKey('sortable', $array);
-        $this->assertArrayHasKey('filterable', $array);
-        $this->assertArrayHasKey('hidden', $array);
+        $this->assertArrayHasKey('name', $array);
+        $this->assertArrayHasKey('type', $array);
+        $this->assertArrayHasKey('is_sortable', $array);
+        $this->assertArrayHasKey('is_filterable', $array);
+        $this->assertArrayHasKey('is_hidden', $array);
         $this->assertArrayHasKey('meta', $array);
 
-        $this->assertEquals('alias', $array['column']);
-        $this->assertEquals('alias', $array['header']);
-        $this->assertEquals(ColumnTypeEnum::Integer, $array['data_type']);
-        $this->assertTrue($array['sortable']);
-        $this->assertTrue($array['filterable']);
-        $this->assertFalse($array['hidden']);
+        $this->assertEquals('alias', $array['name']);
+        $this->assertEquals(ColumnTypeEnum::Integer, $array['type']);
+        $this->assertTrue($array['is_sortable']);
+        $this->assertTrue($array['is_filterable']);
+        $this->assertFalse($array['is_hidden']);
         $this->assertIsArray($array['meta']);
     }
 

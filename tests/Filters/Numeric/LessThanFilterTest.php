@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\FilterTypeEnum;
+use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Filters\Numeric\LessThanFilter;
 use Strucura\DataGrid\Tests\TestCase;
 
@@ -15,7 +15,7 @@ class LessThanFilterTest extends TestCase
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', 10, FilterTypeEnum::LESS_THAN);
+        $filterData = new FilterData('column', 10, FilterOperator::LESS_THAN);
 
         $filter = new LessThanFilter;
 
@@ -26,7 +26,7 @@ class LessThanFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('quantity', 10, FilterTypeEnum::LESS_THAN);
+        $filterData = new FilterData('quantity', 10, FilterOperator::LESS_THAN);
 
         $column->shouldReceive('getSelectAs')->andReturn('quantity');
         $column->shouldReceive('isHavingRequired')->andReturn(false);

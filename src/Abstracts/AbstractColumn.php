@@ -2,8 +2,6 @@
 
 namespace Strucura\DataGrid\Abstracts;
 
-use Exception;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
@@ -15,43 +13,83 @@ abstract class AbstractColumn implements ColumnContract
 {
     use Macroable;
 
+    /**
+     * The query builder parameter bindings to be used for the column
+     */
     protected QueryBuilder $bindings;
 
+    /**
+     * The SQL select expression for the column
+     */
     protected string $selectAs;
 
-    protected string $alias;
+    /**
+     * How we want to name the column
+     */
+    protected string $columnName;
 
-    protected string $queryColumn;
-
+    /**
+     * Whether we want to hide the column in the grid.  This is useful for columns that you may want exposed to the
+     * user, but not visible by default.
+     */
     protected bool $isHidden = false;
 
+    /**
+     * Miscellaneous meta data that can be used to store additional information about the column
+     */
     protected array $meta = [];
 
-    protected bool $sortable = true;
+    /**
+     * Whether the column is sortable
+     */
+    protected bool $isSortable = true;
 
-    protected bool $filterable = true;
+    /**
+     * Whether the column is filterable
+     */
+    protected bool $isFilterable = true;
 
-    protected ColumnTypeEnum $dataType = ColumnTypeEnum::String;
+    /**
+     * The type of column.  This is useful for the front end so that they understand how to present the data and what
+     * filters are available.
+     */
+    protected ColumnTypeEnum $columnType = ColumnTypeEnum::String;
 
-    public function __construct(string $queryColumn, string $alias)
+    /**
+     * AbstractColumn constructor.
+     */
+    public function __construct(string $selectAs, string $alias, array $bindings = [])
     {
-        $this->alias = $alias;
+        $this->columnName = $alias;
         $this->bindings = DB::query();
 
-        if (! empty($queryColumn) && ! preg_match('/^\w+?\.\w+?$/', $queryColumn)) {
-            throw new Exception("Query column '$queryColumn' should be formatted as \"table_name.column_name\".");
+        $this->setSelectAs($selectAs);
+
+        foreach ($bindings as $binding) {
+            $this->addBinding($binding);
         }
-
-        $this->queryColumn = $queryColumn;
-        $this->setSelectAs($queryColumn);
     }
 
-    public static function make(Expression|string $queryColumn, string $alias): self
+    /**
+     * Create a new instance of the column
+     */
+    public static function make(Expression|string $queryColumn, string $alias, array $bindings = []): self
     {
-        return new static($queryColumn, $alias);
+        return new static($queryColumn, $alias, $bindings);
     }
 
-    public function addBinding($value): self
+    /**
+     * Get the column type
+     */
+    public function getColumnType(): ColumnTypeEnum
+    {
+        return $this->columnType;
+    }
+
+    /**
+     * Add a binding to the column
+     */
+    public function addBinding(mixed $value): self
     {
         $this->bindings->addBinding($value);
 
@@ -63,11 +101,19 @@ abstract class AbstractColumn implements ColumnContract
         return $this->bindings->getBindings();
     }
 
-    public function getAlias(): string
+    /**
+     * Get the alias for the column
+     */
+    public function getColumnName(): string
     {
-        return $this->alias;
+        return $this->columnName;
     }
 
+    /**
+     * Set the select expression for the column.
+     *
+     * @return $this
+     */
     public function setSelectAs(string $selectAs): static
     {
         $this->selectAs = $selectAs;
@@ -75,32 +121,41 @@ abstract class AbstractColumn implements ColumnContract
         return $this;
     }
 
+    /**
+     * Get the select expression for the column
+     */
     public function getSelectAs(): string
     {
         return $this->selectAs;
     }
 
-    public function selectAsSubQuery(QueryBuilder|EloquentBuilder $builder): static
-    {
-        $this->bindings->mergeBindings($builder instanceof EloquentBuilder ? $builder->getQuery() : $builder);
-
-        return $this->setSelectAs("({$builder->toSql()})");
-    }
-
+    /**
+     * Set the column type
+     *
+     * @return $this
+     */
     public function withoutSorting(): static
     {
-        $this->sortable = false;
+        $this->isSortable = false;
 
         return $this;
     }
 
+    /**
+     * Set the column type
+     *
+     * @return $this
+     */
     public function withoutFiltering(): static
     {
-        $this->filterable = false;
+        $this->isFilterable = false;
 
         return $this;
     }
 
+    /**
+     * Set the column type
+     */
     public function isHavingRequired(): bool
     {
         foreach (['count(', 'sum(', 'avg(', 'min(', 'max('] as $expression) {
@@ -112,6 +167,11 @@ abstract class AbstractColumn implements ColumnContract
         return false;
     }
 
+    /**
+     * Set the column type
+     *
+     * @return $this
+     */
     public function hidden(): static
     {
         $this->isHidden = true;
@@ -122,12 +182,11 @@ abstract class AbstractColumn implements ColumnContract
     public function toArray(): array
     {
         return [
-            'column' => $this->alias,
-            'header' => $this->alias,
-            'data_type' => $this->dataType,
-            'sortable' => $this->sortable,
-            'filterable' => $this->filterable,
-            'hidden' => $this->isHidden,
+            'name' => $this->columnName,
+            'type' => $this->columnType,
+            'is_sortable' => $this->isSortable,
+            'is_filterable' => $this->isFilterable,
+            'is_hidden' => $this->isHidden,
             'meta' => $this->meta,
         ];
     }

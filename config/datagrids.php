@@ -7,6 +7,10 @@ use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
 use Strucura\DataGrid\Filters\Dates\DateBeforeFilter;
 use Strucura\DataGrid\Filters\Dates\DateIsFilter;
 use Strucura\DataGrid\Filters\Dates\DateIsNotFilter;
+use Strucura\DataGrid\Filters\Dates\DateOnOrAfterFilter;
+use Strucura\DataGrid\Filters\Dates\DateOnOrBeforeFilter;
+use Strucura\DataGrid\Filters\Equals\DoesNotEqualFilter;
+use Strucura\DataGrid\Filters\Equals\EqualsFilter;
 use Strucura\DataGrid\Filters\In\InFilter;
 use Strucura\DataGrid\Filters\In\NotInFilter;
 use Strucura\DataGrid\Filters\Numeric\GreaterThanFilter;
@@ -53,11 +57,17 @@ return [
      * A list of filters that can be applied to a data source.
      */
     'filters' => [
+        // Equality
+        EqualsFilter::class,
+        DoesNotEqualFilter::class,
+
         // Dates
         DateAfterFilter::class,
         DateBeforeFilter::class,
         DateIsFilter::class,
         DateIsNotFilter::class,
+        DateOnOrBeforeFilter::class,
+        DateOnOrAfterFilter::class,
 
         // In
         InFilter::class,
