@@ -35,11 +35,6 @@ abstract class AbstractColumn implements ColumnContract
     protected bool $isHidden = false;
 
     /**
-     * Miscellaneous meta data that can be used to store additional information about the column
-     */
-    protected array $meta = [];
-
-    /**
      * Whether the column is sortable
      */
     protected bool $isSortable = true;
@@ -54,6 +49,11 @@ abstract class AbstractColumn implements ColumnContract
      * filters are available.
      */
     protected ColumnTypeEnum $columnType = ColumnTypeEnum::String;
+
+    /**
+     * Miscellaneous metadata that can be used to store additional information about the column
+     */
+    protected array $meta = [];
 
     /**
      * AbstractColumn constructor.
@@ -149,6 +149,13 @@ abstract class AbstractColumn implements ColumnContract
     public function withoutFiltering(): static
     {
         $this->isFilterable = false;
+
+        return $this;
+    }
+
+    public function withMeta(string $key, mixed $value): static
+    {
+        $this->meta[$key] = $value;
 
         return $this;
     }

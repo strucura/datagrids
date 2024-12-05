@@ -13,4 +13,17 @@ class DateColumn extends AbstractColumn
     {
         return parent::setSelectAs("DATE_FORMAT($selectAs, '%Y-%m-%d')");
     }
+
+    /**
+     * Provides instructions to the frontend on how to display the date
+     *
+     * @param string $dateFormat
+     * @return $this
+     */
+    public function displayFormat(string $dateFormat): static
+    {
+        $this->withMeta('format', $dateFormat);
+
+        return $this;
+    }
 }
