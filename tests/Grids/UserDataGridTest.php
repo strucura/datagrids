@@ -36,8 +36,6 @@ class UserDataGridTest extends TestCase
             'sorts' => [],
         ]);
 
-
-
         // Call the handleData method
         $response = $grid->handleData($request);
 
