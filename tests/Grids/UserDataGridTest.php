@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 use Strucura\DataGrid\Tests\Fakes\UserDataGrid;
+use Strucura\DataGrid\Tests\Fakes\UserDataGridWithAuthorization;
 use Strucura\DataGrid\Tests\TestCase;
 
 class UserDataGridTest extends TestCase
@@ -18,9 +19,7 @@ class UserDataGridTest extends TestCase
         $grid = new UserDataGrid;
 
         // Mock the Gate facade to bypass authorization with specific permission
-        Gate::shouldReceive('authorize')
-            ->with($grid->getPermissionName())
-            ->andReturn(true);
+        Gate::shouldReceive('authorize')->never();
 
         // Seed the database with test data
         DB::table('users')->insert([
@@ -61,9 +60,8 @@ class UserDataGridTest extends TestCase
         // Create an instance of UserDataDataGrid
         $grid = new UserDataGrid;
 
-        Gate::shouldReceive('authorize')
-            ->with($grid->getPermissionName())
-            ->andReturn(true);
+        // Mock the Gate facade to bypass authorization with specific permission
+        Gate::shouldReceive('authorize')->never();
 
         // Call the handleSchema method
         $response = $grid->handleSchema(DataGridSchemaRequest::create($grid->getRoutePath(), 'POST'));
@@ -106,6 +104,58 @@ class UserDataGridTest extends TestCase
         foreach ($columns as $column) {
             $this->assertContains($column, $data['columns']);
         }
+    }
+
+    public function test_invokes_permission_check_when_permission_trait_present_on_data()
+    {
+        $grid = new UserDataGridWithAuthorization;
+
+        // Mock the Gate facade to bypass authorization with specific permission
+        Gate::shouldReceive('authorize')
+            ->with($grid->getPermissionName())
+            ->andReturn(true);
+
+        // Create a DataGridDataRequest with necessary inputs
+        $request = DataGridDataRequest::create('/grid-data', 'GET', [
+            'first' => 0,
+            'last' => 100,
+            'filters' => [],
+            'sorts' => [],
+        ]);
+
+        // Call the handleData method
+        $response = $grid->handleData($request);
+
+        // Assert that the response is a JsonResponse
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
+
+    public function test_invokes_permission_check_when_permission_trait_present_on_schema()
+    {
+        $grid = new UserDataGridWithAuthorization;
+
+        // Mock the Gate facade to bypass authorization with specific permission
+        Gate::shouldReceive('authorize')
+            ->with($grid->getPermissionName())
+            ->andReturn(true);
+
+        // Call the handleSchema method
+        $response = $grid->handleSchema(DataGridSchemaRequest::create($grid->getRoutePath(), 'POST'));
+
+        // Assert that the response is a JsonResponse
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
+
+    public function test_creates_permission_name_correctly()
+    {
+        // Create an instance of UserDataDataGrid
+        $grid = new UserDataGridWithAuthorization;
+
+        // Call the getPermissionName method
+        $name = $grid->getPermissionName();
+
+        // Assert that the returned name matches the expected name
+        $this->assertEquals('user_data_grid_with_authorization', $name);
     }
 
     public function test_gets_data_grid_key_correctly()

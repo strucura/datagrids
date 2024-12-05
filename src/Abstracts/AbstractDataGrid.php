@@ -3,6 +3,7 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Strucura\DataGrid\Actions\GenerateDataGridQueryAction;
 use Strucura\DataGrid\Contracts\DataGridContract;
@@ -58,6 +59,10 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleData(DataGridDataRequest $request): JsonResponse
     {
+        if (method_exists($this, 'getPermissionName')) {
+            Gate::authorize($this->getPermissionName());
+        }
+
         $first = $request->input('first', 0);
         $last = $request->input('last', 100);
 
@@ -87,6 +92,10 @@ abstract class AbstractDataGrid implements DataGridContract
      */
     public function handleSchema(DataGridSchemaRequest $request): JsonResponse
     {
+        if (method_exists($this, 'getPermissionName')) {
+            Gate::authorize($this->getPermissionName());
+        }
+
         $columns = $this->getColumns()->map(function (AbstractColumn $column) {
             return $column->toArray();
         });
