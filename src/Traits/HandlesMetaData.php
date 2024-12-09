@@ -15,4 +15,9 @@ trait HandlesMetaData
 
         return $this;
     }
+
+    public function getMeta(string $key): mixed
+    {
+        return $this->meta[$key] ?? null;
+    }
 }
