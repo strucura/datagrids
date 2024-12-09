@@ -17,7 +17,6 @@ class DateTimeColumn extends AbstractColumn
     /**
      * Provides instructions to the frontend on how to display the date time
      *
-     * @param string $format
      * @return $this
      */
     public function displayFormat(string $format): static

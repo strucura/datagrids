@@ -13,7 +13,7 @@ class BooleanColumn extends AbstractColumn
     {
         $this->withMeta('format', [
             'truthy' => $truthyFormat,
-            'falsy' => $falsyFormat
+            'falsy' => $falsyFormat,
         ]);
 
         return $this;

@@ -2,9 +2,6 @@
 
 namespace Strucura\DataGrid\Abstracts;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Traits\Macroable;
 use Strucura\DataGrid\Contracts\ColumnContract;
 use Strucura\DataGrid\Enums\ColumnType;
@@ -13,7 +10,7 @@ use Strucura\DataGrid\Traits\HandlesQueryCreation;
 
 abstract class AbstractColumn implements ColumnContract
 {
-    use Macroable, HandlesQueryCreation, HandlesMetaData;
+    use HandlesMetaData, HandlesQueryCreation, Macroable;
 
     /**
      * Whether we want to hide the column in the grid.  This is useful for columns that you may want exposed to the

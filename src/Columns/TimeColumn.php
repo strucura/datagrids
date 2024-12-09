@@ -12,7 +12,6 @@ class TimeColumn extends AbstractColumn
     /**
      * Provides instructions to the frontend on how to display the time
      *
-     * @param string $displayFormat
      * @return $this
      */
     public function displayFormat(string $displayFormat): static
