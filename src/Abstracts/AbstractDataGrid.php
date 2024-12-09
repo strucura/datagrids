@@ -114,13 +114,15 @@ abstract class AbstractDataGrid implements DataGridContract
         }
 
         // Get the columns for the grid
-        $columns = $this->getColumns()->map(function (AbstractColumn $column) {
-            return $column->toArray();
-        });
+        $columns = $this->getColumns()
+            ->map(function (AbstractColumn $column) {
+                return $column->toArray();
+            });
 
-        $floatingFilters = $this->getFloatingFilters()->map(function (AbstractColumn $filter) {
-            return $filter->toArray();
-        });
+        $floatingFilters = $this->getFloatingFilters()
+            ->map(function (AbstractColumn $filter) {
+                return $filter->toArray();
+            });
 
         return response()->json([
             'columns' => $columns,
