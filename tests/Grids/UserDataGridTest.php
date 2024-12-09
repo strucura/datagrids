@@ -44,7 +44,7 @@ class UserDataGridTest extends TestCase
         // Assert that the response data matches the expected data
         $data = $response->getData(true);
 
-        $this->assertEquals(2, $data['row_count']);
+        $this->assertEquals(2, $data['total_row_count']);
         $rows = $data['rows'];
         $this->assertCount(2, $rows);
         $this->assertEquals(1, $rows[0]['ID']);
