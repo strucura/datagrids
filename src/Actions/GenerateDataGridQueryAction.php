@@ -41,7 +41,7 @@ class GenerateDataGridQueryAction
         $this->applySorts($query, $gridData->sorts);
 
         foreach ($columns as $column) {
-            $query->selectRaw("{$column->getSelectAs()} as `{$column->getColumnName()}`", $column->getBindings());
+            $query->selectRaw("{$column->getSelectAs()} as `{$column->getAlias()}`", $column->getBindings());
         }
 
         return $query;
@@ -82,14 +82,14 @@ class GenerateDataGridQueryAction
     {
         foreach ($filters as $filter) {
             /** @var AbstractColumn|null $column */
-            $column = $columns->first(fn (AbstractColumn $col) => $col->getColumnName() === $filter->column);
+            $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);
             if (! $column) {
                 continue;
             }
 
             $filterClass = $this->getMatchingFilterClass($column, $filter);
             if (! $filterClass) {
-                throw new Exception("No filter found for column {$column->getColumnName()} with filter type {$filter->filterType->value}");
+                throw new Exception("No filter found for {$column->getAlias()} with filter type {$filter->filterType->value}");
             }
             $filterClass->handle($query, $column, $filter, $filterSetOperator);
         }

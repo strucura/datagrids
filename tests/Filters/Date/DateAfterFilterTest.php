@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
 use Strucura\DataGrid\Tests\TestCase;
@@ -32,7 +32,7 @@ class DateAfterFilterTest extends TestCase
         $column->shouldReceive('getSelectAs')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
-        $column->shouldReceive('getColumnType')->andReturn(ColumnTypeEnum::DateTime);
+        $column->shouldReceive('getColumnType')->andReturn(ColumnType::DateTime);
 
         $query->shouldReceive('whereRaw')
             ->once()
@@ -52,7 +52,7 @@ class DateAfterFilterTest extends TestCase
         $column->shouldReceive('getSelectAs')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
-        $column->shouldReceive('getColumnType')->andReturn(ColumnTypeEnum::Date);
+        $column->shouldReceive('getColumnType')->andReturn(ColumnType::Date);
 
         $query->shouldReceive('whereRaw')
             ->once()

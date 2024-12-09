@@ -3,6 +3,7 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -14,6 +15,11 @@ use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 
 abstract class AbstractDataGrid implements DataGridContract
 {
+    public function getFloatingFilters(): Collection
+    {
+        return collect([]);
+    }
+
     public function getRoutePrefix(): string
     {
         return 'grids';
@@ -111,8 +117,13 @@ abstract class AbstractDataGrid implements DataGridContract
             return $column->toArray();
         });
 
+        $floatingFilters = $this->getFloatingFilters()->map(function (AbstractColumn $filter) {
+            return $filter->toArray();
+        });
+
         return response()->json([
             'columns' => $columns,
+            'floating_filters' => $floatingFilters,
         ]);
     }
 }

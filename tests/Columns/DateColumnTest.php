@@ -3,7 +3,7 @@
 namespace Strucura\DataGrid\Tests\Columns;
 
 use Strucura\DataGrid\Columns\DateColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DateColumnTest extends TestCase
@@ -11,7 +11,7 @@ class DateColumnTest extends TestCase
     public function test_date_column_initializes_with_correct_data_type()
     {
         $column = new DateColumn('table.column', 'alias');
-        $this->assertEquals(ColumnTypeEnum::Date, $column->toArray()['type']);
+        $this->assertEquals(ColumnType::Date, $column->toArray()['type']);
     }
 
     public function test_date_column_to_array_structure()
@@ -27,7 +27,7 @@ class DateColumnTest extends TestCase
         $this->assertArrayHasKey('meta', $array);
 
         $this->assertEquals('alias', $array['name']);
-        $this->assertEquals(ColumnTypeEnum::Date, $array['type']);
+        $this->assertEquals(ColumnType::Date, $array['type']);
         $this->assertTrue($array['is_sortable']);
         $this->assertTrue($array['is_filterable']);
         $this->assertFalse($array['is_hidden']);

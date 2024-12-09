@@ -3,7 +3,7 @@
 namespace Strucura\DataGrid\Tests\Columns;
 
 use Strucura\DataGrid\Columns\IntegerColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 use Strucura\DataGrid\Tests\TestCase;
 
 class IntegerColumnTest extends TestCase
@@ -11,7 +11,7 @@ class IntegerColumnTest extends TestCase
     public function test_integer_column_initializes_with_correct_data_type()
     {
         $column = new IntegerColumn('table.column', 'alias');
-        $this->assertEquals(ColumnTypeEnum::Integer, $column->toArray()['type']);
+        $this->assertEquals(ColumnType::Integer, $column->toArray()['type']);
     }
 
     public function test_integer_column_to_array_structure()
@@ -27,7 +27,7 @@ class IntegerColumnTest extends TestCase
         $this->assertArrayHasKey('meta', $array);
 
         $this->assertEquals('alias', $array['name']);
-        $this->assertEquals(ColumnTypeEnum::Integer, $array['type']);
+        $this->assertEquals(ColumnType::Integer, $array['type']);
         $this->assertTrue($array['is_sortable']);
         $this->assertTrue($array['is_filterable']);
         $this->assertFalse($array['is_hidden']);

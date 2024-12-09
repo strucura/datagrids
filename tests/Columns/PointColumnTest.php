@@ -3,7 +3,7 @@
 namespace Strucura\DataGrid\Tests\Columns;
 
 use Strucura\DataGrid\Columns\PointColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 use Strucura\DataGrid\Tests\TestCase;
 
 class PointColumnTest extends TestCase
@@ -11,7 +11,7 @@ class PointColumnTest extends TestCase
     public function test_point_column_initializes_with_correct_data_type()
     {
         $column = new PointColumn('table.column', 'alias');
-        $this->assertEquals(ColumnTypeEnum::Point, $column->toArray()['type']);
+        $this->assertEquals(ColumnType::Point, $column->toArray()['type']);
     }
 
     public function test_point_column_to_array_structure()
@@ -27,7 +27,7 @@ class PointColumnTest extends TestCase
         $this->assertArrayHasKey('meta', $array);
 
         $this->assertEquals('alias', $array['name']);
-        $this->assertEquals(ColumnTypeEnum::Point, $array['type']);
+        $this->assertEquals(ColumnType::Point, $array['type']);
         $this->assertTrue($array['is_sortable']);
         $this->assertFalse($array['is_filterable']);
         $this->assertFalse($array['is_hidden']);
