@@ -5,6 +5,7 @@ namespace Strucura\DataGrid\Filters\Dates;
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
+use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\ColumnType;
 use Strucura\DataGrid\Enums\FilterOperator;
@@ -12,7 +13,7 @@ use Strucura\DataGrid\Enums\FilterSetOperator;
 
 class DateIsFilter extends AbstractFilter
 {
-    public function canHandle(AbstractColumn $column, FilterData $filterData): bool
+    public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
         return $filterData->filterType === FilterOperator::DATE_IS;
     }
@@ -20,18 +21,12 @@ class DateIsFilter extends AbstractFilter
     /**
      * @throws \Exception
      */
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
+    public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        if ($column->getColumnType() === ColumnType::Date) {
-            $expression = "{$column->getSelectAs()} = DATE_FORMAT(?, '%Y-%m-%d')";
-        } elseif ($column->getColumnType() === ColumnType::DateTime) {
-            $expression = "{$column->getSelectAs()} = DATE_FORMAT(?, '%Y-%m-%d %T')";
-        } else {
-            throw new \Exception('Column type not supported.');
-        }
+        $expression = "{$queryableContract->getSelectAs()} = DATE_FORMAT(?, '%Y-%m-%d')";
 
-        $method = $this->getQueryMethod($column, $filterOperator);
-        $query->$method($expression, [...$column->getBindings(), $filterData->value]);
+        $method = $this->getQueryMethod($queryableContract, $filterOperator);
+        $query->$method($expression, [...$queryableContract->getBindings(), $filterData->value]);
 
         return $query;
     }

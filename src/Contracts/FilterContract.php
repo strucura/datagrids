@@ -9,7 +9,7 @@ use Strucura\DataGrid\Enums\FilterSetOperator;
 
 interface FilterContract
 {
-    public function canHandle(AbstractColumn $column, FilterData $filterData): bool;
+    public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool;
 
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder;
+    public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder;
 }

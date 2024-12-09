@@ -5,13 +5,14 @@ namespace Strucura\DataGrid\Filters\In;
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFilter;
+use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
 class NotInFilter extends AbstractFilter
 {
-    public function canHandle(AbstractColumn $column, FilterData $filterData): bool
+    public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
         return $filterData->filterType === FilterOperator::NOT_IN;
     }
@@ -19,7 +20,7 @@ class NotInFilter extends AbstractFilter
     /**
      * @throws \Exception
      */
-    public function handle(Builder $query, AbstractColumn $column, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
+    public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
         // Normalize the values
         $values = collect($filterData->value)->map(function ($value) {
@@ -28,17 +29,17 @@ class NotInFilter extends AbstractFilter
 
         // You MUST have one parameter per item in the array
         $placeholders = implode(',', array_fill(0, count($values), '?'));
-        $bindings = array_merge($column->getBindings(), $values);
+        $bindings = array_merge($queryableContract->getBindings(), $values);
 
         // Build the expression
-        $expression = $column->getSelectAs()." NOT IN ($placeholders)";
+        $expression = $queryableContract->getSelectAs()." NOT IN ($placeholders)";
 
-        $method = $this->getQueryMethod($column, $filterOperator);
+        $method = $this->getQueryMethod($queryableContract, $filterOperator);
         $query->$method($expression, $bindings);
 
         // If one of the values is null, we need to add a whereNotNull clause
         if (in_array(null, $values)) {
-            $query->orWhereNotNull($column->getSelectAs());
+            $query->orWhereNotNull($queryableContract->getSelectAs());
         }
 
         return $query;

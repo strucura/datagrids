@@ -2,11 +2,12 @@
 
 namespace Strucura\DataGrid\Abstracts;
 
+use Strucura\DataGrid\Contracts\FloatingFilterContract;
 use Strucura\DataGrid\Enums\FloatingFilterType;
 use Strucura\DataGrid\Traits\HandlesMetaData;
 use Strucura\DataGrid\Traits\HandlesQueryCreation;
 
-abstract class AbstractFloatingFilter
+abstract class AbstractFloatingFilter implements FloatingFilterContract
 {
     use HandlesMetaData, HandlesQueryCreation;
 
@@ -18,7 +19,7 @@ abstract class AbstractFloatingFilter
     public function toArray(): array
     {
         return [
-            'name' => $this->getAlias(),
+            'alias' => $this->getAlias(),
             'type' => $this->type,
             'meta' => $this->meta,
         ];

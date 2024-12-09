@@ -81,7 +81,7 @@ abstract class AbstractColumn implements ColumnContract
     public function toArray(): array
     {
         return [
-            'name' => $this->getAlias(),
+            'alias' => $this->getAlias(),
             'type' => $this->columnType,
             'is_sortable' => $this->isSortable,
             'is_filterable' => $this->isFilterable,

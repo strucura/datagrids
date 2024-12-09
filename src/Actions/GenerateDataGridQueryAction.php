@@ -6,7 +6,9 @@ use Exception;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
+use Strucura\DataGrid\Abstracts\AbstractFloatingFilter;
 use Strucura\DataGrid\Contracts\FilterContract;
+use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Data\FilterSetData;
@@ -30,14 +32,18 @@ class GenerateDataGridQueryAction
      *
      * @param  Builder  $query  The query builder instance.
      * @param  Collection<AbstractColumn>  $columns  The collection of columns to select.
+     * @param Collection<AbstractFloatingFilter> $floatingFilters The collection of eligible floating filters.
      * @param  DataGridData  $gridData  The grid data containing the filters and sorts.
      * @return Builder The generated query builder instance.
      *
      * @throws Exception
      */
-    public function handle(Builder $query, Collection $columns, DataGridData $gridData): Builder
+    public function handle(Builder $query, Collection $columns, Collection $floatingFilters, DataGridData $gridData): Builder
     {
-        $this->applyFilterSets($query, $columns, $gridData->filterSets);
+        /** @var Collection<QueryableContract> $queryableContracts */
+        $queryableContracts = $columns->concat($floatingFilters->all());
+
+        $this->applyFilterSets($query, $queryableContracts, $gridData->filterSets);
         $this->applySorts($query, $gridData->sorts);
 
         foreach ($columns as $column) {
@@ -51,17 +57,17 @@ class GenerateDataGridQueryAction
      * Apply filter sets to the query.
      *
      * @param  Builder  $query  The query builder instance.
-     * @param  Collection<AbstractColumn>  $columns  The collection of columns.
+     * @param  Collection<QueryableContract>  $queryableContracts  A collection of columns and floating filters.
      * @param  Collection<FilterSetData>  $filterSets  The collection of filters to apply.
      *
      * @throws Exception If a filter cannot be applied.
      */
-    private function applyFilterSets(Builder $query, Collection $columns, Collection $filterSets): void
+    private function applyFilterSets(Builder $query, Collection $queryableContracts, Collection $filterSets): void
     {
         /** @var FilterSetData $filterSet */
         foreach ($filterSets as $filterSet) {
-            $query->where(function (Builder $query) use ($columns, $filterSet) {
-                $this->applyFilters($query, $columns, $filterSet->filters, $filterSet->filterOperator);
+            $query->where(function (Builder $query) use ($queryableContracts, $filterSet) {
+                $this->applyFilters($query, $queryableContracts, $filterSet->filters, $filterSet->filterOperator);
             });
         }
     }
@@ -70,43 +76,43 @@ class GenerateDataGridQueryAction
      * Apply the filters in the filter set to the query
      *
      * @param  Builder  $query  The query builder instance
-     * @param  Collection  $columns  The collection of columns
-     * @param  Collection  $filters  The collection of filters to apply in the set
+     * @param  Collection<QueryableContract>  $queryableContracts  The collection of queryable contracts to apply filters to
+     * @param  Collection<FilterData>  $filters  The collection of filters to apply in the set
      * @param  FilterSetOperator  $filterSetOperator  The operator to use between filters
      *
      * @throws Exception
      */
-    private function applyFilters(Builder $query, Collection $columns, Collection $filters, FilterSetOperator $filterSetOperator): void
+    private function applyFilters(Builder $query, Collection $queryableContracts, Collection $filters, FilterSetOperator $filterSetOperator): void
     {
         foreach ($filters as $filter) {
-            /** @var AbstractColumn|null $column */
-            $column = $columns->first(fn (AbstractColumn $col) => $col->getAlias() === $filter->column);
-            if (! $column) {
+            /** @var QueryableContract|null $queryableContract */
+            $queryableContract = $queryableContracts->first(fn (QueryableContract $col) => $col->getAlias() === $filter->alias);
+            if (! $queryableContract) {
                 continue;
             }
 
-            $filterClass = $this->getMatchingFilterClass($column, $filter);
+            $filterClass = $this->getMatchingFilterClass($queryableContract, $filter);
             if (! $filterClass) {
-                throw new Exception("No filter found for {$column->getAlias()} with filter type {$filter->filterType->value}");
+                throw new Exception("No filter found for {$queryableContract->getAlias()} with filter type {$filter->filterType->value}");
             }
-            $filterClass->handle($query, $column, $filter, $filterSetOperator);
+            $filterClass->handle($query, $queryableContract, $filter, $filterSetOperator);
         }
     }
 
     /**
      * Find the filter class that can handle the given column and filter
      *
-     * @param  AbstractColumn  $column  The column to filter on
+     * @param  QueryableContract  $queryableContract  The queryable contract to filter on
      * @param  FilterData  $filter  The filter data
      */
-    private function getMatchingFilterClass(AbstractColumn $column, FilterData $filter): ?FilterContract
+    private function getMatchingFilterClass(QueryableContract $queryableContract, FilterData $filter): ?FilterContract
     {
         $availableFilters = config('datagrids.filters');
 
         foreach ($availableFilters as $filterClass) {
             /** @var FilterContract $filterInstance */
             $filterInstance = app($filterClass);
-            if ($filterInstance->canHandle($column, $filter)) {
+            if ($filterInstance->canHandle($queryableContract, $filter)) {
                 return $filterInstance;
             }
         }
@@ -118,13 +124,13 @@ class GenerateDataGridQueryAction
      * Apply sorts to the query.
      *
      * @param  Builder  $query  The query builder instance.
-     * @param  Collection  $sorts  The collection of sorts to apply.
+     * @param  Collection<SortData>  $sorts  The collection of sorts to apply.
      */
     private function applySorts(Builder $query, Collection $sorts): void
     {
         /** @var SortData[] $sorts */
         foreach ($sorts as $sort) {
-            $query->orderBy($sort->column, $sort->sortType->value);
+            $query->orderBy($sort->alias, $sort->sortType->value);
         }
     }
 }

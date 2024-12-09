@@ -26,7 +26,7 @@ trait HandlesQueryCreation
     /**
      * AbstractColumn constructor.
      */
-    final public function __construct(string $selectAs, string $alias, array $bindings = [])
+    public function __construct(string $selectAs, string $alias, array $bindings = [])
     {
         $this->alias = $alias;
         $this->bindings = DB::query();
@@ -41,7 +41,7 @@ trait HandlesQueryCreation
     /**
      * Create a new instance of the column
      */
-    final public static function make(Expression|string $queryColumn, string $alias, array $bindings = []): self
+    public static function make(Expression|string $queryColumn, string $alias, array $bindings = []): self
     {
         return new static($queryColumn, $alias, $bindings);
     }

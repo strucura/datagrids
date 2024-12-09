@@ -80,6 +80,7 @@ abstract class AbstractDataGrid implements DataGridContract
         $query = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
+            $this->getFloatingFilters(),
             DataGridData::fromRequest($request)
         );
 
