@@ -9,7 +9,8 @@ class HandlesMetaDataTest extends TestCase
 {
     private function getTraitMock(): object
     {
-        return new class {
+        return new class
+        {
             use HandlesMetaData;
         };
     }
