@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 
-trait HandlesQueryCreation
+trait HandlesQueryExpressions
 {
     /**
      * The query builder parameter bindings to be used for the column

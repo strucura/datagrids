@@ -6,11 +6,11 @@ use Illuminate\Support\Traits\Macroable;
 use Strucura\DataGrid\Contracts\ColumnContract;
 use Strucura\DataGrid\Enums\ColumnType;
 use Strucura\DataGrid\Traits\HandlesMetaData;
-use Strucura\DataGrid\Traits\HandlesQueryCreation;
+use Strucura\DataGrid\Traits\HandlesQueryExpressions;
 
 abstract class AbstractColumn implements ColumnContract
 {
-    use HandlesMetaData, HandlesQueryCreation, Macroable;
+    use HandlesMetaData, HandlesQueryExpressions, Macroable;
 
     /**
      * Whether we want to hide the column in the grid.  This is useful for columns that you may want exposed to the
