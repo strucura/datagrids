@@ -7,7 +7,7 @@ use Strucura\DataGrid\Enums\ColumnType;
 
 class PointColumn extends AbstractColumn
 {
-    protected ColumnType $columnType = ColumnType::Point;
+    protected ColumnType|string $columnType = ColumnType::Point;
 
     protected bool $isFilterable = false;
 

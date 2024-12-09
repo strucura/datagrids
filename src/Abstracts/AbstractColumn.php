@@ -32,7 +32,7 @@ abstract class AbstractColumn implements ColumnContract
      * The type of column.  This is useful for the front end so that they understand how to present the data and what
      * filters are available.
      */
-    protected ColumnType $columnType = ColumnType::String;
+    protected ColumnType|string $columnType = ColumnType::String;
 
     /**
      * Get the column type

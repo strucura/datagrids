@@ -7,7 +7,7 @@ use Strucura\DataGrid\Enums\ColumnType;
 
 class TimeColumn extends AbstractColumn
 {
-    protected ColumnType $columnType = ColumnType::Time;
+    protected ColumnType|string $columnType = ColumnType::Time;
 
     /**
      * Provides instructions to the frontend on how to display the time

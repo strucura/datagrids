@@ -7,7 +7,7 @@ use Strucura\DataGrid\Enums\ColumnType;
 
 class DateTimeColumn extends AbstractColumn
 {
-    protected ColumnType $columnType = ColumnType::DateTime;
+    protected ColumnType|string $columnType = ColumnType::DateTime;
 
     public function setSelectAs(string $selectAs): static
     {

@@ -7,7 +7,7 @@ use Strucura\DataGrid\Enums\ColumnType;
 
 class FloatColumn extends AbstractColumn
 {
-    protected ColumnType $columnType = ColumnType::Float;
+    protected ColumnType|string $columnType = ColumnType::Float;
 
     public function setSelectAs(string $selectAs): static
     {
