@@ -9,7 +9,8 @@ class HandlesQueryExpressionsTest extends TestCase
 {
     private function getTraitMock(array $constructorArgs = []): object
     {
-        return new class(...$constructorArgs) {
+        return new class(...$constructorArgs)
+        {
             use HandlesQueryExpressions;
         };
     }
