@@ -42,7 +42,7 @@ class GenerateDataGridQueryActionTest extends TestCase
         $query->shouldReceive('selectRaw')->with('test_column as `test_column`', [])->andReturnSelf();
 
         $action = GenerateDataGridQueryAction::make();
-        $result = $action->handle($query, collect([$column]), $gridData);
+        $result = $action->handle($query, collect([$column]), collect([]), $gridData);
 
         $this->assertSame($query, $result);
     }

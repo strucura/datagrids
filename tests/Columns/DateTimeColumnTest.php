@@ -19,14 +19,14 @@ class DateTimeColumnTest extends TestCase
         $column = new DateTimeColumn('table.column', 'alias');
         $array = $column->toArray();
 
-        $this->assertArrayHasKey('name', $array);
+        $this->assertArrayHasKey('alias', $array);
         $this->assertArrayHasKey('type', $array);
         $this->assertArrayHasKey('is_sortable', $array);
         $this->assertArrayHasKey('is_filterable', $array);
         $this->assertArrayHasKey('is_hidden', $array);
         $this->assertArrayHasKey('meta', $array);
 
-        $this->assertEquals('alias', $array['name']);
+        $this->assertEquals('alias', $array['alias']);
         $this->assertEquals(ColumnType::DateTime, $array['type']);
         $this->assertTrue($array['is_sortable']);
         $this->assertTrue($array['is_filterable']);

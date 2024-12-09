@@ -19,14 +19,14 @@ class PointColumnTest extends TestCase
         $column = new PointColumn('table.column', 'alias');
         $array = $column->toArray();
 
-        $this->assertArrayHasKey('name', $array);
+        $this->assertArrayHasKey('alias', $array);
         $this->assertArrayHasKey('type', $array);
         $this->assertArrayHasKey('is_sortable', $array);
         $this->assertArrayHasKey('is_filterable', $array);
         $this->assertArrayHasKey('is_hidden', $array);
         $this->assertArrayHasKey('meta', $array);
 
-        $this->assertEquals('alias', $array['name']);
+        $this->assertEquals('alias', $array['alias']);
         $this->assertEquals(ColumnType::Point, $array['type']);
         $this->assertTrue($array['is_sortable']);
         $this->assertFalse($array['is_filterable']);

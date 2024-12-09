@@ -23,26 +23,6 @@ class DateAfterFilterTest extends TestCase
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
 
-    public function test_handle_date_times()
-    {
-        $query = Mockery::mock(Builder::class);
-        $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterOperator::DATE_AFTER);
-
-        $column->shouldReceive('getSelectAs')->andReturn('created_at');
-        $column->shouldReceive('isHavingRequired')->andReturn(false);
-        $column->shouldReceive('getBindings')->andReturn([]);
-        $column->shouldReceive('getColumnType')->andReturn(ColumnType::DateTime);
-
-        $query->shouldReceive('whereRaw')
-            ->once()
-            ->with('created_at > DATE_FORMAT(?, \'%Y-%m-%d %T\')', ['2023-01-01 00:00:00'])
-            ->andReturnSelf();
-
-        $filter = new DateAfterFilter;
-        $filter->handle($query, $column, $filterData);
-    }
-
     public function test_handle_dates()
     {
         $query = Mockery::mock(Builder::class);
@@ -52,7 +32,6 @@ class DateAfterFilterTest extends TestCase
         $column->shouldReceive('getSelectAs')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
-        $column->shouldReceive('getColumnType')->andReturn(ColumnType::Date);
 
         $query->shouldReceive('whereRaw')
             ->once()
