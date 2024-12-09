@@ -3,7 +3,6 @@
 namespace Strucura\DataGrid\Contracts;
 
 use Illuminate\Database\Query\Builder;
-use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 

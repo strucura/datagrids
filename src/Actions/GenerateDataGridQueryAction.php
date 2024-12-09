@@ -32,7 +32,7 @@ class GenerateDataGridQueryAction
      *
      * @param  Builder  $query  The query builder instance.
      * @param  Collection<AbstractColumn>  $columns  The collection of columns to select.
-     * @param Collection<AbstractFloatingFilter> $floatingFilters The collection of eligible floating filters.
+     * @param  Collection<AbstractFloatingFilter>  $floatingFilters  The collection of eligible floating filters.
      * @param  DataGridData  $gridData  The grid data containing the filters and sorts.
      * @return Builder The generated query builder instance.
      *
