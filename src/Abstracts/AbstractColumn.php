@@ -35,14 +35,6 @@ abstract class AbstractColumn implements ColumnContract
     protected ColumnType|string $columnType = ColumnType::String;
 
     /**
-     * Get the column type
-     */
-    public function getColumnType(): ColumnType
-    {
-        return $this->columnType;
-    }
-
-    /**
      * Set the column type
      *
      * @return $this
