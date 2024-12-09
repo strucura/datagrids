@@ -2,7 +2,7 @@
 
 namespace Strucura\DataGrid\Enums;
 
-enum ColumnTypeEnum: string
+enum ColumnType: string
 {
     case String = 'string';
     case Integer = 'integer';

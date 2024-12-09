@@ -22,5 +22,7 @@ interface DataGridContract
 
     public function getColumns(): Collection;
 
+    public function getFloatingFilters(): Collection;
+
     public function getQuery(): Builder;
 }

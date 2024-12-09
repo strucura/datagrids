@@ -2,7 +2,7 @@
 
 namespace Strucura\DataGrid\Contracts;
 
-interface ColumnContract extends QueryableContract
+interface FloatingFilterContract extends QueryableContract
 {
     public function toArray(): array;
 }

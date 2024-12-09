@@ -21,15 +21,15 @@ class GridDataTest extends TestCase
             'filter_sets' => [
                 [
                     'filters' => [
-                        ['column' => 'name', 'value' => 'Doe', 'filter_operator' => 'equals'],
-                        ['column' => 'age', 'value' => 40, 'filter_operator' => 'lt'],
+                        ['alias' => 'name', 'value' => 'Doe', 'filter_operator' => 'equals'],
+                        ['alias' => 'age', 'value' => 40, 'filter_operator' => 'lt'],
                     ],
                     'filter_set_operator' => 'and',
                 ],
             ],
             'sorts' => [
-                ['column' => 'name', 'sort_operator' => 'asc'],
-                ['column' => 'age', 'sort_operator' => 'desc'],
+                ['alias' => 'name', 'sort_operator' => 'asc'],
+                ['alias' => 'age', 'sort_operator' => 'desc'],
             ],
         ]);
 
@@ -48,10 +48,10 @@ class GridDataTest extends TestCase
         $this->assertCount(2, $filterSet->filters);
 
         $this->assertInstanceOf(FilterData::class, $filterSet->filters[0]);
-        $this->assertEquals('name', $filterSet->filters[0]->column);
+        $this->assertEquals('name', $filterSet->filters[0]->alias);
         $this->assertEquals('Doe', $filterSet->filters[0]->value);
         $this->assertEquals(FilterOperator::EQUALS, $filterSet->filters[0]->filterType);
-        $this->assertEquals('age', $filterSet->filters[1]->column);
+        $this->assertEquals('age', $filterSet->filters[1]->alias);
         $this->assertEquals(40, $filterSet->filters[1]->value);
         $this->assertEquals(FilterOperator::LESS_THAN, $filterSet->filters[1]->filterType);
 
@@ -59,9 +59,9 @@ class GridDataTest extends TestCase
         $this->assertInstanceOf(Collection::class, $gridData->sorts);
         $this->assertCount(2, $gridData->sorts);
         $this->assertInstanceOf(SortData::class, $gridData->sorts[0]);
-        $this->assertEquals('name', $gridData->sorts[0]->column);
+        $this->assertEquals('name', $gridData->sorts[0]->alias);
         $this->assertEquals(SortOperator::ASC, $gridData->sorts[0]->sortType);
-        $this->assertEquals('age', $gridData->sorts[1]->column);
+        $this->assertEquals('age', $gridData->sorts[1]->alias);
         $this->assertEquals(SortOperator::DESC, $gridData->sorts[1]->sortType);
     }
 }

@@ -22,13 +22,13 @@ class DataGridDataRequest extends FormRequest
             'last' => ['required', 'int', 'min:0'],
 
             'sorts' => ['nullable', 'array'],
-            'sorts.*.column' => ['required', 'string', 'min:1'],
+            'sorts.*.alias' => ['required', 'string', 'min:1'],
             'sorts.*.sort_operator' => ['required', Rule::enum(SortOperator::class)],
 
             'filter_sets' => ['nullable', 'array'],
             'filter_sets.*.filter_set_operator' => ['required', Rule::enum(FilterSetOperator::class)],
             'filter_sets.*.filters' => ['required', 'array'],
-            'filter_sets.*.filters.*.column' => ['required', 'string', 'min:1'],
+            'filter_sets.*.filters.*.alias' => ['required', 'string', 'min:1'],
             'filter_sets.*.filters.*.value' => ['present'],
             'filter_sets.*.filters.*.filter_operator' => ['required', Rule::enum(FilterOperator::class)],
         ];
