@@ -110,7 +110,7 @@ class UserDataGridTest extends TestCase
                 'alias' => 'Created At',
                 'type' => 'date_range',
                 'meta' => [],
-            ]
+            ],
         ];
 
         foreach ($floatingFilters as $filter) {
