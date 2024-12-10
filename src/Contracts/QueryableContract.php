@@ -15,47 +15,33 @@ interface QueryableContract
 
     /**
      * Create a new instance of a queryable expression
-     *
-     * @param Expression|string $expression
-     * @param string $alias
-     * @param array $bindings
-     * @return QueryableContract
      */
     public static function make(Expression|string $expression, string $alias, array $bindings = []): QueryableContract;
 
     /**
      * Used to set the expression for the queryable expression
      *
-     * @param string $expression
      * @return QueryableContract
      */
     public function setExpression(string $expression): static;
 
     /**
      * Used to get the expression for the queryable expression
-     *
-     * @return string
      */
     public function getExpression(): string;
 
     /**
      * The alias for the queryable expression
-     *
-     * @return string
      */
     public function getAlias(): string;
 
     /**
      * Get the bindings for the queryable expression
-     *
-     * @return array
      */
     public function getBindings(): array;
 
     /**
      * Determine if the queryable expression must be used in a having clause.
-     *
-     * @return bool
      */
     public function isHavingRequired(): bool;
 }
