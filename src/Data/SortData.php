@@ -6,5 +6,5 @@ use Strucura\DataGrid\Enums\SortOperator;
 
 class SortData
 {
-    public function __construct(public string $column, public SortOperator $sortType) {}
+    public function __construct(public string $alias, public SortOperator $sortType) {}
 }

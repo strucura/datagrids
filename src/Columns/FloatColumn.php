@@ -3,14 +3,14 @@
 namespace Strucura\DataGrid\Columns;
 
 use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 
 class FloatColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $columnType = ColumnTypeEnum::Float;
+    protected ColumnType|string $columnType = ColumnType::Float;
 
-    public function setSelectAs(string $selectAs): static
+    public function setExpression(string $expression): static
     {
-        return parent::setSelectAs('CAST('.$selectAs.' AS FLOAT)');
+        return parent::setExpression('CAST('.$expression.' AS FLOAT)');
     }
 }

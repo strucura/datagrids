@@ -28,7 +28,7 @@ class InFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('created_at', ['value1', 'value2'], FilterOperator::IN);
 
-        $column->shouldReceive('getSelectAs')->andReturn('key');
+        $column->shouldReceive('getExpression')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 
@@ -53,7 +53,7 @@ class InFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('created_at', ['value1', null], FilterOperator::IN);
 
-        $column->shouldReceive('getSelectAs')->andReturn('key');
+        $column->shouldReceive('getExpression')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 

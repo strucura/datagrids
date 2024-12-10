@@ -6,7 +6,6 @@ use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Filters\Dates\DateIsNotFilter;
 use Strucura\DataGrid\Tests\TestCase;
@@ -23,38 +22,15 @@ class DateIsNotFilterTest extends TestCase
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
 
-    public function test_handle_date_times()
-    {
-        $query = Mockery::mock(Builder::class);
-        $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterOperator::DATE_IS_NOT);
-
-        $column->shouldReceive('getSelectAs')->andReturn('created_at');
-        $column->shouldReceive('isHavingRequired')->andReturn(false);
-        $column->shouldReceive('getBindings')->andReturn([]);
-        $column->shouldReceive('getColumnType')->andReturn(ColumnTypeEnum::DateTime);
-
-        $query->shouldReceive('whereRaw')
-            ->once()
-            ->with('created_at != DATE_FORMAT(?, \'%Y-%m-%d %T\')', ['2023-01-01 00:00:00'])
-            ->andReturnSelf();
-
-        $filter = new DateIsNotFilter;
-        $result = $filter->handle($query, $column, $filterData);
-
-        $this->assertSame($query, $result);
-    }
-
     public function test_handle_dates()
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('created_at', '2023-01-01', FilterOperator::DATE_IS_NOT);
 
-        $column->shouldReceive('getSelectAs')->andReturn('created_at');
+        $column->shouldReceive('getExpression')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
-        $column->shouldReceive('getColumnType')->andReturn(ColumnTypeEnum::Date);
 
         $query->shouldReceive('whereRaw')
             ->once()

@@ -28,7 +28,7 @@ class LessThanFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('quantity', 10, FilterOperator::LESS_THAN);
 
-        $column->shouldReceive('getSelectAs')->andReturn('quantity');
+        $column->shouldReceive('getExpression')->andReturn('quantity');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 
