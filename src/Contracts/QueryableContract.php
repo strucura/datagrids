@@ -11,11 +11,6 @@ use Illuminate\Database\Query\Expression;
  */
 interface QueryableContract
 {
-    /**
-     * @param string $expression
-     * @param string $alias
-     * @param array $bindings
-     */
     public function __construct(string $expression, string $alias, array $bindings = []);
 
     public static function make(Expression|string $expression, string $alias, array $bindings = []): QueryableContract;
