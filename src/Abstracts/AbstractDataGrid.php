@@ -120,7 +120,7 @@ abstract class AbstractDataGrid implements DataGridContract
             });
 
         $floatingFilters = $this->getFloatingFilters()
-            ->map(function (AbstractColumn $filter) {
+            ->map(function (AbstractFloatingFilter $filter) {
                 return $filter->toArray();
             });
 

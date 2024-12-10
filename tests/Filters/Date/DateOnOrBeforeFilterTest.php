@@ -24,7 +24,7 @@ class DateOnOrBeforeFilterTest extends TestCase
     {
         $filter = new DateOnOrBeforeFilter;
         $column = $this->mock(AbstractColumn::class);
-        $column->shouldReceive('getSelectAs')->andReturn('test_column');
+        $column->shouldReceive('getExpression')->andReturn('test_column');
         $column->shouldReceive('getBindings')->andReturn([]);
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $filterData = new FilterData('test_column', filterType: FilterOperator::DATE_ON_OR_BEFORE, value: '2023-10-10');

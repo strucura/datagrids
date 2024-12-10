@@ -21,7 +21,7 @@ class GenerateDataGridQueryActionTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $column->shouldReceive('getSelectAs')->andReturn('test_column');
+        $column->shouldReceive('getExpression')->andReturn('test_column');
         $column->shouldReceive('getAlias')->andReturn('test_column');
         $column->shouldReceive('getBindings')->andReturn([]);
         $column->shouldReceive('isHavingRequired')->andReturn(false);

@@ -11,6 +11,6 @@ class DateRangeFloatingFilter extends AbstractFloatingFilter
 
     public function setSelectAs(string $selectAs): static
     {
-        return parent::setSelectAs("DATE_FORMAT($selectAs, '%Y-%m-%d')");
+        return parent::setExpression("DATE_FORMAT($selectAs, '%Y-%m-%d')");
     }
 }

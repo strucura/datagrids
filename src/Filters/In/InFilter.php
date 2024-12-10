@@ -31,14 +31,14 @@ class InFilter extends AbstractFilter
         $bindings = array_merge($queryableContract->getBindings(), $values);
 
         // Build the expression
-        $expression = $queryableContract->getSelectAs()." IN ($placeholders)";
+        $expression = $queryableContract->getExpression()." IN ($placeholders)";
 
         $method = $this->getQueryMethod($queryableContract, $filterOperator);
         $query->$method($expression, $bindings);
 
         // If one of the values is null, we need to add a whereNull clause
         if (in_array(null, $values)) {
-            $query->orWhereNull($queryableContract->getSelectAs());
+            $query->orWhereNull($queryableContract->getExpression());
         }
 
         return $query;

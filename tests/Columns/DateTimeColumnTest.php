@@ -37,7 +37,7 @@ class DateTimeColumnTest extends TestCase
     public function test_set_select_as_formats_date_time_correctly()
     {
         $column = new DateTimeColumn('table.column', 'alias');
-        $column->setSelectAs('table.column');
-        $this->assertEquals("DATE_FORMAT(table.column, '%Y-%m-%d %T')", $column->getSelectAs());
+        $column->setExpression('table.column');
+        $this->assertEquals("DATE_FORMAT(table.column, '%Y-%m-%d %T')", $column->getExpression());
     }
 }

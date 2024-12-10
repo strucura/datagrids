@@ -38,13 +38,13 @@ class IntegerColumnTest extends TestCase
     {
         $column = new IntegerColumn('table.column', 'alias');
         $column->signed();
-        $this->assertEquals('CAST(table.column AS SIGNED)', $column->getSelectAs());
+        $this->assertEquals('CAST(table.column AS SIGNED)', $column->getExpression());
     }
 
     public function test_unsigned_formats_integer_correctly()
     {
         $column = new IntegerColumn('table.column', 'alias');
         $column->unsigned();
-        $this->assertEquals('CAST(table.column AS UNSIGNED)', $column->getSelectAs());
+        $this->assertEquals('CAST(table.column AS UNSIGNED)', $column->getExpression());
     }
 }

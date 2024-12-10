@@ -21,7 +21,7 @@ class DateIsFilter extends AbstractFilter
      */
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = "{$queryableContract->getSelectAs()} = DATE_FORMAT(?, '%Y-%m-%d')";
+        $expression = "{$queryableContract->getExpression()} = DATE_FORMAT(?, '%Y-%m-%d')";
 
         $method = $this->getQueryMethod($queryableContract, $filterOperator);
         $query->$method($expression, [...$queryableContract->getBindings(), $filterData->value]);

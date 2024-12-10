@@ -30,10 +30,10 @@ class EqualsFilter extends AbstractFilter
     private function buildExpression(QueryableContract $queryableContract, FilterData $filterData): string
     {
         if ($filterData->value === null) {
-            return $queryableContract->getSelectAs().' IS NULL';
+            return $queryableContract->getExpression().' IS NULL';
         }
 
-        return $queryableContract->getSelectAs().' = ?';
+        return $queryableContract->getExpression().' = ?';
     }
 
     private function buildBindings(QueryableContract $queryableContract, FilterData $filterData): array

@@ -9,8 +9,8 @@ class FloatColumn extends AbstractColumn
 {
     protected ColumnType|string $columnType = ColumnType::Float;
 
-    public function setSelectAs(string $selectAs): static
+    public function setExpression(string $expression): static
     {
-        return parent::setSelectAs('CAST('.$selectAs.' AS FLOAT)');
+        return parent::setExpression('CAST('.$expression.' AS FLOAT)');
     }
 }

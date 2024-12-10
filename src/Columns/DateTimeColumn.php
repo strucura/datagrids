@@ -9,9 +9,9 @@ class DateTimeColumn extends AbstractColumn
 {
     protected ColumnType|string $columnType = ColumnType::DateTime;
 
-    public function setSelectAs(string $selectAs): static
+    public function setExpression(string $expression): static
     {
-        return parent::setSelectAs("DATE_FORMAT($selectAs, '%Y-%m-%d %T')");
+        return parent::setExpression("DATE_FORMAT($expression, '%Y-%m-%d %T')");
     }
 
     /**

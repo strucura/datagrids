@@ -28,7 +28,7 @@ class DateIsNotFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('created_at', '2023-01-01', FilterOperator::DATE_IS_NOT);
 
-        $column->shouldReceive('getSelectAs')->andReturn('created_at');
+        $column->shouldReceive('getExpression')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 

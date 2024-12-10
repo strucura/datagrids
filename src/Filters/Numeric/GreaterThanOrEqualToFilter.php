@@ -18,7 +18,7 @@ class GreaterThanOrEqualToFilter extends AbstractFilter
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = $queryableContract->getSelectAs().' >= ?';
+        $expression = $queryableContract->getExpression().' >= ?';
         $bindings = [...$queryableContract->getBindings(), $filterData->value];
 
         $method = $this->getQueryMethod($queryableContract, $filterOperator);

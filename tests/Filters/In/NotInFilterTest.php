@@ -28,7 +28,7 @@ class NotInFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('key', ['value1', 'value2'], FilterOperator::NOT_IN);
 
-        $column->shouldReceive('getSelectAs')->andReturn('key');
+        $column->shouldReceive('getExpression')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 
@@ -53,7 +53,7 @@ class NotInFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('key', ['value1', 'value2'], FilterOperator::NOT_IN);
 
-        $column->shouldReceive('getSelectAs')->andReturn('key');
+        $column->shouldReceive('getExpression')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 

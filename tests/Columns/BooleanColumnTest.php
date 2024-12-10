@@ -37,6 +37,6 @@ class BooleanColumnTest extends TestCase
     public function test_get_select_as_returns_correct_value()
     {
         $column = new BooleanColumn('table.column', 'alias');
-        $this->assertEquals('table.column', $column->getSelectAs());
+        $this->assertEquals('table.column', $column->getExpression());
     }
 }

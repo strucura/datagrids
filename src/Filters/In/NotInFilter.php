@@ -31,14 +31,14 @@ class NotInFilter extends AbstractFilter
         $bindings = array_merge($queryableContract->getBindings(), $values);
 
         // Build the expression
-        $expression = $queryableContract->getSelectAs()." NOT IN ($placeholders)";
+        $expression = $queryableContract->getExpression()." NOT IN ($placeholders)";
 
         $method = $this->getQueryMethod($queryableContract, $filterOperator);
         $query->$method($expression, $bindings);
 
         // If one of the values is null, we need to add a whereNotNull clause
         if (in_array(null, $values)) {
-            $query->orWhereNotNull($queryableContract->getSelectAs());
+            $query->orWhereNotNull($queryableContract->getExpression());
         }
 
         return $query;

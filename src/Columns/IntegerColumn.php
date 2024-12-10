@@ -11,11 +11,11 @@ class IntegerColumn extends AbstractColumn
 
     public function signed(): static
     {
-        return $this->setSelectAs('CAST('.$this->getSelectAs().' AS SIGNED)');
+        return $this->setExpression('CAST('.$this->getExpression().' AS SIGNED)');
     }
 
     public function unsigned(): static
     {
-        return $this->setSelectAs('CAST('.$this->getSelectAs().' AS UNSIGNED)');
+        return $this->setExpression('CAST('.$this->getExpression().' AS UNSIGNED)');
     }
 }

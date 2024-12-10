@@ -104,6 +104,18 @@ class UserDataGridTest extends TestCase
         foreach ($columns as $column) {
             $this->assertContains($column, $data['columns']);
         }
+
+        $floatingFilters = [
+            [
+                'alias' => 'Created At',
+                'type' => 'date_range',
+                'meta' => [],
+            ]
+        ];
+
+        foreach ($floatingFilters as $filter) {
+            $this->assertContains($filter, $data['floating_filters']);
+        }
     }
 
     public function test_invokes_permission_check_when_permission_trait_present_on_data()

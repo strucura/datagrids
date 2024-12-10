@@ -47,7 +47,7 @@ class GenerateDataGridQueryAction
         $this->applySorts($query, $gridData->sorts);
 
         foreach ($columns as $column) {
-            $query->selectRaw("{$column->getSelectAs()} as `{$column->getAlias()}`", $column->getBindings());
+            $query->selectRaw("{$column->getExpression()} as `{$column->getAlias()}`", $column->getBindings());
         }
 
         return $query;

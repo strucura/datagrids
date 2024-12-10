@@ -11,8 +11,8 @@ class PointColumn extends AbstractColumn
 
     protected bool $isFilterable = false;
 
-    public function setSelectAs(string $selectAs): static
+    public function setExpression(string $expression): static
     {
-        return parent::setSelectAs("CONCAT(ST_X($selectAs), ',', ST_Y($selectAs))");
+        return parent::setExpression("CONCAT(ST_X($expression), ',', ST_Y($expression))");
     }
 }

@@ -9,6 +9,7 @@ use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Columns\IntegerColumn;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Contracts\DataGridContract;
+use Strucura\DataGrid\FloatingFilters\DateRangeFloatingFilter;
 
 class UserDataGrid extends AbstractDataGrid implements DataGridContract
 {
@@ -24,5 +25,12 @@ class UserDataGrid extends AbstractDataGrid implements DataGridContract
     public function getQuery(): Builder
     {
         return DB::table('users');
+    }
+
+    public function getFloatingFilters(): Collection
+    {
+        return collect([
+            DateRangeFloatingFilter::make('users.created_at', 'Created At'),
+        ]);
     }
 }

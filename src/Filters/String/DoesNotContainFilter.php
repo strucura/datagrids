@@ -18,7 +18,7 @@ class DoesNotContainFilter extends AbstractFilter
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = $queryableContract->getSelectAs().' NOT LIKE ?';
+        $expression = $queryableContract->getExpression().' NOT LIKE ?';
         $value = '%'.$filterData->value.'%';
         $bindings = [...$queryableContract->getBindings(), $value];
 

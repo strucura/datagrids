@@ -16,7 +16,7 @@ trait HandlesQueryExpressions
     /**
      * The SQL select expression for the column
      */
-    protected string $selectAs;
+    protected string $expression;
 
     /**
      * How we want to name the column
@@ -26,12 +26,12 @@ trait HandlesQueryExpressions
     /**
      * AbstractColumn constructor.
      */
-    public function __construct(string $selectAs, string $alias, array $bindings = [])
+    public function __construct(string $expression, string $alias, array $bindings = [])
     {
         $this->alias = $alias;
         $this->bindings = DB::query();
 
-        $this->setSelectAs($selectAs);
+        $this->setExpression($expression);
 
         foreach ($bindings as $binding) {
             $this->addBinding($binding);
@@ -41,9 +41,9 @@ trait HandlesQueryExpressions
     /**
      * Create a new instance of the column
      */
-    public static function make(Expression|string $queryColumn, string $alias, array $bindings = []): self
+    public static function make(Expression|string $expression, string $alias, array $bindings = []): self
     {
-        return new static($queryColumn, $alias, $bindings);
+        return new static($expression, $alias, $bindings);
     }
 
     /**
@@ -74,9 +74,9 @@ trait HandlesQueryExpressions
      *
      * @return $this
      */
-    public function setSelectAs(string $selectAs): static
+    public function setExpression(string $expression): static
     {
-        $this->selectAs = $selectAs;
+        $this->expression = $expression;
 
         return $this;
     }
@@ -84,9 +84,9 @@ trait HandlesQueryExpressions
     /**
      * Get the select expression for the column
      */
-    public function getSelectAs(): string
+    public function getExpression(): string
     {
-        return $this->selectAs;
+        return $this->expression;
     }
 
     /**
@@ -95,7 +95,7 @@ trait HandlesQueryExpressions
     public function isHavingRequired(): bool
     {
         foreach (['count(', 'sum(', 'avg(', 'min(', 'max('] as $expression) {
-            if (str_contains(strtolower($this->selectAs), $expression)) {
+            if (str_contains(strtolower($this->expression), $expression)) {
                 return true;
             }
         }

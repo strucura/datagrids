@@ -37,7 +37,7 @@ class FloatColumnTest extends TestCase
     public function test_set_select_as_formats_float_correctly()
     {
         $column = new FloatColumn('table.column', 'alias');
-        $column->setSelectAs('table.column');
-        $this->assertEquals('CAST(table.column AS FLOAT)', $column->getSelectAs());
+        $column->setExpression('table.column');
+        $this->assertEquals('CAST(table.column AS FLOAT)', $column->getExpression());
     }
 }

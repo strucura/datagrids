@@ -15,11 +15,11 @@ class HandlesQueryExpressionsTest extends TestCase
         };
     }
 
-    public function test_it_can_set_and_get_select_as()
+    public function test_it_can_set_and_get_expression()
     {
         $mock = $this->getTraitMock(['test_column', 'test_alias']);
-        $mock->setSelectAs('new_select_as');
-        $this->assertEquals('new_select_as', $mock->getSelectAs());
+        $mock->setExpression('new_expression');
+        $this->assertEquals('new_expression', $mock->getExpression());
     }
 
     public function test_it_can_add_and_get_bindings()
@@ -49,7 +49,7 @@ class HandlesQueryExpressionsTest extends TestCase
         $mock = $this->getTraitMock(['', '']);
         $instance = $mock::make('test_column', 'test_alias', ['test_binding']);
 
-        $this->assertEquals('test_column', $instance->getSelectAs());
+        $this->assertEquals('test_column', $instance->getExpression());
         $this->assertEquals('test_alias', $instance->getAlias());
         $this->assertContains('test_binding', $instance->getBindings());
     }

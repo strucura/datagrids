@@ -37,7 +37,7 @@ class PointColumnTest extends TestCase
     public function test_set_select_as_formats_point_correctly()
     {
         $column = new PointColumn('table.column', 'alias');
-        $column->setSelectAs('table.column');
-        $this->assertEquals("CONCAT(ST_X(table.column), ',', ST_Y(table.column))", $column->getSelectAs());
+        $column->setExpression('table.column');
+        $this->assertEquals("CONCAT(ST_X(table.column), ',', ST_Y(table.column))", $column->getExpression());
     }
 }

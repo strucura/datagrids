@@ -28,7 +28,7 @@ class ContainsFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('name', 'value', FilterOperator::STRING_CONTAINS);
 
-        $column->shouldReceive('getSelectAs')->andReturn('name');
+        $column->shouldReceive('getExpression')->andReturn('name');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 
