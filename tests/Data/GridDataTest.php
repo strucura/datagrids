@@ -50,10 +50,10 @@ class GridDataTest extends TestCase
         $this->assertInstanceOf(FilterData::class, $filterSet->filters[0]);
         $this->assertEquals('name', $filterSet->filters[0]->alias);
         $this->assertEquals('Doe', $filterSet->filters[0]->value);
-        $this->assertEquals(FilterOperator::EQUALS, $filterSet->filters[0]->filterType);
+        $this->assertEquals(FilterOperator::EQUALS, $filterSet->filters[0]->filterOperator);
         $this->assertEquals('age', $filterSet->filters[1]->alias);
         $this->assertEquals(40, $filterSet->filters[1]->value);
-        $this->assertEquals(FilterOperator::LESS_THAN, $filterSet->filters[1]->filterType);
+        $this->assertEquals(FilterOperator::LESS_THAN, $filterSet->filters[1]->filterOperator);
 
         // Assert sorts
         $this->assertInstanceOf(Collection::class, $gridData->sorts);
