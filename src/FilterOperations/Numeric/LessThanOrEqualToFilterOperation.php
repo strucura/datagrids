@@ -13,7 +13,7 @@ class LessThanOrEqualToFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::LESS_THAN_OR_EQUAL_TO;
+        return $filterData->filterOperator === FilterOperator::LESS_THAN_OR_EQUAL_TO;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

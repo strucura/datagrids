@@ -13,7 +13,7 @@ class DoesNotContainFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::STRING_DOES_NOT_CONTAIN;
+        return $filterData->filterOperator === FilterOperator::STRING_DOES_NOT_CONTAIN;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

@@ -13,7 +13,7 @@ class DateOnOrBeforeFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::DATE_ON_OR_BEFORE;
+        return $filterData->filterOperator === FilterOperator::DATE_ON_OR_BEFORE;
     }
 
     /**

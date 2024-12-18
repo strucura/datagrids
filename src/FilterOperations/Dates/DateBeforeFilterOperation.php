@@ -13,7 +13,7 @@ class DateBeforeFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::DATE_BEFORE;
+        return $filterData->filterOperator === FilterOperator::DATE_BEFORE;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

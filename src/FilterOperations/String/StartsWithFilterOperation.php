@@ -13,7 +13,7 @@ class StartsWithFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::STRING_STARTS_WITH;
+        return $filterData->filterOperator === FilterOperator::STRING_STARTS_WITH;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

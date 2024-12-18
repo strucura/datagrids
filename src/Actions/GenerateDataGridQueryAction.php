@@ -93,7 +93,7 @@ class GenerateDataGridQueryAction
 
             $filterClass = $this->getMatchingFilterClass($queryableContract, $filter);
             if (! $filterClass) {
-                throw new Exception("No filter operation found for {$queryableContract->getAlias()} with filter operator {$filter->filterType->value}");
+                throw new Exception("No filter operation found for {$queryableContract->getAlias()} with filter operator {$filter->filterOperator->value}");
             }
             $filterClass->handle($query, $queryableContract, $filter, $filterSetOperator);
         }

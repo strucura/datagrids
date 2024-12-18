@@ -13,7 +13,7 @@ class NotInFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::NOT_IN;
+        return $filterData->filterOperator === FilterOperator::NOT_IN;
     }
 
     /**

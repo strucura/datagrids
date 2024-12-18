@@ -13,7 +13,7 @@ class DateIsFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::DATE_IS;
+        return $filterData->filterOperator === FilterOperator::DATE_IS;
     }
 
     /**

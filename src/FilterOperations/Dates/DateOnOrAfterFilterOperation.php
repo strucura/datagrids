@@ -13,7 +13,7 @@ class DateOnOrAfterFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::DATE_ON_OR_AFTER;
+        return $filterData->filterOperator === FilterOperator::DATE_ON_OR_AFTER;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

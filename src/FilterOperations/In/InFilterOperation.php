@@ -13,7 +13,7 @@ class InFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::IN;
+        return $filterData->filterOperator === FilterOperator::IN;
     }
 
     /**

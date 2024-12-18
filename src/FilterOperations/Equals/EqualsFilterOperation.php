@@ -13,7 +13,7 @@ class EqualsFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::EQUALS && $this->getNormalizedValue($filterData->value) !== null;
+        return $filterData->filterOperator === FilterOperator::EQUALS && $this->getNormalizedValue($filterData->value) !== null;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
