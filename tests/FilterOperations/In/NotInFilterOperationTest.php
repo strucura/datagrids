@@ -1,57 +1,57 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\Filters\In;
+namespace Strucura\DataGrid\Tests\FilterOperations\In;
 
 use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\FilterOperations\In\InFilterOperation;
+use Strucura\DataGrid\FilterOperations\In\NotInFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
-class InFilterTest extends TestCase
+class NotInFilterOperationTest extends TestCase
 {
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', ['value1', 'value2'], FilterOperator::IN);
+        $filterData = new FilterData('column', ['value1', 'value2'], FilterOperator::NOT_IN);
 
-        $filter = new InFilterOperation;
+        $filter = new NotInFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
 
-    public function test_handle_not_null_values()
+    public function test_handle_without_nulls()
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', ['value1', 'value2'], FilterOperator::IN);
+        $filterData = new FilterData('key', ['value1', 'value2'], FilterOperator::NOT_IN);
 
         $column->shouldReceive('getExpression')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
         $column->shouldReceive('getBindings')->andReturn([]);
 
-        $query->shouldReceive('whereRaw')
-            ->once()
-            ->with('key IN (?,?)', ['value1', 'value2'])
-            ->andReturnSelf();
-
-        $query->shouldNotReceive('orWhereNull')
+        $query->shouldNotReceive('orWhereNotNull')
             ->with('key')
             ->andReturnSelf();
 
-        $filter = new InFilterOperation;
+        $query->shouldReceive('whereRaw')
+            ->once()
+            ->with('key NOT IN (?,?)', ['value1', 'value2'])
+            ->andReturnSelf();
+
+        $filter = new NotInFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);
     }
 
-    public function test_handle_with_null_values()
+    public function test_handle_with_nulls()
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', ['value1', null], FilterOperator::IN);
+        $filterData = new FilterData('key', ['value1', 'value2'], FilterOperator::NOT_IN);
 
         $column->shouldReceive('getExpression')->andReturn('key');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
@@ -59,15 +59,14 @@ class InFilterTest extends TestCase
 
         $query->shouldReceive('whereRaw')
             ->once()
-            ->with('key IN (?,?)', ['value1', null])
+            ->with('key NOT IN (?,?)', ['value1', 'value2'])
             ->andReturnSelf();
 
-        $query->shouldReceive('orWhereNull')
-            ->once()
+        $query->shouldReceive('orWhereNotNull')
             ->with('key')
             ->andReturnSelf();
 
-        $filter = new InFilterOperation;
+        $filter = new NotInFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

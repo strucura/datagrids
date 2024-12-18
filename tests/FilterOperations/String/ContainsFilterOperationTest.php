@@ -1,23 +1,23 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\Filters\String;
+namespace Strucura\DataGrid\Tests\FilterOperations\String;
 
 use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\FilterOperations\String\StartsWithFilterOperation;
+use Strucura\DataGrid\FilterOperations\String\ContainsFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
-class StartsWithFilterTest extends TestCase
+class ContainsFilterOperationTest extends TestCase
 {
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', 'value', FilterOperator::STRING_STARTS_WITH);
+        $filterData = new FilterData('column', 'value', FilterOperator::STRING_CONTAINS);
 
-        $filter = new StartsWithFilterOperation;
+        $filter = new ContainsFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -26,7 +26,7 @@ class StartsWithFilterTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('name', 'value', FilterOperator::STRING_STARTS_WITH);
+        $filterData = new FilterData('name', 'value', FilterOperator::STRING_CONTAINS);
 
         $column->shouldReceive('getExpression')->andReturn('name');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
@@ -34,10 +34,10 @@ class StartsWithFilterTest extends TestCase
 
         $query->shouldReceive('whereRaw')
             ->once()
-            ->with('name LIKE ?', ['value%'])
+            ->with('name LIKE ?', ['%value%'])
             ->andReturnSelf();
 
-        $filter = new StartsWithFilterOperation;
+        $filter = new ContainsFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

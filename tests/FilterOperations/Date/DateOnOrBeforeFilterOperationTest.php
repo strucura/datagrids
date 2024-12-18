@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\Filters\Date;
+namespace Strucura\DataGrid\Tests\FilterOperations\Date;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
@@ -9,7 +9,7 @@ use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\FilterOperations\Dates\DateOnOrBeforeFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
-class DateOnOrBeforeFilterTest extends TestCase
+class DateOnOrBeforeFilterOperationTest extends TestCase
 {
     public function test_it_can_handle_date_on_or_before_filter_type()
     {

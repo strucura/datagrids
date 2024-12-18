@@ -1,32 +1,32 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\Filters\Date;
+namespace Strucura\DataGrid\Tests\FilterOperations\Equals;
 
 use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\FilterOperations\Dates\DateIsFilterOperation;
+use Strucura\DataGrid\FilterOperations\Equals\DoesNotEqualFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
-class DateIsFilterTest extends TestCase
+class DoesNotEqualFilterOperationTest extends TestCase
 {
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('column', '2024-10-12', FilterOperator::DATE_IS);
+        $filterData = new FilterData('column', 'value', FilterOperator::NOT_EQUALS);
 
-        $filter = new DateIsFilterOperation;
+        $filter = new DoesNotEqualFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
 
-    public function test_handle_dates()
+    public function test_handle()
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('created_at', '2023-01-01', FilterOperator::DATE_IS);
+        $filterData = new FilterData('created_at', '2023-01-01 00:00:00', FilterOperator::NOT_EQUALS);
 
         $column->shouldReceive('getExpression')->andReturn('created_at');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
@@ -34,10 +34,10 @@ class DateIsFilterTest extends TestCase
 
         $query->shouldReceive('whereRaw')
             ->once()
-            ->with('created_at = DATE_FORMAT(?, \'%Y-%m-%d\')', ['2023-01-01'])
+            ->with('created_at != ?', ['2023-01-01 00:00:00'])
             ->andReturnSelf();
 
-        $filter = new DateIsFilterOperation;
+        $filter = new DoesNotEqualFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

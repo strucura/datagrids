@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\Filters\Numeric;
+namespace Strucura\DataGrid\Tests\FilterOperations\Numeric;
 
 use Illuminate\Database\Query\Builder;
 use Mockery;
@@ -10,7 +10,7 @@ use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\FilterOperations\Numeric\GreaterThanFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
-class GreaterThanFilterTest extends TestCase
+class GreaterThanFilterOperationTest extends TestCase
 {
     public function test_can_handle()
     {
