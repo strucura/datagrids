@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Filters\String;
+namespace Strucura\DataGrid\FilterOperations\String;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractFilterOperation;

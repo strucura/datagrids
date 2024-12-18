@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\Filters\Equals;
+namespace Strucura\DataGrid\FilterOperations\Equals;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractFilterOperation;

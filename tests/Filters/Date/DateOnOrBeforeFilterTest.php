@@ -6,7 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Dates\DateOnOrBeforeFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateOnOrBeforeFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DateOnOrBeforeFilterTest extends TestCase

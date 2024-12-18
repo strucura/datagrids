@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Numeric\GreaterThanFilterOperation;
+use Strucura\DataGrid\FilterOperations\Numeric\GreaterThanFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class GreaterThanFilterTest extends TestCase

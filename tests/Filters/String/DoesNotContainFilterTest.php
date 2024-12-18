@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\String\DoesNotContainFilterOperation;
+use Strucura\DataGrid\FilterOperations\String\DoesNotContainFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DoesNotContainFilterTest extends TestCase

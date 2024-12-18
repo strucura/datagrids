@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Dates\DateIsNotFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateIsNotFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DateIsNotFilterTest extends TestCase

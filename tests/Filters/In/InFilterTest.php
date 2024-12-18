@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\In\InFilterOperation;
+use Strucura\DataGrid\FilterOperations\In\InFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class InFilterTest extends TestCase
