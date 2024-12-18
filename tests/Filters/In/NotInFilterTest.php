@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\In\NotInFilter;
+use Strucura\DataGrid\Filters\In\NotInFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class NotInFilterTest extends TestCase
@@ -17,7 +17,7 @@ class NotInFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', ['value1', 'value2'], FilterOperator::NOT_IN);
 
-        $filter = new NotInFilter;
+        $filter = new NotInFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -41,7 +41,7 @@ class NotInFilterTest extends TestCase
             ->with('key NOT IN (?,?)', ['value1', 'value2'])
             ->andReturnSelf();
 
-        $filter = new NotInFilter;
+        $filter = new NotInFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);
@@ -66,7 +66,7 @@ class NotInFilterTest extends TestCase
             ->with('key')
             ->andReturnSelf();
 
-        $filter = new NotInFilter;
+        $filter = new NotInFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

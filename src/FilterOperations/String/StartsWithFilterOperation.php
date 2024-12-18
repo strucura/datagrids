@@ -1,25 +1,27 @@
 <?php
 
-namespace Strucura\DataGrid\Filters\Numeric;
+namespace Strucura\DataGrid\Filters\String;
 
 use Illuminate\Database\Query\Builder;
-use Strucura\DataGrid\Abstracts\AbstractFilter;
+use Strucura\DataGrid\Abstracts\AbstractFilterOperation;
 use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
-class LessThanFilter extends AbstractFilter
+class StartsWithFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterType === FilterOperator::LESS_THAN;
+        return $filterData->filterType === FilterOperator::STRING_STARTS_WITH;
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = $queryableContract->getExpression().' < ?';
-        $bindings = [...$queryableContract->getBindings(), $filterData->value];
+        $expression = $queryableContract->getExpression().' LIKE ?';
+        $value = $filterData->value.'%';
+
+        $bindings = [...$queryableContract->getBindings(), $value];
 
         $method = $this->getQueryMethod($queryableContract, $filterOperator);
         $query->$method($expression, $bindings);

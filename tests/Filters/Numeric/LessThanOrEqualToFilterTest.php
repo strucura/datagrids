@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Numeric\LessThanOrEqualToFilter;
+use Strucura\DataGrid\Filters\Numeric\LessThanOrEqualToFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class LessThanOrEqualToFilterTest extends TestCase
@@ -17,7 +17,7 @@ class LessThanOrEqualToFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 10, FilterOperator::LESS_THAN_OR_EQUAL_TO);
 
-        $filter = new LessThanOrEqualToFilter;
+        $filter = new LessThanOrEqualToFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class LessThanOrEqualToFilterTest extends TestCase
             ->with('quantity <= ?', [10])
             ->andReturnSelf();
 
-        $filter = new LessThanOrEqualToFilter;
+        $filter = new LessThanOrEqualToFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

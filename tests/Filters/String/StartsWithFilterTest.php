@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\String\StartsWithFilter;
+use Strucura\DataGrid\Filters\String\StartsWithFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class StartsWithFilterTest extends TestCase
@@ -17,7 +17,7 @@ class StartsWithFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 'value', FilterOperator::STRING_STARTS_WITH);
 
-        $filter = new StartsWithFilter;
+        $filter = new StartsWithFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class StartsWithFilterTest extends TestCase
             ->with('name LIKE ?', ['value%'])
             ->andReturnSelf();
 
-        $filter = new StartsWithFilter;
+        $filter = new StartsWithFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

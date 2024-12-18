@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Dates\DateIsNotFilter;
+use Strucura\DataGrid\Filters\Dates\DateIsNotFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DateIsNotFilterTest extends TestCase
@@ -17,7 +17,7 @@ class DateIsNotFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', '2024-10-12', FilterOperator::DATE_IS_NOT);
 
-        $filter = new DateIsNotFilter;
+        $filter = new DateIsNotFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class DateIsNotFilterTest extends TestCase
             ->with('created_at != DATE_FORMAT(?, \'%Y-%m-%d\')', ['2023-01-01'])
             ->andReturnSelf();
 
-        $filter = new DateIsNotFilter;
+        $filter = new DateIsNotFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

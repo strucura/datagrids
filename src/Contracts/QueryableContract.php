@@ -20,8 +20,6 @@ interface QueryableContract
 
     /**
      * Used to set the expression for the queryable expression
-     *
-     * @return QueryableContract
      */
     public function setExpression(string $expression): static;
 

@@ -3,13 +3,13 @@
 namespace Strucura\DataGrid\Filters\Dates;
 
 use Illuminate\Database\Query\Builder;
-use Strucura\DataGrid\Abstracts\AbstractFilter;
+use Strucura\DataGrid\Abstracts\AbstractFilterOperation;
 use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
-class DateOnOrAfterFilter extends AbstractFilter
+class DateOnOrAfterFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {

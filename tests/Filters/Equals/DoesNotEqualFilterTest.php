@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Equals\DoesNotEqualFilter;
+use Strucura\DataGrid\Filters\Equals\DoesNotEqualFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DoesNotEqualFilterTest extends TestCase
@@ -17,7 +17,7 @@ class DoesNotEqualFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 'value', FilterOperator::NOT_EQUALS);
 
-        $filter = new DoesNotEqualFilter;
+        $filter = new DoesNotEqualFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class DoesNotEqualFilterTest extends TestCase
             ->with('created_at != ?', ['2023-01-01 00:00:00'])
             ->andReturnSelf();
 
-        $filter = new DoesNotEqualFilter;
+        $filter = new DoesNotEqualFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

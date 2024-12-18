@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\String\DoesNotContainFilter;
+use Strucura\DataGrid\Filters\String\DoesNotContainFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DoesNotContainFilterTest extends TestCase
@@ -17,7 +17,7 @@ class DoesNotContainFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 'value', FilterOperator::STRING_DOES_NOT_CONTAIN);
 
-        $filter = new DoesNotContainFilter;
+        $filter = new DoesNotContainFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class DoesNotContainFilterTest extends TestCase
             ->with('name NOT LIKE ?', ['%value%'])
             ->andReturnSelf();
 
-        $filter = new DoesNotContainFilter;
+        $filter = new DoesNotContainFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

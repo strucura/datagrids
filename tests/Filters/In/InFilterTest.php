@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\In\InFilter;
+use Strucura\DataGrid\Filters\In\InFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class InFilterTest extends TestCase
@@ -17,7 +17,7 @@ class InFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', ['value1', 'value2'], FilterOperator::IN);
 
-        $filter = new InFilter;
+        $filter = new InFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -41,7 +41,7 @@ class InFilterTest extends TestCase
             ->with('key')
             ->andReturnSelf();
 
-        $filter = new InFilter;
+        $filter = new InFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);
@@ -67,7 +67,7 @@ class InFilterTest extends TestCase
             ->with('key')
             ->andReturnSelf();
 
-        $filter = new InFilter;
+        $filter = new InFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);

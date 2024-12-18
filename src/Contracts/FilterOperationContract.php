@@ -9,7 +9,7 @@ use Strucura\DataGrid\Enums\FilterSetOperator;
 /**
  * Used to define the means for applying a specific filter operator to the query.
  */
-interface FilterContract
+interface FilterOperationContract
 {
     /**
      * Determines if the filter can handle the given filter data

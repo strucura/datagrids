@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
+use Strucura\DataGrid\Filters\Dates\DateAfterFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DateAfterFilterTest extends TestCase
@@ -17,7 +17,7 @@ class DateAfterFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', '2024-10-12', FilterOperator::DATE_AFTER);
 
-        $filter = new DateAfterFilter;
+        $filter = new DateAfterFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class DateAfterFilterTest extends TestCase
             ->with('created_at > DATE_FORMAT(?, \'%Y-%m-%d\')', ['2023-01-01'])
             ->andReturnSelf();
 
-        $filter = new DateAfterFilter;
+        $filter = new DateAfterFilterOperation;
         $filter->handle($query, $column, $filterData);
     }
 }

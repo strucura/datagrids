@@ -7,7 +7,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Abstracts\AbstractFloatingFilter;
-use Strucura\DataGrid\Contracts\FilterContract;
+use Strucura\DataGrid\Contracts\FilterOperationContract;
 use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\DataGridData;
 use Strucura\DataGrid\Data\FilterData;
@@ -93,7 +93,7 @@ class GenerateDataGridQueryAction
 
             $filterClass = $this->getMatchingFilterClass($queryableContract, $filter);
             if (! $filterClass) {
-                throw new Exception("No filter found for {$queryableContract->getAlias()} with filter type {$filter->filterType->value}");
+                throw new Exception("No filter operation found for {$queryableContract->getAlias()} with filter operator {$filter->filterType->value}");
             }
             $filterClass->handle($query, $queryableContract, $filter, $filterSetOperator);
         }
@@ -105,12 +105,12 @@ class GenerateDataGridQueryAction
      * @param  QueryableContract  $queryableContract  The queryable contract to filter on
      * @param  FilterData  $filter  The filter data
      */
-    private function getMatchingFilterClass(QueryableContract $queryableContract, FilterData $filter): ?FilterContract
+    private function getMatchingFilterClass(QueryableContract $queryableContract, FilterData $filter): ?FilterOperationContract
     {
-        $availableFilters = config('datagrids.filters');
+        $availableFilters = config('datagrids.filter_operations');
 
         foreach ($availableFilters as $filterClass) {
-            /** @var FilterContract $filterInstance */
+            /** @var FilterOperationContract $filterInstance */
             $filterInstance = app($filterClass);
             if ($filterInstance->canHandle($queryableContract, $filter)) {
                 return $filterInstance;

@@ -3,11 +3,11 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Pipeline\Pipeline;
-use Strucura\DataGrid\Contracts\FilterContract;
+use Strucura\DataGrid\Contracts\FilterOperationContract;
 use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
-abstract class AbstractFilter implements FilterContract
+abstract class AbstractFilterOperation implements FilterOperationContract
 {
     /**
      * Normalize the value before using it in the query.

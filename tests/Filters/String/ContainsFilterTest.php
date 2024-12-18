@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\Filters\String\ContainsFilter;
+use Strucura\DataGrid\Filters\String\ContainsFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class ContainsFilterTest extends TestCase
@@ -17,7 +17,7 @@ class ContainsFilterTest extends TestCase
         $column = Mockery::mock(AbstractColumn::class);
         $filterData = new FilterData('column', 'value', FilterOperator::STRING_CONTAINS);
 
-        $filter = new ContainsFilter;
+        $filter = new ContainsFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -37,7 +37,7 @@ class ContainsFilterTest extends TestCase
             ->with('name LIKE ?', ['%value%'])
             ->andReturnSelf();
 
-        $filter = new ContainsFilter;
+        $filter = new ContainsFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);
