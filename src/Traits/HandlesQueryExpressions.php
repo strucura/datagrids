@@ -41,7 +41,7 @@ trait HandlesQueryExpressions
     /**
      * Create a new instance of the column
      */
-    public static function make(Expression|string $expression, string $alias, array $bindings = []): self
+    public static function make(Expression|string $expression, string $alias, array $bindings = []): static
     {
         return new static($expression, $alias, $bindings);
     }

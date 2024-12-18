@@ -16,7 +16,7 @@ interface QueryableContract
     /**
      * Create a new instance of a queryable expression
      */
-    public static function make(Expression|string $expression, string $alias, array $bindings = []): QueryableContract;
+    public static function make(Expression|string $expression, string $alias, array $bindings = []): static;
 
     /**
      * Used to set the expression for the queryable expression
