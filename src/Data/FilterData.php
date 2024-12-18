@@ -7,8 +7,8 @@ use Strucura\DataGrid\Enums\FilterOperator;
 class FilterData
 {
     public function __construct(
-        public string         $alias,
-        public mixed          $value,
+        public string $alias,
+        public mixed $value,
         public FilterOperator $filterOperator,
     ) {}
 }
