@@ -114,7 +114,7 @@ class UserDataGridTest extends TestCase
         ];
 
         foreach ($floatingFilters as $filter) {
-            $this->assertContains($filter, $data['floating_filters']);
+            $this->assertContains($filter, $data['external_filter_inputs']);
         }
     }
 

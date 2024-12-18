@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Abstracts\AbstractFloatingFilter;
+use Strucura\DataGrid\Abstracts\AbstractFilterInput;
 use Strucura\DataGrid\Contracts\FilterOperationContract;
 use Strucura\DataGrid\Contracts\QueryableContract;
 use Strucura\DataGrid\Data\DataGridData;
@@ -32,16 +32,16 @@ class GenerateDataGridQueryAction
      *
      * @param  Builder  $query  The query builder instance.
      * @param  Collection<AbstractColumn>  $columns  The collection of columns to select.
-     * @param  Collection<AbstractFloatingFilter>  $floatingFilters  The collection of eligible floating filters.
+     * @param  Collection<AbstractFilterInput>  $externalFilterInputs  The collection of eligible external filter inputs.
      * @param  DataGridData  $gridData  The grid data containing the filters and sorts.
      * @return Builder The generated query builder instance.
      *
      * @throws Exception
      */
-    public function handle(Builder $query, Collection $columns, Collection $floatingFilters, DataGridData $gridData): Builder
+    public function handle(Builder $query, Collection $columns, Collection $externalFilterInputs, DataGridData $gridData): Builder
     {
         /** @var Collection<QueryableContract> $queryableContracts */
-        $queryableContracts = $columns->concat($floatingFilters->all());
+        $queryableContracts = $columns->concat($externalFilterInputs->all());
 
         $this->applyFilterSets($query, $queryableContracts, $gridData->filterSets);
         $this->applySorts($query, $gridData->sorts);

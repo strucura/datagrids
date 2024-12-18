@@ -44,9 +44,10 @@ interface DataGridContract
     public function getColumns(): Collection;
 
     /**
-     * Used to define the floating filters that will be available in the data grid
+     * Used to define the filter inputs that will be available to be applied to the data grid, but will live outside
+     * the data grid.
      */
-    public function getFloatingFilters(): Collection;
+    public function getExternalFilterInputs(): Collection;
 
     /**
      * The base query for the data grid.

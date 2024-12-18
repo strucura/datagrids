@@ -1,11 +1,11 @@
 <?php
 
-namespace Strucura\DataGrid\FloatingFilters;
+namespace Strucura\DataGrid\FilterInputs;
 
-use Strucura\DataGrid\Abstracts\AbstractFloatingFilter;
+use Strucura\DataGrid\Abstracts\AbstractFilterInput;
 use Strucura\DataGrid\Enums\FloatingFilterType;
 
-class DateRangeFloatingFilter extends AbstractFloatingFilter
+class DateRangeFilterInput extends AbstractFilterInput
 {
     protected FloatingFilterType|string $type = FloatingFilterType::DateRange;
 

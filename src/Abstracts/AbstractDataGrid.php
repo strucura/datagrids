@@ -15,7 +15,7 @@ use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 
 abstract class AbstractDataGrid implements DataGridContract
 {
-    public function getFloatingFilters(): Collection
+    public function getExternalFilterInputs(): Collection
     {
         return collect([]);
     }
@@ -80,7 +80,7 @@ abstract class AbstractDataGrid implements DataGridContract
         $query = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
-            $this->getFloatingFilters(),
+            $this->getExternalFilterInputs(),
             DataGridData::fromRequest($request)
         );
 
@@ -119,14 +119,14 @@ abstract class AbstractDataGrid implements DataGridContract
                 return $column->toArray();
             });
 
-        $floatingFilters = $this->getFloatingFilters()
-            ->map(function (AbstractFloatingFilter $filter) {
+        $externalFilterInputs = $this->getExternalFilterInputs()
+            ->map(function (AbstractFilterInput $filter) {
                 return $filter->toArray();
             });
 
         return response()->json([
             'columns' => $columns,
-            'floating_filters' => $floatingFilters,
+            'external_filter_inputs' => $externalFilterInputs,
         ]);
     }
 }
