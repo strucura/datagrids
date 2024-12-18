@@ -3,24 +3,24 @@
 // config for Strucura/DataGrid
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Abstracts\AbstractDataGrid;
-use Strucura\DataGrid\Filters\Dates\DateAfterFilter;
-use Strucura\DataGrid\Filters\Dates\DateBeforeFilter;
-use Strucura\DataGrid\Filters\Dates\DateIsFilter;
-use Strucura\DataGrid\Filters\Dates\DateIsNotFilter;
-use Strucura\DataGrid\Filters\Dates\DateOnOrAfterFilter;
-use Strucura\DataGrid\Filters\Dates\DateOnOrBeforeFilter;
-use Strucura\DataGrid\Filters\Equals\DoesNotEqualFilter;
-use Strucura\DataGrid\Filters\Equals\EqualsFilter;
-use Strucura\DataGrid\Filters\In\InFilter;
-use Strucura\DataGrid\Filters\In\NotInFilter;
-use Strucura\DataGrid\Filters\Numeric\GreaterThanFilter;
-use Strucura\DataGrid\Filters\Numeric\GreaterThanOrEqualToFilter;
-use Strucura\DataGrid\Filters\Numeric\LessThanFilter;
-use Strucura\DataGrid\Filters\Numeric\LessThanOrEqualToFilter;
-use Strucura\DataGrid\Filters\String\ContainsFilter;
-use Strucura\DataGrid\Filters\String\DoesNotContainFilter;
-use Strucura\DataGrid\Filters\String\EndsWithFilter;
-use Strucura\DataGrid\Filters\String\StartsWithFilter;
+use Strucura\DataGrid\FilterOperations\Dates\DateAfterFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateBeforeFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateIsFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateIsNotFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateOnOrAfterFilterOperation;
+use Strucura\DataGrid\FilterOperations\Dates\DateOnOrBeforeFilterOperation;
+use Strucura\DataGrid\FilterOperations\Equals\DoesNotEqualFilterOperation;
+use Strucura\DataGrid\FilterOperations\Equals\EqualsFilterOperation;
+use Strucura\DataGrid\FilterOperations\In\InFilterOperation;
+use Strucura\DataGrid\FilterOperations\In\NotInFilterOperation;
+use Strucura\DataGrid\FilterOperations\Numeric\GreaterThanFilterOperation;
+use Strucura\DataGrid\FilterOperations\Numeric\GreaterThanOrEqualToFilterOperation;
+use Strucura\DataGrid\FilterOperations\Numeric\LessThanFilterOperation;
+use Strucura\DataGrid\FilterOperations\Numeric\LessThanOrEqualToFilterOperation;
+use Strucura\DataGrid\FilterOperations\String\ContainsFilterOperation;
+use Strucura\DataGrid\FilterOperations\String\DoesNotContainFilterOperation;
+use Strucura\DataGrid\FilterOperations\String\EndsWithFilterOperation;
+use Strucura\DataGrid\FilterOperations\String\StartsWithFilterOperation;
 use Strucura\DataGrid\Normalizers\BooleanNormalizer;
 use Strucura\DataGrid\Normalizers\FloatNormalizer;
 use Strucura\DataGrid\Normalizers\IntegerNormalizer;
@@ -56,33 +56,33 @@ return [
     /**
      * A list of filters that can be applied to a data source.
      */
-    'filters' => [
+    'filter_operations' => [
         // Equality
-        EqualsFilter::class,
-        DoesNotEqualFilter::class,
+        EqualsFilterOperation::class,
+        DoesNotEqualFilterOperation::class,
 
         // Dates
-        DateAfterFilter::class,
-        DateBeforeFilter::class,
-        DateIsFilter::class,
-        DateIsNotFilter::class,
-        DateOnOrBeforeFilter::class,
-        DateOnOrAfterFilter::class,
+        DateAfterFilterOperation::class,
+        DateBeforeFilterOperation::class,
+        DateIsFilterOperation::class,
+        DateIsNotFilterOperation::class,
+        DateOnOrBeforeFilterOperation::class,
+        DateOnOrAfterFilterOperation::class,
 
         // In
-        InFilter::class,
-        NotInFilter::class,
+        InFilterOperation::class,
+        NotInFilterOperation::class,
 
         // Numeric
-        GreaterThanFilter::class,
-        GreaterThanOrEqualToFilter::class,
-        LessThanFilter::class,
-        LessThanOrEqualToFilter::class,
+        GreaterThanFilterOperation::class,
+        GreaterThanOrEqualToFilterOperation::class,
+        LessThanFilterOperation::class,
+        LessThanOrEqualToFilterOperation::class,
 
         // String
-        ContainsFilter::class,
-        DoesNotContainFilter::class,
-        EndsWithFilter::class,
-        StartsWithFilter::class,
+        ContainsFilterOperation::class,
+        DoesNotContainFilterOperation::class,
+        EndsWithFilterOperation::class,
+        StartsWithFilterOperation::class,
     ],
 ];

@@ -3,11 +3,11 @@
 namespace Strucura\DataGrid\Columns;
 
 use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 
 class TimeColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $columnType = ColumnTypeEnum::Time;
+    protected ColumnType|string $columnType = ColumnType::Time;
 
     /**
      * Provides instructions to the frontend on how to display the time

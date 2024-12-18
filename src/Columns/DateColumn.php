@@ -3,15 +3,15 @@
 namespace Strucura\DataGrid\Columns;
 
 use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 
 class DateColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $columnType = ColumnTypeEnum::Date;
+    protected ColumnType|string $columnType = ColumnType::Date;
 
-    public function setSelectAs(string $selectAs): static
+    public function setExpression(string $expression): static
     {
-        return parent::setSelectAs("DATE_FORMAT($selectAs, '%Y-%m-%d')");
+        return parent::setExpression("DATE_FORMAT($expression, '%Y-%m-%d')");
     }
 
     /**

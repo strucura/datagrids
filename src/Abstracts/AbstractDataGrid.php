@@ -3,6 +3,7 @@
 namespace Strucura\DataGrid\Abstracts;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -14,6 +15,11 @@ use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 
 abstract class AbstractDataGrid implements DataGridContract
 {
+    public function getExternalFilterInputs(): Collection
+    {
+        return collect([]);
+    }
+
     public function getRoutePrefix(): string
     {
         return 'grids';
@@ -74,6 +80,7 @@ abstract class AbstractDataGrid implements DataGridContract
         $query = GenerateDataGridQueryAction::make()->handle(
             $this->getQuery(),
             $this->getColumns(),
+            $this->getExternalFilterInputs(),
             DataGridData::fromRequest($request)
         );
 
@@ -107,12 +114,19 @@ abstract class AbstractDataGrid implements DataGridContract
         }
 
         // Get the columns for the grid
-        $columns = $this->getColumns()->map(function (AbstractColumn $column) {
-            return $column->toArray();
-        });
+        $columns = $this->getColumns()
+            ->map(function (AbstractColumn $column) {
+                return $column->toArray();
+            });
+
+        $externalFilterInputs = $this->getExternalFilterInputs()
+            ->map(function (AbstractFilterInput $filter) {
+                return $filter->toArray();
+            });
 
         return response()->json([
             'columns' => $columns,
+            'external_filter_inputs' => $externalFilterInputs,
         ]);
     }
 }

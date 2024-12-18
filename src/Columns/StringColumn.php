@@ -3,9 +3,9 @@
 namespace Strucura\DataGrid\Columns;
 
 use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Enums\ColumnTypeEnum;
+use Strucura\DataGrid\Enums\ColumnType;
 
 class StringColumn extends AbstractColumn
 {
-    protected ColumnTypeEnum $columnType = ColumnTypeEnum::String;
+    protected ColumnType|string $columnType = ColumnType::String;
 }

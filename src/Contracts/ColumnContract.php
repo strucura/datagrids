@@ -2,13 +2,7 @@
 
 namespace Strucura\DataGrid\Contracts;
 
-interface ColumnContract
+interface ColumnContract extends QueryableContract
 {
-    public function __construct(string $queryColumn, string $alias);
-
-    public function getSelectAs(): string;
-
-    public function getBindings(): array;
-
-    public function isHavingRequired(): bool;
+    public function toArray(): array;
 }

@@ -25,7 +25,7 @@ class DataGridData
             $filters = collect();
             foreach ($filterSetsRequestItem['filters'] as $filter) {
                 $filters->push(new FilterData(
-                    $filter['column'],
+                    $filter['alias'],
                     $filter['value'],
                     FilterOperator::tryFrom($filter['filter_operator'])
                 ));
@@ -41,7 +41,7 @@ class DataGridData
         $sorts = collect();
         foreach ($requestSorts as $sort) {
             $sorts->push(new SortData(
-                $sort['column'],
+                $sort['alias'],
                 SortOperator::tryFrom($sort['sort_operator']))
             );
         }
