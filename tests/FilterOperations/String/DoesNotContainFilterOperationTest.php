@@ -34,7 +34,7 @@ class DoesNotContainFilterOperationTest extends TestCase
 
         $query->shouldReceive('whereRaw')
             ->once()
-            ->with('name NOT LIKE ?', ['%value%'])
+            ->with('name NOT LIKE ? OR name IS NULL', ['%value%'])
             ->andReturnSelf();
 
         $filter = new DoesNotContainFilterOperation;
