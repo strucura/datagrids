@@ -16,7 +16,7 @@ enum FilterOperator: string
     case LESS_THAN_OR_EQUAL_TO = 'lte';
     case GREATER_THAN = 'gt';
     case GREATER_THAN_OR_EQUAL_TO = 'gte';
-    //case BETWEEN = 'between';
+    // case BETWEEN = 'between';
     case DATE_IS = 'dateIs';
     case DATE_IS_NOT = 'dateIsNot';
     case DATE_BEFORE = 'dateBefore';
