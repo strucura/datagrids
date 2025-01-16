@@ -21,7 +21,7 @@ class DataGridServiceProvider extends PackageServiceProvider
         $package
             ->name('datagrids')
             ->hasCommands([
-                MakeDataGridCommand::class
+                MakeDataGridCommand::class,
             ])
             ->hasConfigFile();
 
