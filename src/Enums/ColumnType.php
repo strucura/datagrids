@@ -5,8 +5,7 @@ namespace Strucura\DataGrid\Enums;
 enum ColumnType: string
 {
     case String = 'string';
-    case Integer = 'integer';
-    case Float = 'float';
+    case Number = 'number';
     case Date = 'date';
     case Time = 'time';
     case DateTime = 'datetime';

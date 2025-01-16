@@ -5,9 +5,14 @@ namespace Strucura\DataGrid\Columns;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Enums\ColumnType;
 
-class IntegerColumn extends AbstractColumn
+class NumberColumn extends AbstractColumn
 {
-    protected ColumnType|string $columnType = ColumnType::Integer;
+    protected ColumnType|string $columnType = ColumnType::Number;
+
+    public function float(): static
+    {
+        return $this->setExpression('CAST('.$this->getExpression().' AS FLOAT)');
+    }
 
     public function signed(): static
     {
