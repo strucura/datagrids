@@ -77,7 +77,7 @@ class UserDataGridTest extends TestCase
         $columns = [
             [
                 'alias' => 'ID',
-                'type' => 'integer',
+                'type' => 'number',
                 'is_sortable' => true,
                 'is_filterable' => true,
                 'is_hidden' => false,
