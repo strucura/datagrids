@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\StructureDiscoverer\Discover;
+use Strucura\DataGrid\Commands\MakeDataGridCommand;
 use Strucura\DataGrid\Contracts\DataGridContract;
 
 class DataGridServiceProvider extends PackageServiceProvider
@@ -19,6 +20,9 @@ class DataGridServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('datagrids')
+            ->hasCommands([
+                MakeDataGridCommand::class
+            ])
             ->hasConfigFile();
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
