@@ -1,0 +1,21 @@
+<?php
+
+namespace App\DataGrids;
+
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Strucura\DataGrid\Abstracts\AbstractDataGrid;
+
+class DATA_GRID_NAME extends AbstractDataGrid
+{
+    public function getColumns(): Collection
+    {
+        return collect([]);
+    }
+
+    public function getQuery(): Builder
+    {
+        return DB::table('');
+    }
+}
