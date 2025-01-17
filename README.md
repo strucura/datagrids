@@ -41,6 +41,8 @@ Here is how the discovery process is set up:
 2. **Conditions**: The `conditions` array defines the criteria that a class must meet to be considered a grid. In this case, it uses the `DiscoverCondition` class to find classes that implement the `GridContract` interface.
 
 ```php
+<?php
+
 'discovery' => [
     'paths' => [
         app_path(''),
@@ -64,47 +66,62 @@ normalizers are registered in the `config/datagrids.php` file under the `normali
 implement the `NormalizerContract` interface.
 
 ```php
-'normalizers' => [
-    BooleanNormalizer::class,
-    TimezoneNormalizer::class,
-    FloatNormalizer::class,
-    IntegerNormalizer::class,
-    NullNormalizer::class,
-],
+<?php
+
+return [
+    'normalizers' => [
+        BooleanNormalizer::class,
+        TimezoneNormalizer::class,
+        FloatNormalizer::class,
+        IntegerNormalizer::class,
+        NullNormalizer::class,
+    ],
+]
 ```
 
 This configuration ensures that the specified normalizers are applied to filter values in the order they are listed.
 
-### Filters
+### Filter Operations
 
-Filters are used to apply specific conditions to the data being queried. They help in narrowing down the results 
-based on various criteria.  Filters are registered in the `config/datagrids.php` file under the `filters` key. Each 
-filter class must extend the `AbstractFilter` class and implement the `FilterContract` interface.
+Filter operations are used to apply specific conditions to the data being queried. They help in narrowing down the 
+results based on various criteria.  Filter operations are registered in the `config/datagrids.php` file under the 
+`filter_operations` key. Each filter operation class must extend the `AbstractFilterOperation` class and implement the `FilterOperationContract` 
+interface.
 
 ```php
-'filters' => [
-    // Dates
-    DateAfterFilter::class,
-    DateBeforeFilter::class,
-    DateIsFilter::class,
-    DateIsNotFilter::class,
+<?php
 
-    // In
-    InFilter::class,
-    NotInFilter::class,
-
-    // Numeric
-    GreaterThanFilter::class,
-    GreaterThanOrEqualToFilter::class,
-    LessThanFilter::class,
-    LessThanOrEqualToFilter::class,
-
-    // String
-    ContainsFilter::class,
-    DoesNotContainFilter::class,
-    EndsWithFilter::class,
-    StartsWithFilter::class,
-],
+return [
+    'filter_operations' => [
+        // Equality
+        EqualsFilterOperation::class,
+        DoesNotEqualFilterOperation::class,
+    
+        // Dates
+        DateAfterFilterOperation::class,
+        DateBeforeFilterOperation::class,
+        DateIsFilterOperation::class,
+        DateIsNotFilterOperation::class,
+        DateOnOrBeforeFilterOperation::class,
+        DateOnOrAfterFilterOperation::class,
+    
+        // In
+        InFilterOperation::class,
+        NotInFilterOperation::class,
+    
+        // Numeric
+        GreaterThanFilterOperation::class,
+        GreaterThanOrEqualToFilterOperation::class,
+        LessThanFilterOperation::class,
+        LessThanOrEqualToFilterOperation::class,
+    
+        // String
+        ContainsFilterOperation::class,
+        DoesNotContainFilterOperation::class,
+        EndsWithFilterOperation::class,
+        StartsWithFilterOperation::class,
+    ],
+]
 ```
 
 This configuration ensures that the specified filters are available for use in the application. Each filter class defines the conditions it can handle and the logic to apply those conditions to the query.
@@ -124,7 +141,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Columns\DateTimeColumn;
-use Strucura\DataGrid\Columns\IntegerColumn;
+use Strucura\DataGrid\Columns\NumberColumn;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Contracts\DataGridContract;
 
@@ -133,7 +150,7 @@ class ActiveUserDataGrid extends AbstractDataGrid implements DataGridContract
     public function getColumns(): Collection
     {
         return collect([
-            IntegerColumn::make('users.id', 'ID'),
+            NumberColumn::make('users.id', 'ID'),
             StringColumn::make('users.name', 'Name'),
             StringColumn::make('users.email', 'Email'),
             DateTimeColumn::make('users.created_at', 'Created At'),
