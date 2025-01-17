@@ -43,16 +43,18 @@ Here is how the discovery process is set up:
 ```php
 <?php
 
-'discovery' => [
-    'paths' => [
-        app_path(''),
+return [
+    'discovery' => [
+        'paths' => [
+            app_path(''),
+        ],
+        'conditions' => [
+            ConditionBuilder::create()
+                ->classes()
+                ->extending(AbstractDataGrid::class),
+        ],
     ],
-    'conditions' => [
-        ConditionBuilder::create()
-            ->classes()
-            ->extending(AbstractDataGrid::class),
-    ],
-],
+]
 ```
 
 This setup ensures that any class within the specified paths that implements the `DataGridContract` interface will be 
