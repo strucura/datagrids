@@ -70,6 +70,30 @@ abstract class AbstractColumn implements ColumnContract
         return $this;
     }
 
+    /**
+     * Identifies a value that we want to prefix each value with to the front end
+     *
+     * @return $this
+     */
+    public function prefix(string $prefix): static
+    {
+        $this->withMeta('prefix', $prefix);
+
+        return $this;
+    }
+
+    /**
+     * Identifies a value that we want to postfix to each value to the front end
+     *
+     * @return $this
+     */
+    public function postfix(string $postfix): static
+    {
+        $this->withMeta('postfix', $postfix);
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
