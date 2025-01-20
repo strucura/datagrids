@@ -9,15 +9,17 @@ class TimeColumn extends AbstractColumn
 {
     protected ColumnType|string $columnType = ColumnType::Time;
 
-    /**
-     * Provides instructions to the frontend on how to display the time
-     *
-     * @return $this
-     */
-    public function displayFormat(string $displayFormat): static
+    public function locale(string $locale): static
     {
-        $this->withMeta('format', $displayFormat);
+        return $this->withMeta('locale', $locale);
+    }
 
-        return $this;
+    public function formatOptions(string $hour, string $minute, string $second): static
+    {
+        return $this->withMeta('format_options', [
+            'hour' => $hour,
+            'minute' => $minute,
+            'second' => $second,
+        ]);
     }
 }

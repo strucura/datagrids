@@ -14,15 +14,17 @@ class DateColumn extends AbstractColumn
         return parent::setExpression("DATE_FORMAT($expression, '%Y-%m-%d')");
     }
 
-    /**
-     * Provides instructions to the frontend on how to display the date
-     *
-     * @return $this
-     */
-    public function displayFormat(string $dateFormat): static
+    public function locale(string $locale): static
     {
-        $this->withMeta('format', $dateFormat);
+        return $this->withMeta('locale', $locale);
+    }
 
-        return $this;
+    public function formatOptions(string $year, string $month, string $day): static
+    {
+        return $this->withMeta('format_options', [
+            'year' => $year,
+            'month' => $month,
+            'day' => $day,
+        ]);
     }
 }
