@@ -6,7 +6,7 @@ use Illuminate\Console\GeneratorCommand;
 
 class MakeDataGridCommand extends GeneratorCommand
 {
-    protected $signature = 'make:data-grid {name}';
+    protected $signature = 'make:datagrid {name}';
 
     protected $type = 'data-grid';
 
