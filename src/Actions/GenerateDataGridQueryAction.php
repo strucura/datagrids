@@ -53,7 +53,8 @@ class GenerateDataGridQueryAction
         return $query;
     }
 
-    private function getMatchingQueryableContract($key, Collection $queryableContracts): ?QueryableContract {
+    private function getMatchingQueryableContract($key, Collection $queryableContracts): ?QueryableContract
+    {
         return $queryableContracts->first(fn (QueryableContract $col) => $col->getAlias() === $key);
     }
 
