@@ -44,13 +44,17 @@ class GenerateDataGridQueryAction
         $queryableContracts = $columns->concat($externalFilterInputs->all());
 
         $this->applyFilterSets($query, $queryableContracts, $gridData->filterSets);
-        $this->applySorts($query, $gridData->sorts);
+        $this->applySorts($query, $queryableContracts, $gridData->sorts);
 
         foreach ($columns as $column) {
             $query->selectRaw("{$column->getExpression()} as `{$column->getAlias()}`", $column->getBindings());
         }
 
         return $query;
+    }
+
+    private function getMatchingQueryableContract($key, Collection $queryableContracts): ?QueryableContract {
+        return $queryableContracts->first(fn (QueryableContract $col) => $col->getAlias() === $key);
     }
 
     /**
@@ -86,8 +90,8 @@ class GenerateDataGridQueryAction
     {
         foreach ($filters as $filter) {
             /** @var QueryableContract|null $queryableContract */
-            $queryableContract = $queryableContracts->first(fn (QueryableContract $col) => $col->getAlias() === $filter->alias);
-            if (! $queryableContract) {
+            $queryableContract = $this->getMatchingQueryableContract($filter->alias, $queryableContracts);
+            if (empty($queryableContract)) {
                 continue;
             }
 
@@ -124,13 +128,23 @@ class GenerateDataGridQueryAction
      * Apply sorts to the query.
      *
      * @param  Builder  $query  The query builder instance.
+     * @param  Collection<QueryableContract>  $queryableContracts  A collection of columns and floating filters.
      * @param  Collection<SortData>  $sorts  The collection of sorts to apply.
      */
-    private function applySorts(Builder $query, Collection $sorts): void
+    private function applySorts(Builder $query, Collection $queryableContracts, Collection $sorts): void
     {
         /** @var SortData[] $sorts */
         foreach ($sorts as $sort) {
-            $query->orderBy($sort->alias, $sort->sortType->value);
+            $queryableContract = $this->getMatchingQueryableContract($sort->alias, $queryableContracts);
+
+            /**
+             * If the queryable contract is not found, then we can't sort by it.
+             */
+            if (empty($queryableContract)) {
+                continue;
+            }
+
+            $query->orderBy($queryableContract->getAlias(), $sort->sortType->value);
         }
     }
 }
