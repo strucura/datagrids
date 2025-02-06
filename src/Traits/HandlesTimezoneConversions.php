@@ -2,10 +2,6 @@
 
 namespace Strucura\DataGrid\Traits;
 
-use Strucura\DataGrid\Abstracts\AbstractColumn;
-use Strucura\DataGrid\Columns\DateColumn;
-use Strucura\DataGrid\Columns\DateTimeColumn;
-
 trait HandlesTimezoneConversions
 {
     /**
@@ -15,7 +11,7 @@ trait HandlesTimezoneConversions
      */
     public function toTimezone(string $timezone): static
     {
-        if (!in_array($timezone, timezone_identifiers_list())) {
+        if (! in_array($timezone, timezone_identifiers_list())) {
             throw new \Exception("Invalid timezone: $timezone");
         }
 
