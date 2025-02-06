@@ -2,7 +2,6 @@
 
 namespace Strucura\DataGrid\Columns;
 
-use Illuminate\Support\Facades\Context;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Enums\ColumnType;
 
@@ -34,7 +33,7 @@ class DateColumn extends AbstractColumn
      */
     public function toTimezone(string $timezone): static
     {
-        if (!in_array($timezone, timezone_identifiers_list())) {
+        if (! in_array($timezone, timezone_identifiers_list())) {
             throw new \Exception("Invalid timezone: $timezone");
         }
 
