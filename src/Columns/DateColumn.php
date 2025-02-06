@@ -2,12 +2,14 @@
 
 namespace Strucura\DataGrid\Columns;
 
-use Illuminate\Support\Facades\Context;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Enums\ColumnType;
+use Strucura\DataGrid\Traits\HandlesTimezoneConversions;
 
 class DateColumn extends AbstractColumn
 {
+    use HandlesTimezoneConversions;
+
     protected ColumnType|string $columnType = ColumnType::Date;
 
     public function setExpression(string $expression): static
@@ -23,25 +25,6 @@ class DateColumn extends AbstractColumn
     public function displayFormat(string $dateFormat): static
     {
         $this->withMeta('format', $dateFormat);
-
-        return $this;
-    }
-
-    /**
-     * Handles the conversion of the date to a different timezone
-     *
-     * @throws \Exception
-     */
-    public function toTimezone(string $timezone): static
-    {
-        if (!in_array($timezone, timezone_identifiers_list())) {
-            throw new \Exception("Invalid timezone: $timezone");
-        }
-
-        // If the timezone is the same as the app timezone, we don't need to convert
-        $this->setExpression("CONVERT_TZ($this->expression, ?, ?)")
-            ->addBinding(config('app.timezone') ?? 'UTC')
-            ->addBinding($timezone);
 
         return $this;
     }
