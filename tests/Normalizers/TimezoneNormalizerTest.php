@@ -16,7 +16,7 @@ class TimezoneNormalizerTest extends TestCase
 
     public function test_converts_iso_8601_to_app_timezone()
     {
-        $normalizer = new TimezoneNormalizer();
+        $normalizer = new TimezoneNormalizer;
         $next = function ($value) {
             return $value;
         };
@@ -31,7 +31,7 @@ class TimezoneNormalizerTest extends TestCase
 
     public function test_does_not_convert_non_iso_8601_dates()
     {
-        $normalizer = new TimezoneNormalizer();
+        $normalizer = new TimezoneNormalizer;
         $next = function ($value) {
             return $value;
         };
@@ -44,7 +44,7 @@ class TimezoneNormalizerTest extends TestCase
 
     public function test_does_not_convert_invalid_dates()
     {
-        $normalizer = new TimezoneNormalizer();
+        $normalizer = new TimezoneNormalizer;
         $next = function ($value) {
             return $value;
         };
