@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\FilterOperations\Equals;
+namespace Strucura\DataGrid\FilterOperations\Equality;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractFilterOperation;
@@ -9,11 +9,11 @@ use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
-class EqualsFilterOperation extends AbstractFilterOperation
+class DoesNotEqualFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterOperator === FilterOperator::EQUALS && $this->getNormalizedValue($filterData->value) !== null;
+        return in_array($filterData->filterOperator, [FilterOperator::NOT_EQUALS, FilterOperator::DATE_IS_NOT]);
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
@@ -30,10 +30,10 @@ class EqualsFilterOperation extends AbstractFilterOperation
     private function buildExpression(QueryableContract $queryableContract, FilterData $filterData): string
     {
         if ($filterData->value === null) {
-            return $queryableContract->getExpression().' IS NULL';
+            return $queryableContract->getExpression().' IS NOT NULL';
         }
 
-        return $queryableContract->getExpression().' = ?';
+        return $queryableContract->getExpression().' != ?';
     }
 
     private function buildBindings(QueryableContract $queryableContract, FilterData $filterData): array

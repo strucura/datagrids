@@ -12,11 +12,6 @@ class DateTimeColumn extends AbstractColumn
 
     protected ColumnType|string $columnType = ColumnType::DateTime;
 
-    public function setExpression(string $expression): static
-    {
-        return parent::setExpression("DATE_FORMAT($expression, '%Y-%m-%d %T')");
-    }
-
     /**
      * Provides instructions to the frontend on how to display the date time
      *

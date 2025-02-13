@@ -38,6 +38,6 @@ class DateTimeColumnTest extends TestCase
     {
         $column = new DateTimeColumn('table.column', 'alias');
         $column->setExpression('table.column');
-        $this->assertEquals("DATE_FORMAT(table.column, '%Y-%m-%d %T')", $column->getExpression());
+        $this->assertEquals("table.column", $column->getExpression());
     }
 }
