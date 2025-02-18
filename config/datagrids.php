@@ -3,12 +3,6 @@
 // config for Strucura/DataGrid
 use Spatie\StructureDiscoverer\Support\Conditions\ConditionBuilder;
 use Strucura\DataGrid\Abstracts\AbstractDataGrid;
-use Strucura\DataGrid\FilterOperations\Dates\DateAfterFilterOperation;
-use Strucura\DataGrid\FilterOperations\Dates\DateBeforeFilterOperation;
-use Strucura\DataGrid\FilterOperations\Dates\DateIsFilterOperation;
-use Strucura\DataGrid\FilterOperations\Dates\DateIsNotFilterOperation;
-use Strucura\DataGrid\FilterOperations\Dates\DateOnOrAfterFilterOperation;
-use Strucura\DataGrid\FilterOperations\Dates\DateOnOrBeforeFilterOperation;
 use Strucura\DataGrid\FilterOperations\Equality\DoesNotEqualFilterOperation;
 use Strucura\DataGrid\FilterOperations\Equality\EqualsFilterOperation;
 use Strucura\DataGrid\FilterOperations\Equality\GreaterThanFilterOperation;
