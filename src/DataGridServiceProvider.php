@@ -31,7 +31,7 @@ class DataGridServiceProvider extends PackageServiceProvider
         if (config('datagrids.route_registration.enabled')) {
             RegisterDataGridRoutesAction::make()->handle(
                 config('datagrids.route_registration.discovery.paths'),
-                config('datagrids.route_registration.discovery.conditions')
+                ...config('datagrids.route_registration.discovery.conditions')
             );
         }
     }
