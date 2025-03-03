@@ -134,7 +134,7 @@ class GenerateDataGridQueryAction
      */
     private function applySorts(Builder $query, Collection $queryableContracts, Collection $sorts): void
     {
-        /** @var SortData[] $sorts */
+        /** @var Collection<SortData> $sorts */
         foreach ($sorts as $sort) {
             $queryableContract = $this->getMatchingQueryableContract($sort->alias, $queryableContracts);
 
