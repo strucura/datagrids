@@ -60,8 +60,8 @@ class GridDataTest extends TestCase
         $this->assertCount(2, $gridData->sorts);
         $this->assertInstanceOf(SortData::class, $gridData->sorts[0]);
         $this->assertEquals('name', $gridData->sorts[0]->alias);
-        $this->assertEquals(SortOperator::ASC, $gridData->sorts[0]->sortType);
+        $this->assertEquals(SortOperator::ASC, $gridData->sorts[0]->sortOperator);
         $this->assertEquals('age', $gridData->sorts[1]->alias);
-        $this->assertEquals(SortOperator::DESC, $gridData->sorts[1]->sortType);
+        $this->assertEquals(SortOperator::DESC, $gridData->sorts[1]->sortOperator);
     }
 }
