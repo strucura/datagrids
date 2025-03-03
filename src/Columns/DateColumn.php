@@ -9,11 +9,6 @@ class DateColumn extends AbstractColumn
 {
     protected ColumnType|string $columnType = ColumnType::Date;
 
-    public function setExpression(string $expression): static
-    {
-        return parent::setExpression("DATE_FORMAT($expression, '%Y-%m-%d')");
-    }
-
     /**
      * Provides instructions to the frontend on how to display the date
      *

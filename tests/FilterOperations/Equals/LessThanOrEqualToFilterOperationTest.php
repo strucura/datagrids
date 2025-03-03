@@ -1,13 +1,13 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\FilterOperations\Numeric;
+namespace Strucura\DataGrid\Tests\FilterOperations\Equals;
 
 use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\FilterOperations\Numeric\LessThanOrEqualToFilterOperation;
+use Strucura\DataGrid\FilterOperations\Equality\LessThanOrEqualToFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class LessThanOrEqualToFilterOperationTest extends TestCase

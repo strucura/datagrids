@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\FilterOperations\Numeric;
+namespace Strucura\DataGrid\FilterOperations\Equality;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractFilterOperation;
@@ -13,7 +13,7 @@ class GreaterThanOrEqualToFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterOperator === FilterOperator::GREATER_THAN_OR_EQUAL_TO;
+        return in_array($filterData->filterOperator, [FilterOperator::GREATER_THAN_OR_EQUAL_TO, FilterOperator::DATE_ON_OR_AFTER]);
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder

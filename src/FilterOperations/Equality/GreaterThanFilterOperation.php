@@ -1,6 +1,6 @@
 <?php
 
-namespace Strucura\DataGrid\FilterOperations\Dates;
+namespace Strucura\DataGrid\FilterOperations\Equality;
 
 use Illuminate\Database\Query\Builder;
 use Strucura\DataGrid\Abstracts\AbstractFilterOperation;
@@ -9,19 +9,20 @@ use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
 use Strucura\DataGrid\Enums\FilterSetOperator;
 
-class DateIsNotFilterOperation extends AbstractFilterOperation
+class GreaterThanFilterOperation extends AbstractFilterOperation
 {
     public function canHandle(QueryableContract $queryableContract, FilterData $filterData): bool
     {
-        return $filterData->filterOperator === FilterOperator::DATE_IS_NOT;
+        return in_array($filterData->filterOperator, [FilterOperator::GREATER_THAN, FilterOperator::DATE_AFTER]);
     }
 
     public function handle(Builder $query, QueryableContract $queryableContract, FilterData $filterData, FilterSetOperator $filterOperator = FilterSetOperator::AND): Builder
     {
-        $expression = "{$queryableContract->getExpression()} != DATE_FORMAT(?, '%Y-%m-%d')";
+        $expression = $queryableContract->getExpression().' > ?';
+        $bindings = [...$queryableContract->getBindings(), $filterData->value];
 
         $method = $this->getQueryMethod($queryableContract, $filterOperator);
-        $query->$method($expression, [...$queryableContract->getBindings(), $filterData->value]);
+        $query->$method($expression, $bindings);
 
         return $query;
     }

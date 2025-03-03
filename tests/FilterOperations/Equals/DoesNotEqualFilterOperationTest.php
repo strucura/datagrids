@@ -7,7 +7,7 @@ use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\FilterOperations\Equals\DoesNotEqualFilterOperation;
+use Strucura\DataGrid\FilterOperations\Equality\DoesNotEqualFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
 class DoesNotEqualFilterOperationTest extends TestCase

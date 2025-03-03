@@ -4,10 +4,10 @@ namespace Strucura\DataGrid\Enums;
 
 enum FilterOperator: string
 {
-    case STRING_STARTS_WITH = 'stringStartsWith';
-    case STRING_CONTAINS = 'stringContains';
-    case STRING_DOES_NOT_CONTAIN = 'stringDoesNotContain';
-    case STRING_ENDS_WITH = 'stringEndsWith';
+    case STRING_STARTS_WITH = 'startsWith';
+    case STRING_CONTAINS = 'contains';
+    case STRING_DOES_NOT_CONTAIN = 'doesNotContain';
+    case STRING_ENDS_WITH = 'endsWith';
     case EQUALS = 'equals';
     case NOT_EQUALS = 'doesNotEquals';
     case IN = 'in';

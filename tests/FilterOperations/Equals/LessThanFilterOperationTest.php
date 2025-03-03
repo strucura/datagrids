@@ -1,23 +1,23 @@
 <?php
 
-namespace Strucura\DataGrid\Tests\FilterOperations\Numeric;
+namespace Strucura\DataGrid\Tests\FilterOperations\Equals;
 
 use Illuminate\Database\Query\Builder;
 use Mockery;
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Data\FilterData;
 use Strucura\DataGrid\Enums\FilterOperator;
-use Strucura\DataGrid\FilterOperations\Numeric\GreaterThanOrEqualToFilterOperation;
+use Strucura\DataGrid\FilterOperations\Equality\LessThanFilterOperation;
 use Strucura\DataGrid\Tests\TestCase;
 
-class GreaterThanOrEqualToFilterOperationTest extends TestCase
+class LessThanFilterOperationTest extends TestCase
 {
     public function test_can_handle()
     {
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('quantity', 10, FilterOperator::GREATER_THAN_OR_EQUAL_TO);
+        $filterData = new FilterData('column', 10, FilterOperator::LESS_THAN);
 
-        $filter = new GreaterThanOrEqualToFilterOperation;
+        $filter = new LessThanFilterOperation;
 
         $this->assertTrue($filter->canHandle($column, $filterData));
     }
@@ -26,7 +26,7 @@ class GreaterThanOrEqualToFilterOperationTest extends TestCase
     {
         $query = Mockery::mock(Builder::class);
         $column = Mockery::mock(AbstractColumn::class);
-        $filterData = new FilterData('quantity', 10, FilterOperator::GREATER_THAN_OR_EQUAL_TO);
+        $filterData = new FilterData('quantity', 10, FilterOperator::LESS_THAN);
 
         $column->shouldReceive('getExpression')->andReturn('quantity');
         $column->shouldReceive('isHavingRequired')->andReturn(false);
@@ -34,10 +34,10 @@ class GreaterThanOrEqualToFilterOperationTest extends TestCase
 
         $query->shouldReceive('whereRaw')
             ->once()
-            ->with('quantity >= ?', [10])
+            ->with('quantity < ?', [10])
             ->andReturnSelf();
 
-        $filter = new GreaterThanOrEqualToFilterOperation;
+        $filter = new LessThanFilterOperation;
         $result = $filter->handle($query, $column, $filterData);
 
         $this->assertSame($query, $result);
