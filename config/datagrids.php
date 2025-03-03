@@ -19,7 +19,6 @@ use Strucura\DataGrid\Normalizers\BooleanNormalizer;
 use Strucura\DataGrid\Normalizers\FloatNormalizer;
 use Strucura\DataGrid\Normalizers\IntegerNormalizer;
 use Strucura\DataGrid\Normalizers\NullNormalizer;
-use Strucura\DataGrid\Normalizers\TimezoneNormalizer;
 
 return [
     /**

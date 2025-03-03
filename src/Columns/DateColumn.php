@@ -15,7 +15,6 @@ class DateColumn extends AbstractColumn
     /**
      * Set the expression to format the date
      *
-     * @param string $expression
      * @return $this
      */
     public function setExpression(string $expression): static
