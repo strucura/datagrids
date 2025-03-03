@@ -38,6 +38,6 @@ class DateColumnTest extends TestCase
     {
         $column = new DateColumn('table.column', 'alias');
         $column->setExpression('table.column');
-        $this->assertEquals("table.column", $column->getExpression());
+        $this->assertEquals('table.column', $column->getExpression());
     }
 }
