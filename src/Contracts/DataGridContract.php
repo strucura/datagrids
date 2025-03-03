@@ -5,6 +5,7 @@ namespace Strucura\DataGrid\Contracts;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Strucura\DataGrid\Data\SortData;
 use Strucura\DataGrid\Http\Requests\DataGridDataRequest;
 use Strucura\DataGrid\Http\Requests\DataGridSchemaRequest;
 
@@ -53,4 +54,11 @@ interface DataGridContract
      * The base query for the data grid.
      */
     public function getQuery(): Builder;
+
+    /**
+     * Used to provide default sorts for the data grid on the initial load
+     *
+     * @return Collection<SortData>
+     */
+    public function getDefaultSorts(): Collection;
 }

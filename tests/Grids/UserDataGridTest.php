@@ -116,6 +116,18 @@ class UserDataGridTest extends TestCase
         foreach ($floatingFilters as $filter) {
             $this->assertContains($filter, $data['external_filter_inputs']);
         }
+
+        // Assert that the initial sorts are present in the response data
+        $defaultSorts = [
+            [
+                'alias' => 'ID',
+                'sortOperator' => 'asc',
+            ],
+        ];
+
+        foreach ($defaultSorts as $sort) {
+            $this->assertContains($sort, $data['default_sorts']);
+        }
     }
 
     public function test_invokes_permission_check_when_permission_trait_present_on_data()

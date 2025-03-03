@@ -145,7 +145,7 @@ class GenerateDataGridQueryAction
                 continue;
             }
 
-            $query->orderBy($queryableContract->getAlias(), $sort->sortType->value);
+            $query->orderBy($queryableContract->getAlias(), $sort->sortOperator->value);
         }
     }
 }

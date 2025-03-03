@@ -9,6 +9,8 @@ use Strucura\DataGrid\Abstracts\AbstractDataGrid;
 use Strucura\DataGrid\Columns\NumberColumn;
 use Strucura\DataGrid\Columns\StringColumn;
 use Strucura\DataGrid\Contracts\DataGridContract;
+use Strucura\DataGrid\Data\SortData;
+use Strucura\DataGrid\Enums\SortOperator;
 use Strucura\DataGrid\FilterInputs\DateRangeFilterInput;
 
 class UserDataGrid extends AbstractDataGrid implements DataGridContract
@@ -31,6 +33,13 @@ class UserDataGrid extends AbstractDataGrid implements DataGridContract
     {
         return collect([
             DateRangeFilterInput::make('users.created_at', 'Created At'),
+        ]);
+    }
+
+    public function getDefaultSorts(): Collection
+    {
+        return collect([
+            SortData::make('ID', SortOperator::ASC),
         ]);
     }
 }
