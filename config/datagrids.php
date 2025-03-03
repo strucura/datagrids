@@ -31,14 +31,17 @@ return [
     /**
      * Used to discover grids in the application.
      */
-    'discovery' => [
-        'paths' => [
-            app_path(''),
-        ],
-        'conditions' => [
-            ConditionBuilder::create()
-                ->classes()
-                ->extending(AbstractDataGrid::class),
+    'route_registration' => [
+        'enabled' => true,
+        'discovery' => [
+            'paths' => [
+                app_path(''),
+            ],
+            'conditions' => [
+                ConditionBuilder::create()
+                    ->classes()
+                    ->extending(AbstractDataGrid::class),
+            ],
         ],
     ],
 
