@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\StructureDiscoverer\Discover;
+use Strucura\DataGrid\Actions\RegisterDataGridRoutesAction;
 use Strucura\DataGrid\Commands\MakeDataGridCommand;
 use Strucura\DataGrid\Contracts\DataGridContract;
 
@@ -30,18 +31,11 @@ class DataGridServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $paths = config('datagrids.discovery.paths');
-        $conditions = config('datagrids.discovery.conditions');
-
-        $discoveredGridFQCNs = Discover::in(...$paths)
-            ->any(...$conditions)
-            ->get();
-
-        foreach ($discoveredGridFQCNs as $gridFQCN) {
-            /** @var DataGridContract $grid */
-            $grid = new $gridFQCN;
-            Route::post($grid->getRoutePath().'/data', [$gridFQCN, 'handleData'])->name($grid->getRouteName().'.data');
-            Route::post($grid->getRoutePath().'/schema', [$gridFQCN, 'handleSchema'])->name($grid->getRouteName().'.schema');
+        if (config('datagrids.route_registration.enabled')) {
+            RegisterDataGridRoutesAction::make()->handle(
+                config('datagrids.route_registration.paths'),
+                config('datagrids.route_registration.conditions')
+            );
         }
     }
 }
