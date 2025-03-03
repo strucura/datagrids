@@ -41,11 +41,9 @@ return [
      */
     'normalizers' => [
         BooleanNormalizer::class,
-        TimezoneNormalizer::class,
         FloatNormalizer::class,
         IntegerNormalizer::class,
         NullNormalizer::class,
-        TimezoneNormalizer::class,
     ],
 
     /**

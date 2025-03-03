@@ -12,6 +12,12 @@ class DateColumn extends AbstractColumn
 
     protected ColumnType|string $columnType = ColumnType::Date;
 
+    /**
+     * Set the expression to format the date
+     *
+     * @param string $expression
+     * @return $this
+     */
     public function setExpression(string $expression): static
     {
         return parent::setExpression("DATE_FORMAT($expression, '%Y-%m-%d')");
