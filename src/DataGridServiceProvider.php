@@ -2,13 +2,10 @@
 
 namespace Strucura\DataGrid;
 
-use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\StructureDiscoverer\Discover;
 use Strucura\DataGrid\Actions\RegisterDataGridRoutesAction;
 use Strucura\DataGrid\Commands\MakeDataGridCommand;
-use Strucura\DataGrid\Contracts\DataGridContract;
 
 class DataGridServiceProvider extends PackageServiceProvider
 {

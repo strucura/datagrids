@@ -10,7 +10,7 @@ use Strucura\DataGrid\Tests\TestCase;
 
 class RegisterDataGridRoutesActionTest extends TestCase
 {
-    public function testHandleRegistersRoutes()
+    public function test_handle_registers_routes()
     {
         // Mock the Discover class
         $this->mock(Discover::class, function ($discoverMock) {
