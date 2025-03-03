@@ -22,8 +22,6 @@ class DataGridServiceProvider extends PackageServiceProvider
                 MakeDataGridCommand::class,
             ])
             ->hasConfigFile();
-
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     public function packageRegistered(): void
