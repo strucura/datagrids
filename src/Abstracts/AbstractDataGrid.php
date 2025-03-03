@@ -126,7 +126,13 @@ abstract class AbstractDataGrid implements DataGridContract
 
         return response()->json([
             'columns' => $columns,
+            'default_sorts' => $this->getDefaultSorts()->map->toArray(),
             'external_filter_inputs' => $externalFilterInputs,
         ]);
+    }
+
+    public function getDefaultSorts(): Collection
+    {
+        return collect();
     }
 }
