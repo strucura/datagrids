@@ -4,12 +4,9 @@ namespace Strucura\DataGrid\Columns;
 
 use Strucura\DataGrid\Abstracts\AbstractColumn;
 use Strucura\DataGrid\Enums\ColumnType;
-use Strucura\DataGrid\Traits\HandlesTimezoneConversions;
 
 class DateTimeColumn extends AbstractColumn
 {
-    use HandlesTimezoneConversions;
-
     protected ColumnType|string $columnType = ColumnType::DateTime;
 
     /**

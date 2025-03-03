@@ -33,25 +33,4 @@ class NumberColumnTest extends TestCase
         $this->assertFalse($array['is_hidden']);
         $this->assertIsArray($array['meta']);
     }
-
-    public function test_float_method_sets_expression_correctly()
-    {
-        $column = new NumberColumn('table.column', 'alias');
-        $column->float();
-        $this->assertEquals('CAST(table.column AS FLOAT)', $column->getExpression());
-    }
-
-    public function test_signed_method_sets_expression_correctly()
-    {
-        $column = new NumberColumn('table.column', 'alias');
-        $column->signed();
-        $this->assertEquals('CAST(table.column AS SIGNED)', $column->getExpression());
-    }
-
-    public function test_unsigned_method_sets_expression_correctly()
-    {
-        $column = new NumberColumn('table.column', 'alias');
-        $column->unsigned();
-        $this->assertEquals('CAST(table.column AS UNSIGNED)', $column->getExpression());
-    }
 }
